@@ -15,6 +15,8 @@ class ProfilesCollection {
       lastName: { type: String, optional: true },
       bio: { type: String, optional: true },
       picture: { type: String, optional: true },
+      vegan: { type: Boolean, optional: true },
+      glutenFree: { type: Boolean, optional: true },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);

@@ -1,22 +1,53 @@
 {
   "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
-    { "email": "john@foo.com", "password": "changeme" },
-    { "email": "jane@foo.com", "password": "changeme", "role": "vendor" }
+    { "email": "admin@foo.com", "role": "admin" },
+    { "email": "merchant@foo.com", "role": "vendor" },
+    { "email": "john@foo.com" },
+    { "email": "jane@foo.com" },
+    { "email": "user@foo.com" }
   ],
 
-  "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  "defaultProfiles": [
+    {
+      "email": "admin@foo.com",
+      "firstName": "Admin", "lastName": "Access",
+      "bio": "The default admin", "picture": ""
+    },
+    {
+      "email": "merchant@foo.com",
+      "firstName": "Trader", "lastName": "Joe",
+      "bio": "The default vendor", "picture": ""
+    },
+    {
+      "email": "john@foo.com",
+      "firstName": "John", "lastName": "Doe",
+      "bio": "The test gluten-free user", "picture": "",
+      "gluten-free": true
+    },
+    {
+      "email": "jane@foo.com",
+      "firstName": "Jane", "lastName": "Poe",
+      "bio": "The test vegan user", "picture": "",
+      "vegan": true
+    }
   ],
 
   "defaultRecipes": [
-    { "name": "Lettuce and Tomato Salad", "owner": "john@foo.com", "image": "", "description": "The classic salad", "instructions": "Wash the lettuce and tomato, chop the lettuce and tomato, eat.", "time": 10, "servings": 2, "Ingredients": [ "lettuce", "tomato" ] }
+    {
+      "name": "Lettuce and Tomato Salad",
+      "owner": "jane@foo.com",
+      "description": "The classic salad", "image": "",
+      "instructions": "Wash the lettuce and tomato, chop the lettuce and tomato, enjoy.",
+      "time": 10, "servings": 2,
+      "Ingredients": [
+        { "name": "lettuce", "quantity": 1 },
+        { "name": "tomato", "quantity": 2 }
+      ]
+    }
   ],
 
   "defaultVendors": [
-    { "name": "Janes Market", "address": "POST 307, University of Hawaii", "owner": "jane@foo.com" }
+    { "name": "ICS HQ", "address": "POST 307, University of Hawaii" },
+    { "name": "ICS Class", "address": "Basement, Hamilton Library, University of Hawaii" }
   ]
 }
