@@ -3,30 +3,52 @@ import { Roles } from 'meteor/alanning:roles';
 import { Stuffs } from '../../api/stuff/Stuff';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
+import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
+import { Vendors } from '../../api/vendors/Vendors';
+import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
+import { Profiles } from '../../api/profiles/Profiles';
+import { ProfilesAllergies } from '../../api/profiles/ProfilesAllergies';
 
-// User-level publication.
-// If logged in, then publish documents owned by this user. Otherwise publish nothing.
-Meteor.publish(Stuffs.userPublicationName, function () {
+/** User level access */
+
+/** Publish all Ingredients Documents. Everyone has full access */
+Meteor.publish(Ingredients.userPublicationName, () => Ingredients.collection.find());
+
+/** Publish Profile Document for logged in user */
+Meteor.publish(Profiles.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return Stuffs.collection.find({ owner: username });
+    return Profiles.collection.find({ owner: username });
   }
   return this.ready();
 });
-/** Define a publication to publish all Ingredients.
- * Everyone can browse and edit ingredients */
-Meteor.publish(Ingredients.userPublicationName, () => Ingredients.collection.find());
 
-/** Define a publication to publish all Recipes.
- * Everyone can browse recipes with user level access */
+/** Publish Profile-Allergies relations for logged in user */
+Meteor.publish(ProfilesAllergies.userPublicationName, function () {
+  if (this.userId) {
+    const username = Meteor.users.findOne(this.userId).username;
+    return ProfilesAllergies.collection.find({ owner: username });
+  }
+  return this.ready();
+});
+
+/** Publish all Recipes Documents. */
 Meteor.publish(Recipes.userPublicationName, () => Recipes.collection.find());
+
+/** Publish all Recipes-Ingredients Relations. */
+Meteor.publish(RecipesIngredients.userPublicationName, () => Recipes.collection.find());
+
+/** Publish all Vendors Documents. */
+Meteor.publish(Vendors.userPublicationName, () => Vendors.collection.find());
+
+/** Publish all Vendors-Ingredients relations. */
+Meteor.publish(VendorsIngredients.userPublicationName, () => VendorsIngredients.collection.find());
 
 // Vendor-level publication.
 
-/** Admin level publications */
-/** Recipes.
- * Admins have full access to all recipes
- * Owners get admin level access on recipes they own */
+/** Admin level publications: edit access and view */
+/** Publish all Recipes for Admins.
+ *  Publish owned Recipes for users (hopefully) */
 Meteor.publish(Recipes.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Recipes.collection.find();
