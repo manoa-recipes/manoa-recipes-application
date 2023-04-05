@@ -3,6 +3,8 @@ import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import { Stuffs } from '../../api/stuff/Stuff.js';
 import { Ingredients } from '../../api/ingredients/Ingredients';
+import { Recipes } from '../../api/recipes/Recipes';
+import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 
 /* eslint-disable no-console */
 
@@ -13,7 +15,24 @@ function createUser(email, role) {
     Roles.createRole(role, { unlessExists: true });
     Roles.addUsersToRoles(userID, 'admin');
   }
+  if (role === 'vendor') {
+    Roles.createRole(role, { unlessExists: true });
+    Roles.addUsersToRoles(userID, 'admin');
+  }
 }
+
+const addIngredient = (ingredient) => {
+  console.log(`  Adding/Updating Ingredient: ${ingredient}`);
+  Ingredients.collection.update({ name: ingredient }, { $set: { name: ingredient } }, { upsert: true });
+};
+const addRecipeIngredient = ({ recipe, ingredient, quantity }) => {
+  console.log(`  Adding/Updating RecipeIngredient: ${ingredient} (${recipe})`);
+  RecipesIngredients.collection.update({ name: ingredient }, { $set: { name: ingredient } }, { upsert: true });
+};
+const addRecipe = ({ name, owner, image, description, instructions, time, servings, ingredients }) => {
+  console.log(`  Adding/Updating Recipe: ${name} (${owner})`);
+  Recipes.collection.insert({ name: name, owner: owner, image: image, description: description, instructions: instructions, time: time, servings: servings });
+};
 
 if (Meteor.users.find().count() === 0) {
   if (Meteor.settings.defaultProjects && Meteor.settings.defaultProfiles) {
@@ -30,17 +49,6 @@ if (Meteor.users.find().count() === 0) {
 
 /** Initialize Databases */
 // Ingredients
-const addIngredient = (ingredient) => {
-  console.log(`  Adding/Updating Ingredient: ${ingredient}`);
-  Ingredients.collection.update({ name: ingredient }, { $set: { name: ingredient } }, { upsert: true });
-};
-
-if (Ingredients.collection.find().count() === 0) {
-  if (Meteor.settings.defaultData) {
-    console.log('Creating default data.');
-    Meteor.settings.defaultData.forEach(data => addData(data));
-  }
-}
 
 // Initialize the database with a default data document.
 const addData = (data) => {

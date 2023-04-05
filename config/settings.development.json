@@ -10,24 +10,32 @@
   "defaultProfiles": [
     {
       "email": "admin@foo.com",
-      "firstName": "Admin", "lastName": "Access",
-      "bio": "The default admin", "picture": ""
+      "firstName": "Admin",
+      "lastName": "Access",
+      "picture": "",
+      "bio": "The default admin"
     },
     {
       "email": "merchant@foo.com",
-      "firstName": "Trader", "lastName": "Joe",
-      "bio": "The default vendor", "picture": ""
+      "firstName": "Trader",
+      "lastName": "Joe",
+      "picture": "",
+      "bio": "The default vendor"
     },
     {
       "email": "john@foo.com",
-      "firstName": "John", "lastName": "Doe",
-      "bio": "The test gluten-free user", "picture": "",
+      "firstName": "John",
+      "lastName": "Doe",
+      "picture": "",
+      "bio": "The test gluten-free user",
       "gluten-free": true
     },
     {
       "email": "jane@foo.com",
-      "firstName": "Jane", "lastName": "Poe",
-      "bio": "The test vegan user", "picture": "",
+      "firstName": "Jane",
+      "lastName": "Poe",
+      "picture": "",
+      "bio": "The test vegan user",
       "vegan": true
     }
   ],
@@ -36,10 +44,12 @@
     {
       "name": "Lettuce and Tomato Salad",
       "owner": "jane@foo.com",
-      "description": "The classic salad", "image": "",
+      "image": "",
+      "description": "The classic salad",
       "instructions": "Wash the lettuce and tomato, chop the lettuce and tomato, enjoy.",
-      "time": 10, "servings": 2,
-      "Ingredients": [
+      "time": 10,
+      "servings": 2,
+      "ingredients": [
         { "name": "lettuce", "quantity": 1 },
         { "name": "tomato", "quantity": 2 }
       ]
@@ -49,5 +59,6 @@
   "defaultVendors": [
     { "name": "ICS HQ", "address": "POST 307, University of Hawaii" },
     { "name": "ICS Class", "address": "Basement, Hamilton Library, University of Hawaii" }
-  ]
+  ],
+  "loadAssetsFile":  false
 }
