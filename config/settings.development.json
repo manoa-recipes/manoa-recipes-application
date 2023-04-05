@@ -1,7 +1,8 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
-    { "email": "john@foo.com", "password": "changeme" }
+    { "email": "john@foo.com", "password": "changeme" },
+    { "email": "jane@foo.com", "password": "changeme", "role": "vendor" }
   ],
 
   "defaultData": [
@@ -9,5 +10,13 @@
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  ],
+
+  "defaultRecipes": [
+    { "name": "Lettuce and Tomato Salad", "owner": "john@foo.com", "image": "", "description": "The classic salad", "instructions": "Wash the lettuce and tomato, chop the lettuce and tomato, eat.", "time": 10, "servings": 2, "Ingredients": [ "lettuce", "tomato" ] }
+  ],
+
+  "defaultVendors": [
+    { "name": "Janes Market", "address": "POST 307, University of Hawaii", "owner": "jane@foo.com" }
   ]
 }
