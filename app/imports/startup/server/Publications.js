@@ -7,7 +7,7 @@ import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import { Profiles } from '../../api/profiles/Profiles';
-import { ProfilesAllergies } from '../../api/profiles/ProfilesAllergies';
+import { IngredientsAllergies } from '../../api/ingredients/IngredientsAllergies';
 
 /** User level access */
 
@@ -23,11 +23,11 @@ Meteor.publish(Profiles.userPublicationName, function () {
   return this.ready();
 });
 
-/** Publish Profile-Allergies relations for logged in user */
-Meteor.publish(ProfilesAllergies.userPublicationName, function () {
+/** Publish Ingredients-Allergies documents for logged in user */
+Meteor.publish(IngredientsAllergies.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return ProfilesAllergies.collection.find({ owner: username });
+    return IngredientsAllergies.collection.find({ owner: username });
   }
   return this.ready();
 });
@@ -46,9 +46,7 @@ Meteor.publish(VendorsIngredients.userPublicationName, () => VendorsIngredients.
 
 // Vendor-level publication.
 
-/** Admin level publications: edit access and view */
-/** Publish all Recipes for Admins.
- *  Publish owned Recipes for users (hopefully) */
+/** Admin level publications */
 Meteor.publish(Recipes.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Recipes.collection.find();

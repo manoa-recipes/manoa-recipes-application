@@ -2,16 +2,16 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
 /** Encapsulates state and variable values for this collection. */
-class ProfilesAllergiesCollection {
+class IngredientsAllergiesCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'ProfilesAllergiesCollection';
+    this.name = 'IngredientsAllergiesCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      profile: String,
       ingredient: String,
+      profile: String,
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
@@ -21,4 +21,4 @@ class ProfilesAllergiesCollection {
   }
 }
 
-export const ProfilesAllergies = new ProfilesAllergiesCollection();
+export const IngredientsAllergies = new IngredientsAllergiesCollection();
