@@ -78,7 +78,7 @@ const addVendor = ({ name, address }) => {
 
 /** Function to populate the collections with default data when installed for the first time. */
 if (Meteor.users.find().count() === 0) {
-  if (Meteor.settings.defaultProjects && Meteor.settings.defaultProfiles) {
+  if (Meteor.settings.defaultAccounts && Meteor.settings.defaultProfiles && Meteor.settings.defaultRecipes && Meteor.settings.defaultVendors) {
     console.log('Creating the default user(s)');
     Meteor.settings.defaultAccounts.forEach(({ email, password, role }) => createUser(email, password, role));
     console.log('Creating the default profiles');
