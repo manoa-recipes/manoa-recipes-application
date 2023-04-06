@@ -12,6 +12,7 @@ class VendorsIngredientsCollection {
     this.schema = new SimpleSchema({
       vendor: String,
       ingredient: String,
+      inStock: { type: Boolean, defaultValue: true },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);

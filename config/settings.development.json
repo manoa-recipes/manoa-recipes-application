@@ -1,42 +1,28 @@
 {
-  "defaultAccounts": [
-    { "email": "admin@foo.com", "role": "admin" },
-    { "email": "merchant@foo.com", "role": "vendor" },
-    { "email": "john@foo.com" },
-    { "email": "jane@foo.com" },
-    { "email": "user@foo.com" }
-  ],
-
   "defaultProfiles": [
     {
       "email": "admin@foo.com",
-      "firstName": "Admin",
-      "lastName": "Access",
-      "picture": "",
-      "bio": "The default admin"
+      "role": "admin",
+      "vegan": false,
+      "glutenFree": false
     },
     {
       "email": "merchant@foo.com",
-      "firstName": "Trader",
-      "lastName": "Joe",
-      "picture": "",
-      "bio": "The default vendor"
+      "role": "vendor",
+      "vegan": false,
+      "glutenFree": false
     },
     {
       "email": "john@foo.com",
-      "firstName": "John",
-      "lastName": "Doe",
-      "picture": "",
-      "bio": "The test gluten-free user",
-      "gluten-free": true
+      "role": "",
+      "vegan": false,
+      "glutenFree": true
     },
     {
       "email": "jane@foo.com",
-      "firstName": "Jane",
-      "lastName": "Poe",
-      "picture": "",
-      "bio": "The test vegan user",
-      "vegan": true
+      "role": "",
+      "vegan": true,
+      "glutenFree": false
     }
   ],
 
@@ -44,14 +30,12 @@
     {
       "name": "Lettuce and Tomato Salad",
       "owner": "jane@foo.com",
-      "image": "",
-      "description": "The classic salad",
       "instructions": "Wash the lettuce and tomato, chop the lettuce and tomato, enjoy.",
       "time": 10,
       "servings": 2,
       "ingredients": [
-        { "name": "lettuce", "quantity": 1 },
-        { "name": "tomato", "quantity": 2 }
+        { "recipe": "Lettuce and Tomato Salad", "ingredient": "lettuce", "quantity": 1 },
+        { "recipe": "Lettuce and Tomato Salad", "ingredient": "tomato", "quantity": 2 }
       ]
     }
   ],
@@ -60,5 +44,6 @@
     { "name": "ICS HQ", "address": "POST 307, University of Hawaii" },
     { "name": "ICS Class", "address": "Basement, Hamilton Library, University of Hawaii" }
   ],
+
   "loadAssetsFile":  false
 }

@@ -10,10 +10,8 @@ class VendorsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      name: String,
+      name: { type: String, defaultValue: 'Store' },
       address: { type: String, index: true, unique: true },
-      image: { type: String, optional: true },
-      owner: String,
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);

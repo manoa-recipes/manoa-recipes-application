@@ -11,12 +11,8 @@ class ProfilesCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       email: { type: String, index: true, unique: true },
-      firstName: { type: String, optional: true },
-      lastName: { type: String, optional: true },
-      bio: { type: String, optional: true },
-      picture: { type: String, optional: true },
-      vegan: { type: Boolean, optional: true },
-      glutenFree: { type: Boolean, optional: true },
+      vegan: { type: Boolean, defaultValue: false },
+      glutenFree: { type: Boolean, defaultValue: false },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
