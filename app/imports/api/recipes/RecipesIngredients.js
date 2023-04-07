@@ -12,6 +12,7 @@ class RecipesIngredientsCollection {
     this.schema = new SimpleSchema({
       recipe: String,
       ingredient: String,
+      size: { type: String, defaultValue: 'whole' },
       quantity: Number,
     });
     // Ensure collection documents obey schema.

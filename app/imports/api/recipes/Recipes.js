@@ -12,8 +12,6 @@ class RecipesCollection {
     this.schema = new SimpleSchema({
       name: { type: String, index: true, unique: true },
       owner: String,
-      image: { type: String, optional: true },
-      description: { type: String, optional: true },
       instructions: { type: String, optional: false },
       time: { type: Number, optional: false },
       servings: { type: Number, optional: false },
