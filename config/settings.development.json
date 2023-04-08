@@ -9,8 +9,8 @@
     {
       "email": "merchant@foo.com",
       "role": "vendor",
-      "vegan": false,
-      "glutenFree": false
+      "vegan": true,
+      "glutenFree": true
     },
     {
       "email": "john@foo.com",
@@ -23,6 +23,19 @@
       "role": "",
       "vegan": true,
       "glutenFree": false
+    },
+    {
+      "email": "dracula@foo.com",
+      "role": "",
+      "vegan": false,
+      "glutenFree": false
+    }
+  ],
+
+  "defaultIngredientsAllergies": [
+    {
+      "profile": "dracula@foo.com",
+      "ingredient": "garlic"
     }
   ],
 
@@ -32,29 +45,28 @@
       "owner": "jane@foo.com",
       "instructions": "Wash the lettuce and tomato, chop the lettuce and tomato, enjoy.",
       "time": 10,
-      "servings": 2,
-      "ingredients": [
-        { "recipe": "Default Salad", "ingredient": "lettuce", "quantity": 1 },
-        { "recipe": "Default Salad", "ingredient": "tomato", "quantity": 2 }
-      ]
+      "servings": 2
     },
     {
       "name": "Scratch Pasta Sauce",
       "owner": "john@foo.com",
       "instructions": "Requires a stove-top or hot-plate and a pot. Put pot on low-medium heat, add olive oil and diced onion, salt and pepper, and cook until onion is translucent. Add diced garlic and cook for ten more minutes. Mix tomato paste in and cook for five more minutes. Mix in three cups of water and cook five more minutes. Add and mix tomato sauce and chopped basil and reduce heat to low for 25 more minutes.  Note: Season salt and pepper to taste.",
       "time": 60,
-      "servings": 4,
-      "ingredients": [
-        { "recipe": "Scratch Pasta Sauce", "ingredient": "olive oil", "size": "tablespoon", "quantity": 4 },
-        { "recipe": "Scratch Pasta Sauce", "ingredient": "onion", "size": "whole", "quantity": 0.5 },
-        { "recipe": "Scratch Pasta Sauce", "ingredient": "garlic", "size": "clove", "quantity": 3 },
-        { "recipe": "Scratch Pasta Sauce", "ingredient": "salt", "size": "teaspoon", "quantity": 6 },
-        { "recipe": "Scratch Pasta Sauce", "ingredient": "black pepper", "size": "teaspoon", "quantity": 2 },
-        { "recipe": "Scratch Pasta Sauce", "ingredient": "tomato paste", "size": "6oz can", "quantity": 0.5 },
-        { "recipe": "Scratch Pasta Sauce", "ingredient": "tomato sauce", "size": "29oz can", "quantity": 1 },
-        { "recipe": "Scratch Pasta Sauce", "ingredient": "basil", "size": "sprig", "quantity": 6 }
-      ]
+      "servings": 4
     }
+  ],
+
+  "defaultRecipesIngredients": [
+    { "recipe": "Default Salad", "ingredient": "lettuce", "size": "whole", "quantity": 1 },
+    { "recipe": "Default Salad", "ingredient": "tomato", "size": "whole", "quantity": 2 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "olive oil", "size": "tablespoon", "quantity": 4 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "onion", "size": "half", "quantity": 1 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "garlic", "size": "clove", "quantity": 3 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "salt", "size": "teaspoon", "quantity": 6 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "black pepper", "size": "teaspoon", "quantity": 2 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "tomato paste", "size": "ounce", "quantity": 3 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "tomato sauce", "size": "ounce", "quantity": 29 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "basil", "size": "sprig", "quantity": 6 }
   ],
 
   "defaultVendors": [
