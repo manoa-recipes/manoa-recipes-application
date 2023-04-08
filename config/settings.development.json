@@ -43,7 +43,7 @@
     {
       "name": "Default Salad",
       "owner": "jane@foo.com",
-      "instructions": "Wash the lettuce and tomato, chop the lettuce and tomato, enjoy.",
+      "instructions": "Wash the lettuce and tomato thoroughly.  Assemble the chopped lettuce and tomato.  ",
       "time": 10,
       "servings": 2
     },
@@ -57,7 +57,7 @@
   ],
 
   "defaultRecipesIngredients": [
-    { "recipe": "Default Salad", "ingredient": "lettuce", "size": "whole", "quantity": 1 },
+    { "recipe": "Default Salad", "ingredient": "lettuce", "size": "head", "quantity": 1 },
     { "recipe": "Default Salad", "ingredient": "tomato", "size": "whole", "quantity": 2 },
     { "recipe": "Scratch Pasta Sauce", "ingredient": "olive oil", "size": "tablespoon", "quantity": 4 },
     { "recipe": "Scratch Pasta Sauce", "ingredient": "onion", "size": "half", "quantity": 1 },
@@ -70,8 +70,39 @@
   ],
 
   "defaultVendors": [
-    { "name": "ICS HQ", "address": "POST 307, University of Hawaii" },
-    { "name": "ICS Class", "address": "Basement, Hamilton Library, University of Hawaii" }
+    { "name": "ICS Office", "address": "POST 307, University of Hawaii" },
+    { "name": "ICS Class Room", "address": "Basement of Hamilton Library, University of Hawaii" }
+  ],
+
+  "defaultVendorsIngredients": [
+    {
+      "address": "POST 307, University of Hawaii",
+      "ingredient": "tomato",
+      "inStock": true,
+      "size": "whole",
+      "price": 0.79
+    },
+    {
+      "address": "POST 307, University of Hawaii",
+      "ingredient": "lettuce",
+      "inStock": false,
+      "size": "head",
+      "price": 1.29
+    },
+    {
+      "address": "Basement of Hamilton Library, University of Hawaii",
+      "ingredient": "lettuce",
+      "inStock": true,
+      "size": "head",
+      "price": 1.39
+    },
+    {
+      "address": "Basement of Hamilton Library, University of Hawaii",
+      "ingredient": "tomato",
+      "inStock": true,
+      "size": "whole",
+      "price": 0.89
+    }
   ],
 
   "loadAssetsFile":  false
