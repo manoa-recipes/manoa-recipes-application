@@ -13,7 +13,7 @@ class RecipesIngredientsCollection {
       recipe: String,
       ingredient: String,
       size: { type: String, defaultValue: 'whole' },
-      quantity: Number,
+      quantity: { type: Number, defaultValue: 1 },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
