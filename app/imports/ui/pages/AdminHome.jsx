@@ -1,48 +1,33 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
-import { Col, Container, Row, Table } from 'react-bootstrap';
-import { Stuffs } from '../../api/stuff/Stuff';
-import StuffItemAdmin from '../components/StuffItemAdmin';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { Col, Row, Container, Tab, Tabs } from 'react-bootstrap';
+import IngredientsListAdmin from '../components/IngredientsListAdmin';
+import IngredientsAllergiesListAdmin from '../components/IngredientsAllergiesListAdmin';
+import ProfilesListAdmin from '../components/ProfilesListAdmin';
+import VendorsListAdmin from '../components/VendorsListAdmin';
+import RecipesListAdmin from '../components/RecipesListAdmin';
+import RecipesIngredientsListAdmin from '../components/RecipesIngredientsListAdmin';
+import VendorsIngredientsListAdmin from '../components/VendorsIngredientsListAdmin';
 
-/* Renders simple tables with all data. */
-const AdminHome = () => {
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { stuffs, ready } = useTracker(() => {
-    // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Stuffs.adminPublicationName);
-    // Determine if the subscription is ready
-    const rdy = subscription.ready();
-    // Get the Stuff documents
-    const items = Stuffs.collection.find({}).fetch();
-    return {
-      stuffs: items,
-      ready: rdy,
-    };
-  }, []);
-  return (ready ? (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col md={7}>
-          <Col className="text-center"><h2>Admin Home Page</h2></Col>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Condition</th>
-                <th>Owner</th>
-              </tr>
-            </thead>
-            <tbody>
-              {stuffs.map((stuff) => <StuffItemAdmin key={stuff._id} stuff={stuff} />)}
-            </tbody>
-          </Table>
+/* Organize all admin data tables */
+const AdminHome = () => (
+  <Container className="p-0 text-center">
+    <Tabs fill>
+      <Tab eventKey="tables" title="db Tables">
+        <Col>
+          <h2>Single Collections</h2>
+          <Row>
+            <Col><IngredientsListAdmin /><IngredientsAllergiesListAdmin /></Col>
+            <Col><ProfilesListAdmin /><VendorsListAdmin /></Col>
+          </Row>
+          <Row><RecipesListAdmin /></Row>
+          <Row><RecipesIngredientsListAdmin /></Row>
+          <Row><VendorsIngredientsListAdmin /></Row>
         </Col>
-      </Row>
-    </Container>
-  ) : <LoadingSpinner />);
-};
+      </Tab>
+      <Tab eventKey="forms" title="db Tables: Forms" />
+      <Tab eventKey="search" title="Search Test" />
+    </Tabs>
+  </Container>
+);
 
 export default AdminHome;
