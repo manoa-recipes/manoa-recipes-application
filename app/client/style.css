@@ -17,12 +17,37 @@ body {
 /* Set the alert background on the signin and signup pages. */
 #signin-page .alert-light, #signup-page .alert-light {
   --bs-alert-bg: var(--matr-navbar-bg);
+  margin-bottom: 310px;
+  background:lightsalmon;
 }
 
 /* Define custom styles */
 .gray-background {
   background-color: var(--matr-navbar-bg);
-  color: var(--bs-dark);
   padding-top: 10px;
   padding-bottom: 20px;
 }
+
+#sign-in-background{
+  background: url("images/pic5.jpg") no-repeat center center fixed;
+  background-size: cover;
+  flex: 1;
+}
+
+#row-c{
+  background: darksalmon;
+}
+
+#card-color{
+  background:lightsalmon;
+}
+
+#card-rounder{
+  border-radius: 50px;
+}
+
+#text-sign-in{
+  color: darkblue;
+}
+
+
