@@ -11,7 +11,7 @@ import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import { Vendors } from '../../api/vendors/Vendors';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-const IndividualRecipe = ({ recipe: { name: name } }) => {
+const IndividualRecipe = ({  }) => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready } = useTracker(() => {
     // Ensure that minimongo is populated with all collections prior to running render().

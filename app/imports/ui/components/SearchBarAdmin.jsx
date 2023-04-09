@@ -7,7 +7,7 @@ import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import LoadingSpinner from './LoadingSpinner';
 
 /* Admin and vendor page. */
-const AdminSearchBar = () => {
+const SearchBarAdmin = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, ingrs } = useTracker(() => {
     // Note that this subscription will get cleaned up
@@ -29,4 +29,4 @@ const AdminSearchBar = () => {
   ) : <LoadingSpinner />);
 };
 
-export default AdminSearchBar;
+export default SearchBarAdmin;

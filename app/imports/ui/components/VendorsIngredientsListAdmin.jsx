@@ -2,10 +2,11 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Container, Table } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import LoadingSpinner from './LoadingSpinner';
-import PropTypes from 'prop-types';
 
+// A List-Item for a document from the VendorsIngredients collection
 const VendorIngredientAdmin = ({ vendorIngredient }) => (
   <tr>
     <td className="text-start">{vendorIngredient._id}</td>
@@ -16,8 +17,6 @@ const VendorIngredientAdmin = ({ vendorIngredient }) => (
     <td>{vendorIngredient.price}</td>
   </tr>
 );
-
-// Require a document to be passed to this component.
 VendorIngredientAdmin.propTypes = {
   vendorIngredient: PropTypes.shape({
     address: PropTypes.string,
@@ -29,7 +28,7 @@ VendorIngredientAdmin.propTypes = {
   }).isRequired,
 };
 
-/* Admin and vendor page. */
+// A List for all documents from the VendorsIngredients collection
 const VendorsIngredientsListAdmin = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, vendorsIngredients } = useTracker(() => {
@@ -57,7 +56,7 @@ const VendorsIngredientsListAdmin = () => {
             <th>ingredient</th>
             <th>inStock</th>
             <th>size</th>
-            <th>quantity</th>
+            <th>price</th>
           </tr>
         </thead>
         <tbody>
