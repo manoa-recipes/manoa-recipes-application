@@ -2,80 +2,81 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import { Ingredients } from '../../api/ingredients/Ingredients';
+import { IngredientsAllergies } from '../../api/ingredients/IngredientsAllergies';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { Recipes } from '../../api/recipes/Recipes';
 import { Profiles } from '../../api/profiles/Profiles';
 import { Vendors } from '../../api/vendors/Vendors';
+import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 
 /* eslint-disable no-console */
 
-/** These are functions which are only be used by the server during installation. */
+const verbose = false;
 
-const debug = true;
-
-// Simple function to add a user to the Meteor roles.
+// Add user to their Meteor role.
 function promoteUser(userID, role) {
-  if (debug) { console.log(`    promoteUser(${userID}, ${role})`); }
-
+  if (verbose) { console.log(`... promoteUser(${userID}, ${role})`); }
   Roles.createRole(role, { unlessExists: true });
   Roles.addUsersToRoles(userID, role);
 }
 
-// Function to add a user to the Meteor accounts.
+// Add user to the Meteor accounts.
 function createUser(email, role) {
-  if (debug) { console.log(`  createUser(${email}, ${role})`); }
-
+  console.log(`  createUser(${email}, ${role})`);
   const userID = Accounts.createUser({ username: email, email, password: 'changeme' });
   if (role === 'admin') { promoteUser(userID, role); }
   if (role === 'vendor') { promoteUser(userID, role); }
 }
 
-// Function to add to or update the Ingredients data collection.
+// Add document to the Ingredients collection
 const addIngredient = (ingredient) => {
-  if (debug) { console.log(`  addIngredient(${ingredient})`); }
-
-  /** Each document has a unique "name" field. */
+  console.log(`addIngredient(${ingredient})`);
+  if (verbose) { console.log(`... Ingredients.collection.update({ name: ${ingredient} }, { $set: { name: ... } }, { upsert: true })`); }
   Ingredients.collection.update({ name: ingredient }, { $set: { name: ingredient } }, { upsert: true });
 };
 
-// Function to add to or update the RecipesIngredients relational collection.
-const addRecipeIngredient = ({ recipe, ingredient, quantity }) => {
-  if (debug) { console.log(`  addRecipeIngredient(${recipe}, ${ingredient}, ${quantity})`); }
-
-  // Add to or update the Ingredients collection before the relational collection
-  addIngredient(ingredient);
-
-  /** Each document relates the quantity for each ingredient for their corresponding recipes. */
-  if (debug) { console.log(`    Updating ${quantity} X ${ingredient} to ${recipe} document.`); }
-  RecipesIngredients.collection.update({ recipe: recipe, ingredient: ingredient }, { $set: { recipe: recipe, ingredient: ingredient, quantity: quantity } }, { upsert: true });
+const addIngredientAllergy = ({ profile, ingredient }) => {
+  console.log(`addIngredientAllergy({ ${profile}, ${ingredient} })`);
+  if (verbose) { console.log('... IngredientsAllergies.collection.insert({ profile: ..., ingredient: ... })'); }
+  IngredientsAllergies.collection.insert({ profile: profile, ingredient: ingredient });
 };
 
-// Function to add to the Recipes data collection.
-const addRecipe = ({ name, owner, image, description, instructions, time, servings, ingredients }) => {
-  if (debug) { console.log(`  addRecipe(${name}, ${owner}, ...)`); }
-
-  /** Each document has a unique "name" field. */
-  Recipes.collection.insert({ name: name, owner: owner, image: image, description: description, instructions: instructions, time: time, servings: servings });
-
-  // Add to or update the relational documents associated with this recipe
-  ingredients.map(ingredient => addRecipeIngredient(ingredient));
-};
-
-// Function to add to the Profiles data collection.
-const addProfile = ({ email, role, firstName, lastName, bio, picture, vegan, glutenFree }) => {
-  if (debug) { console.log(`  addProfile(${email}, ${role}, ...)`); }
-
-  // Creating meteor user account for this new profile
+// Add document to the Profiles collection
+const addProfile = ({ email, role, vegan, glutenFree }) => {
+  console.log(`addProfile(${email}, ${role}, ...)`);
   createUser(email, role);
-
-  /** Each document has a unique "email" */
-  Profiles.collection.insert({ email, firstName, lastName, bio, picture, vegan, glutenFree });
+  if (verbose) { console.log(`... Profiles.collection.insert(\n... { email: ...,\n...   vegan: ${vegan},\n...   glutenFree: ${glutenFree}\n... })`); }
+  Profiles.collection.insert({ email, vegan, glutenFree });
 };
 
-// Function to add new vendors to the Vendors data collection.
+// Add document to the RecipesIngredients collection
+const addRecipeIngredient = ({ recipe, ingredient, size, quantity }) => {
+  console.log(`addRecipeIngredient({ ${recipe}, ${ingredient}, ...})`);
+  addIngredient(ingredient);
+  if (verbose) { console.log(`... RecipesIngredients.collection.insert(\n... {\n...   recipe: ...,\n...   ingredient: ...,\n...   size: ${size},\n...   quantity: ${quantity},\n... })`); }
+  RecipesIngredients.collection.insert({ recipe: recipe, ingredient: ingredient, size: size, quantity: quantity });
+};
+
+// Add document to the Recipes collection
+const addRecipe = ({ name, owner, instructions, time, servings }) => {
+  console.log(`addRecipe(${name}, ${owner}, ...)`);
+  if (verbose) { console.log(`... RecipesIngredients.collection.insert(\n... {\n...   name: ...,\n...   owner: ...,\n...   instructions: ${instructions},\n...   time: ${time},\n...   servings: ${servings},\n... })`); }
+  Recipes.collection.insert({ name: name, owner: owner, instructions: instructions, time: time, servings: servings });
+};
+
+// Add document to the Vendors collection
 const addVendor = ({ name, address }) => {
-  if (debug) { console.log(`  addVendor(${name}, ${address})`); }
+  console.log(`addVendor(${name}, ${address})`);
+  if (verbose) { console.log('... Vendors.collection.insert({ name: ..., address: ... })'); }
   Vendors.collection.insert({ name, address });
+};
+
+// Add document to the VendorsIngredients collection
+const addVendorIngredient = ({ address, ingredient, inStock, size, price }) => {
+  console.log(`addVendorIngredient(${address}, ${ingredient}, ...)`);
+  addIngredient(ingredient);
+  if (verbose) { console.log(`... VendorsIngredients.collection.insert(\n... {\n...   address: ...,\n...   ingredient: ...,\n...   inStock: ${inStock},\n...   size: ${size},\n...   price: ${price}\n... })`); }
+  VendorsIngredients.collection.insert({ address, ingredient, inStock, size, price });
 };
 
 /** Function to populate the collections with default data when installed for the first time. */
@@ -86,12 +87,15 @@ if (Meteor.users.find().count() === 0) {
     Meteor.settings.defaultProfiles.map(profile => addProfile(profile));
     console.log('Creating default recipes.');
     Meteor.settings.defaultRecipes.map(recipe => addRecipe(recipe));
+    console.log('Creating default recipesingredients.');
+    Meteor.settings.defaultRecipesIngredients.map(recipeIngredient => addRecipeIngredient(recipeIngredient));
+    console.log('Creating default ingredientsallergies.');
+    Meteor.settings.defaultIngredientsAllergies.map(ingredientAllergy => addIngredientAllergy(ingredientAllergy));
     console.log('Creating default vendors.');
     Meteor.settings.defaultVendors.map(vendor => addVendor(vendor));
+    console.log('Creating default vendorsingredients.');
+    Meteor.settings.defaultVendorsIngredients.map(vendorIngredient => addVendorIngredient(vendorIngredient));
   } else {
     console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
-    console.log('This app needs a defaultProfiles array of profile objects.');
-    console.log('This app needs a defaultRecipes array of recipe objects.');
-    console.log('This app needs a defaultVendors array of vendor objects.');
   }
 }

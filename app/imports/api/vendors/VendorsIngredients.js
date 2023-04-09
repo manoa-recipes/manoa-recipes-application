@@ -10,9 +10,11 @@ class VendorsIngredientsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      vendor: String,
+      address: String,
       ingredient: String,
       inStock: { type: Boolean, defaultValue: true },
+      size: { type: String, defaultValue: 'whole' },
+      price: { type: Number, defaultValue: 0.01 },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
