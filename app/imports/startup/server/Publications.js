@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
-import { Stuffs } from '../../api/stuff/Stuff';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
@@ -9,57 +8,40 @@ import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import { Profiles } from '../../api/profiles/Profiles';
 import { IngredientsAllergies } from '../../api/ingredients/IngredientsAllergies';
 
-/** User level access */
-
-/** Publish all Ingredients Documents. Everyone has full access */
+/** User level access: Everyone can see everything anyway */
+// Publish all ingredient documents.
 Meteor.publish(Ingredients.userPublicationName, () => Ingredients.collection.find());
 
-/** Publish Profile Document for logged in user */
-Meteor.publish(Profiles.userPublicationName, function () {
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Profiles.collection.find({ owner: username });
-  }
-  return this.ready();
-});
+// Publish all profile documents.
+Meteor.publish(Profiles.userPublicationName, () => Profiles.collection.find());
 
-/** Publish Ingredients-Allergies documents for logged in user */
+/** Publish Ingredients-Allergies documents for logged in user ONLY (This might change) */
 Meteor.publish(IngredientsAllergies.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return IngredientsAllergies.collection.find({ owner: username });
+    return IngredientsAllergies.collection.find({ profile: username });
   }
   return this.ready();
 });
 
-/** Publish all Recipes Documents. */
+// Publish all Recipe Documents.
 Meteor.publish(Recipes.userPublicationName, () => Recipes.collection.find());
 
-/** Publish all Recipes-Ingredients Relations. */
-Meteor.publish(RecipesIngredients.userPublicationName, () => Recipes.collection.find());
+// Publish all RecipesIngredients Documents.
+Meteor.publish(RecipesIngredients.userPublicationName, () => RecipesIngredients.collection.find());
 
-/** Publish all Vendors Documents. */
+// Publish all Vendor Documents.
 Meteor.publish(Vendors.userPublicationName, () => Vendors.collection.find());
 
-/** Publish all Vendors-Ingredients relations. */
+// Publish all Vendor-AdminDataIngredient relations.
 Meteor.publish(VendorsIngredients.userPublicationName, () => VendorsIngredients.collection.find());
 
 // Vendor-level publication.
 
 /** Admin level publications */
-Meteor.publish(Recipes.adminPublicationName, function () {
+Meteor.publish(IngredientsAllergies.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return Recipes.collection.find();
-  }
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Recipes.collection.find({ owner: username });
-  }
-  return this.ready();
-});
-Meteor.publish(Stuffs.adminPublicationName, function () {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return Stuffs.collection.find();
+    return IngredientsAllergies.collection.find();
   }
   return this.ready();
 });
