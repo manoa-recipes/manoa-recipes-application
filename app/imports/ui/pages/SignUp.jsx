@@ -40,19 +40,19 @@ const SignUp = ({ location }) => {
   }
 
   return (
-    <Container fluid id="signup-page" className="py-3">
+    <Container fluid id="signup-page" className="">
       <Row id="row-c">
         <Col md={3}>
-          <Col id="text-sign-in" className="text-center">
+          <Col id="text-sign-up" className="text-center">
             <h4>Register your account</h4>
           </Col>
           <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
-            <Card>
+            <Card id="card-color">
               <Card.Body>
                 <TextField id="card-rounder" name="email" placeholder="E-mail address" />
                 <TextField id="card-rounder" name="password" placeholder="Password" type="password" />
                 <SelectField
-                  id="card-rounder"
+                  id=""
                   name="isVendor"
                   label="Sign up as a vendor?"
                   options={[
@@ -79,7 +79,7 @@ const SignUp = ({ location }) => {
             </Alert>
           )}
         </Col>
-        <Col id="sign-in-background" />
+        <Col id="sign-up-background" />
       </Row>
     </Container>
   );
