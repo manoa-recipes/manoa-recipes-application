@@ -1,13 +1,109 @@
 {
-  "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
-    { "email": "john@foo.com", "password": "changeme" }
+  "defaultProfiles": [
+    {
+      "email": "admin@foo.com",
+      "role": "admin",
+      "vegan": false,
+      "glutenFree": false
+    },
+    {
+      "email": "merchant@foo.com",
+      "role": "vendor",
+      "vegan": true,
+      "glutenFree": true
+    },
+    {
+      "email": "john@foo.com",
+      "role": "",
+      "vegan": false,
+      "glutenFree": true
+    },
+    {
+      "email": "jane@foo.com",
+      "role": "",
+      "vegan": true,
+      "glutenFree": false
+    },
+    {
+      "email": "dracula@foo.com",
+      "role": "",
+      "vegan": false,
+      "glutenFree": false
+    }
   ],
 
-  "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
-  ]
+  "defaultIngredientsAllergies": [
+    {
+      "profile": "dracula@foo.com",
+      "ingredient": "garlic"
+    }
+  ],
+
+  "defaultRecipes": [
+    {
+      "name": "Default Salad",
+      "owner": "jane@foo.com",
+      "instructions": "Wash the lettuce and tomato thoroughly.  Assemble the chopped lettuce and tomato.  ",
+      "time": 10,
+      "servings": 2
+    },
+    {
+      "name": "Scratch Pasta Sauce",
+      "owner": "john@foo.com",
+      "instructions": "Requires a stove-top or hot-plate and a pot. Put pot on low-medium heat, add olive oil and diced onion, salt and pepper, and cook until onion is translucent. Add diced garlic and cook for ten more minutes. Mix tomato paste in and cook for five more minutes. Mix in three cups of water and cook five more minutes. Add and mix tomato sauce and chopped basil and reduce heat to low for 25 more minutes.  Note: Season salt and pepper to taste.",
+      "time": 60,
+      "servings": 4
+    }
+  ],
+
+  "defaultRecipesIngredients": [
+    { "recipe": "Default Salad", "ingredient": "lettuce", "size": "head", "quantity": 1 },
+    { "recipe": "Default Salad", "ingredient": "tomato", "size": "whole", "quantity": 2 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "olive oil", "size": "tablespoon", "quantity": 4 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "onion", "size": "half", "quantity": 1 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "garlic", "size": "clove", "quantity": 3 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "salt", "size": "teaspoon", "quantity": 6 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "black pepper", "size": "teaspoon", "quantity": 2 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "tomato paste", "size": "ounce", "quantity": 3 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "tomato sauce", "size": "ounce", "quantity": 29 },
+    { "recipe": "Scratch Pasta Sauce", "ingredient": "basil", "size": "sprig", "quantity": 6 }
+  ],
+
+  "defaultVendors": [
+    { "name": "ICS Office", "address": "POST 307, University of Hawaii" },
+    { "name": "ICS Class Room", "address": "Basement of Hamilton Library, University of Hawaii" }
+  ],
+
+  "defaultVendorsIngredients": [
+    {
+      "address": "POST 307, University of Hawaii",
+      "ingredient": "tomato",
+      "inStock": true,
+      "size": "whole",
+      "price": 0.79
+    },
+    {
+      "address": "POST 307, University of Hawaii",
+      "ingredient": "lettuce",
+      "inStock": false,
+      "size": "head",
+      "price": 1.29
+    },
+    {
+      "address": "Basement of Hamilton Library, University of Hawaii",
+      "ingredient": "lettuce",
+      "inStock": true,
+      "size": "head",
+      "price": 1.39
+    },
+    {
+      "address": "Basement of Hamilton Library, University of Hawaii",
+      "ingredient": "tomato",
+      "inStock": true,
+      "size": "whole",
+      "price": 0.89
+    }
+  ],
+
+  "loadAssetsFile":  false
 }
