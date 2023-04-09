@@ -26,3 +26,11 @@ body {
   padding-top: 10px;
   padding-bottom: 20px;
 }
+
+.userHomeBackground {
+  background: fixed center url("https://previews.123rf.com/images/romastudio/romastudio1603/romastudio160300203/54088672-healthy-food-background-studio-photo-of-different-fruits-and-vegetables-on-white-wooden-table-high.jpg");
+  background-size: cover;
+  height: 75vh;
+
+}
+
