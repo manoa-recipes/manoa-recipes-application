@@ -35,6 +35,7 @@ const addIngredient = (ingredient) => {
   Ingredients.collection.update({ name: ingredient }, { $set: { name: ingredient } }, { upsert: true });
 };
 
+// Add document to the IngredientsAllergies collection
 const addIngredientAllergy = ({ profile, ingredient }) => {
   console.log(`addIngredientAllergy({ ${profile}, ${ingredient} })`);
   if (verbose) { console.log('... IngredientsAllergies.collection.insert({ profile: ..., ingredient: ... })'); }
