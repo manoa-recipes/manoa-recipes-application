@@ -14,7 +14,7 @@ const NavBar = () => {
 
   return (
     <Navbar expand="lg" id="nav">
-      <Container>
+      <Container id="text">
         <Navbar.Brand as={NavLink} to="/">
           <Image src="manoa-recipes.png" alt="logo" />
         </Navbar.Brand>
