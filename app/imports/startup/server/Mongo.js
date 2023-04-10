@@ -11,7 +11,9 @@ import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 /* eslint-disable no-console */
 
 /** For Debugging */
-const verbose = true;
+const verbose = false;
+
+if (verbose) { console.log('\nMongo.js running...\nverbose is enabled for debugging.\n  To turn it off change "verbose" variable to "false" in Mongo.js'); }
 
 // Add user to their Meteor role.
 function promoteUser(userID, role) {
@@ -90,17 +92,18 @@ const addVendorIngredient = ({ address, ingredient, inStock, size, price }) => {
 if (Meteor.users.find().count() === 0) {
   console.log('No users found.  Initializing database.');
   if (Meteor.settings.defaultProfiles && Meteor.settings.defaultRecipes && Meteor.settings.defaultVendors) {
-    console.log('Creating default profiles.');
+    console.log('\nCreating default profiles.');
     Meteor.settings.defaultProfiles.map(profile => addProfile(profile));
-    console.log('Creating default recipes.');
+    console.log('\nCreating default recipes.');
     Meteor.settings.defaultRecipes.map(recipe => addRecipe(recipe));
-    console.log('Creating default recipesingredients.');
+    console.log('\nCreating default recipesingredients.');
     Meteor.settings.defaultRecipesIngredients.map(recipeIngredient => addRecipeIngredient(recipeIngredient));
-    console.log('Creating default vendors.');
+    console.log('\nCreating default vendors.');
     Meteor.settings.defaultVendors.map(vendor => addVendor(vendor));
-    console.log('Creating default vendorsingredients.');
+    console.log('\nCreating default vendorsingredients.');
     Meteor.settings.defaultVendorsIngredients.map(vendorIngredient => addVendorIngredient(vendorIngredient));
+    console.log('\nCollections initialized with default data from "settings.development.json".');
   } else {
-    console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
+    console.log('Error: Cannot initialize the database!  Please invoke meteor with a settings file.');
   }
 }
