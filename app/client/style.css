@@ -3,15 +3,51 @@
 
 /* Set up some CSS variables to theme the application. */
 :root {
-  --matr-navbar-bg: #ECECEC;
-  --matr-navbar-bg-rgb: 236, 236, 236;
+  /* Navbar Colors */
+  --matr-navbar-bg: #204018;
+  --matr-navbar-bg-rgb: 32, 64, 24;
+  /* Light Colors */
+  --matr-bg-light: #ABC4AA;
+  --matr-bg-light-rgb: 171, 196, 170;
+  --matr-text-light: #ffffff;
+  /* Dark Colors */
+  --matr-bg-dark: #204018;
+  --matr-bg-dark-rgb: 32, 64, 24;
+  --matr-text-dark: #675D50;
+  --matr-text-dark-rgb: 103, 93, 80;
+  /* Highlight Colors */
+
+  /* Selection Colors */
 }
 
 /* Change bootstrap variable values.
  See https://getbootstrap.com/docs/5.2/customize/css-variables/
  */
 body {
-  --bs-light-rgb: var(--matr-navbar-bg-rgb);
+  /* Background Colors */
+  --bs-dark: var(--matr-bg-dark);
+  --bs-dark-rgb: var(--matr-bg-dark-rgb);
+  --bs-light: var(--matr-bg-light);
+  --bs-light-rgb: var(--matr-bg-light-rgb);
+  /* Text Colors */
+  --bs-body-color: var(--matr-text-dark);
+  --bs-body-color-rgb: var(--matr-text-dark-rgb);
+  /* Card Colors */
+  --bs-card-bg: var(--matr-bg-light);
+  --bs-card-border-color: var(--matr-bg-dark);
+  --bs-card-color: var(--matr-text-dark);
+  --bs-card-cap-color: var(--matr-text-light);
+  /* Button Colors */
+  --bs-btn-bg: var(--matr-bg-light);
+  --bs-btn-color: var(--matr-bg-dark);
+  --bs-btn-hover-bg: var(--matr-text-dark);
+  --bs-btn-hover-color: var(--matr-bg-light);
+  --bs-btn-active-bg: var(--matr-bg-light);
+  --bs-btn-active-color: var(--matr-text-light);
+  --bs-btn-disabled-color: #808080;
+  /* Other colors */
+  --bs-modal-color: var(--matr-bg-light);
+  --bs-nav-tabs-link-active-color: var(--matr-text-dark);
 }
 
 /* Set the alert background on the signin and signup pages. */
