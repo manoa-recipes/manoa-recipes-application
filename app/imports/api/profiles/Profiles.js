@@ -13,10 +13,15 @@ class ProfilesCollection {
       email: { type: String, index: true, unique: true },
       vegan: { type: Boolean, defaultValue: false },
       glutenFree: { type: Boolean, defaultValue: false },
+      allergies: {
+        type: Array,
+        minCount: 0,
+      },
+      'allergies.$': String,
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
-    // Define names for publications and subscriptions
+    // Define names for publications and subscriptions (Might not need all three)
     this.userPublicationName = `${this.name}.publication.user`;
     this.vendorPublicationName = `${this.name}.publication.vendor`;
     this.adminPublicationName = `${this.name}.publication.admin`;

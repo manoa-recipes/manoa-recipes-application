@@ -4,31 +4,38 @@
       "email": "admin@foo.com",
       "role": "admin",
       "vegan": false,
-      "glutenFree": false
+      "glutenFree": false,
+      "allergies": []
     },
     {
       "email": "merchant@foo.com",
       "role": "vendor",
       "vegan": true,
-      "glutenFree": true
+      "glutenFree": true,
+      "allergies": []
     },
     {
       "email": "john@foo.com",
       "role": "",
       "vegan": false,
-      "glutenFree": true
+      "glutenFree": true,
+      "allergies": []
     },
     {
       "email": "jane@foo.com",
       "role": "",
       "vegan": true,
-      "glutenFree": false
+      "glutenFree": false,
+      "allergies": []
     },
     {
       "email": "dracula@foo.com",
       "role": "",
       "vegan": false,
-      "glutenFree": false
+      "glutenFree": false,
+      "allergies": [
+        "garlic"
+      ]
     }
   ],
 
