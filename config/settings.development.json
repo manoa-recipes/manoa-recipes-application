@@ -39,13 +39,6 @@
     }
   ],
 
-  "defaultIngredientsAllergies": [
-    {
-      "profile": "dracula@foo.com",
-      "ingredient": "garlic"
-    }
-  ],
-
   "defaultRecipes": [
     {
       "name": "Default Salad",
