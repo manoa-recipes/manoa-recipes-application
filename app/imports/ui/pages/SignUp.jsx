@@ -6,6 +6,7 @@ import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'uniforms-bootstrap5';
+import { Roles } from 'meteor/alanning:roles';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -17,14 +18,17 @@ const SignUp = ({ location }) => {
   const schema = new SimpleSchema({
     email: String,
     password: String,
-    isVendor: { type: String, allowedValues: ['vendor', ''] },
+    role: { type: String, allowedValues: ['vendor', ''], defaultValue: '' },
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
   const submit = (doc) => {
-    const { email, password, isVendor } = doc;
-    const profile = { role: isVendor };
-    Accounts.createUser({ email, username: email, password, profile }, (err) => {
+    const { email, password, role } = doc;
+    const userID = Accounts.createUser({ email, username: email, password, role }, (err) => {
+      if (role === 'vendor') {
+        Roles.createRole(role, { unlessExists: true });
+        Roles.addUsersToRoles(userID, 'vendor');
+      }
       if (err) {
         setError(err.reason);
       } else {
@@ -51,17 +55,9 @@ const SignUp = ({ location }) => {
               <Card.Body>
                 <TextField id="card-rounder" name="email" placeholder="E-mail address" />
                 <TextField id="card-rounder" name="password" placeholder="Password" type="password" />
-                <SelectField
-                  id=""
-                  name="isVendor"
-                  label="Sign up as a vendor?"
-                  options={[
-                    { label: 'No', value: 'customer' },
-                    { label: 'Yes', value: 'vendor' },
-                  ]}
-                />
-                <ErrorsField />
+                <SelectField name="role" />
                 <SubmitField />
+                <ErrorsField />
               </Card.Body>
             </Card>
           </AutoForm>
