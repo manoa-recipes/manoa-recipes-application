@@ -32,21 +32,18 @@ const UserHome = () => {
   },
   ];
   return (
-    <div className="userHomeBackground">
-      <Container className="py-3">
-        <Row className="justify-content-center">
-          <Col>
-            <Col className="text-center">
-              <h2>Featured Recipe</h2>
-            </Col>
-            <Row xs={1} md={2} lg={3} className="g-4">
-              {recipes.map((recipe, index) => (<Col key={index}><RecipeCard recipe={recipe} /></Col>))}
-            </Row>
-
+    <Container className="py-3">
+      <Row className="justify-content-center">
+        <Col>
+          <Col className="text-center">
+            <h2>Featured Recipe</h2>
           </Col>
-        </Row>
-      </Container>
-    </div>
+          <Row xs={1} md={2} lg={3} className="g-4">
+            {recipes.map((recipe, index) => (<Col key={index}><RecipeCard recipe={recipe} /></Col>))}
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -48,6 +48,10 @@ body {
   /* Other colors */
   --bs-modal-color: var(--matr-bg-light);
   --bs-nav-tabs-link-active-color: var(--matr-text-dark);
+
+  background: fixed center url("https://wallpapers.com/images/hd/vegetables-healthy-food-desktop-1fdano01i4e1w365.jpg");
+  background-size: cover;
+  height: 75vh;
 }
 
 /* Set the alert background on the signin and signup pages. */
@@ -98,11 +102,4 @@ body {
 
 #text {
   color: #675D50;
-}
-
-.userHomeBackground {
-  background: fixed center url("https://wallpapers.com/images/hd/vegetables-healthy-food-desktop-1fdano01i4e1w365.jpg");
-  background-size: cover;
-  height: 75vh;
-
 }
