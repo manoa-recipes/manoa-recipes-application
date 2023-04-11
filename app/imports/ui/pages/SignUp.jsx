@@ -6,6 +6,7 @@ import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { Roles } from 'meteor/alanning:roles';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -17,13 +18,17 @@ const SignUp = ({ location }) => {
   const schema = new SimpleSchema({
     email: String,
     password: String,
+    role: String,
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
-  /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
-    const { email, password } = doc;
-    Accounts.createUser({ email, username: email, password }, (err) => {
+    const { email, password, role } = doc;
+    const userID = Accounts.createUser({ email, username: email, password, role }, (err) => {
+      if (role === 'vendor') {
+        Roles.createRole(role, { unlessExists: true });
+        Roles.addUsersToRoles(userID, 'vendor');
+      }
       if (err) {
         setError(err.reason);
       } else {
@@ -33,26 +38,30 @@ const SignUp = ({ location }) => {
     });
   };
 
-  /* Display the signup form. Redirect to add page after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/add' } };
-  // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
   }
+
   return (
-    <Container id="signup-page" className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center">
-            <h2>Register your account</h2>
+    <Container fluid id="signup-page" className="">
+      <Row id="row-c">
+        <Col md={3}>
+          <Col id="text-sign-up" className="text-center">
+            <h4>Register your account</h4>
           </Col>
-          <AutoForm schema={bridge} onSubmit={data => submit(data)}>
-            <Card>
+          <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
+            <Card id="card-signin-signup">
               <Card.Body>
-                <TextField name="email" placeholder="E-mail address" />
-                <TextField name="password" placeholder="Password" type="password" />
-                <ErrorsField />
+                <TextField id="card-signin-signup" name="email" placeholder="E-mail address" />
+                <TextField id="card-signin-signup" name="password" placeholder="Password" type="password" />
+                <div>
+                  <input type="checkbox" id="vendor" name="role" value="vendor" />
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                  <label htmlFor="vendor">Vendor</label>
+                </div>
                 <SubmitField />
+                <ErrorsField />
               </Card.Body>
             </Card>
           </AutoForm>
@@ -70,20 +79,22 @@ const SignUp = ({ location }) => {
             </Alert>
           )}
         </Col>
+        <Col id="sign-up-background" />
       </Row>
     </Container>
   );
 };
 
-/* Ensure that the React Router location object is available in case we need to redirect. */
 SignUp.propTypes = {
   location: PropTypes.shape({
-    state: PropTypes.string,
+    state: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
   }),
 };
 
 SignUp.defaultProps = {
-  location: { state: '' },
+  location: { state: {} },
 };
 
 export default SignUp;
