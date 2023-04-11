@@ -51,8 +51,36 @@ body {
 }
 
 /* Set the alert background on the signin and signup pages. */
-#signin-page .alert-light, #signup-page .alert-light {
+#signin-page .alert-light{
   --bs-alert-bg: var(--matr-navbar-bg);
+  margin-bottom: 100px;
+  background:#94AF9F;
+  border-radius: 20px;
+}
+
+#signup-page .alert-light{
+  --bs-alert-bg: var(--matr-navbar-bg);
+  margin-bottom: 75px;
+  background:#94AF9F;
+  border-radius: 20px;
+}
+
+#sign-in-background, #sign-up-background{
+  background: url("images/pic5.jpeg") no-repeat center center fixed;
+  background-size: cover;
+  flex: 1;
+}
+
+#row-c{
+  background: #FFDEB4;
+}
+
+#card-signin-signup{
+  background:#94AF9F;
+}
+
+#text-sign-in, #text-sign-up{
+  color: #7AA874;
 }
 
 /* Define custom styles */
