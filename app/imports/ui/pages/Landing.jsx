@@ -1,9 +1,17 @@
 import React from 'react';
-import { Col, Container, Image, Row } from 'react-bootstrap';
+import { Col, Image, Row } from 'react-bootstrap';
 
 /* A simple static component to render some text for the landing page. */
 const Landing = () => (
-  <Container id="landing-page" fluid className="py-3">
+  <div id="landing-page">
+    <Row className="align-middle text-center">
+      <Col xs={8}>
+        <Image src="/images/gnocchi-bake.jpg" className="border border-dark" />
+      </Col>
+      <Col xs={4} className="d-flex flex-column justify-content-center">
+        <h1>Welcome!</h1>
+      </Col>
+    </Row>
     <Row className="align-middle text-center">
       <Col xs={4}>
         <Image roundedCircle src="/images/manoa-recipes.png" width="150px" />
@@ -15,7 +23,7 @@ const Landing = () => (
       </Col>
 
     </Row>
-  </Container>
+  </div>
 );
 
 export default Landing;
