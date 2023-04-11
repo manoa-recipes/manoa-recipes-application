@@ -5,7 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Roles } from 'meteor/alanning:roles';
 
 /**
@@ -18,7 +18,7 @@ const SignUp = ({ location }) => {
   const schema = new SimpleSchema({
     email: String,
     password: String,
-    role: { type: String, allowedValues: ['vendor', ''], defaultValue: '' },
+    role: String,
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
@@ -51,11 +51,15 @@ const SignUp = ({ location }) => {
             <h4>Register your account</h4>
           </Col>
           <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
-            <Card id="card-color">
+            <Card id="card-signin-signup">
               <Card.Body>
-                <TextField id="card-rounder" name="email" placeholder="E-mail address" />
-                <TextField id="card-rounder" name="password" placeholder="Password" type="password" />
-                <SelectField name="role" />
+                <TextField id="card-signin-signup" name="email" placeholder="E-mail address" />
+                <TextField id="card-signin-signup" name="password" placeholder="Password" type="password" />
+                <div>
+                  <input type="checkbox" id="vendor" name="role" value="vendor" />
+                  {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                  <label htmlFor="vendor">Vendor</label>
+                </div>
                 <SubmitField />
                 <ErrorsField />
               </Card.Body>

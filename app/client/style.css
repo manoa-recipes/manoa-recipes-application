@@ -52,13 +52,21 @@ body {
 }
 
 /* Set the alert background on the signin and signup pages. */
-#signin-page .alert-light, #signup-page .alert-light {
+#signin-page .alert-light{
   --bs-alert-bg: var(--matr-navbar-bg);
-  margin-bottom: 310px;
-  background:lightsalmon;
+  margin-bottom: 140px;
+  background:#94AF9F;
+  border-radius: 20px;
 }
 
-/* Define custom styles */
+#signup-page .alert-light{
+  --bs-alert-bg: var(--matr-navbar-bg);
+  margin-bottom: 118px;
+  background:#94AF9F;
+  border-radius: 20px;
+}
+
+   /* Define custom styles */
 .gray-background {
   background-color: var(--matr-navbar-bg);
   padding-top: 10px;
@@ -72,17 +80,13 @@ body {
 }
 
 #row-c{
-  background: darksalmon;
+  background: #FFDEB4;
 }
 
-#card-color{
-  background:lightsalmon;
-}
-
-#card-rounder{
-  border-radius: 50px;
+#card-signin-signup{
+  background:#94AF9F;
 }
 
 #text-sign-in, #text-sign-up{
-  color: darkblue;
+  color: #7AA874;
 }
