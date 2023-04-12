@@ -5,6 +5,14 @@ import RelationListsAdmin from '../components/RelationListsAdmin';
 import IndividualRecipe from '../components/IndividualRecipe';
 
 const testRecipe = {
+  name: 'Scratch Pasta Sauce',
+  owner: 'john@foo.com',
+  image: '',
+  instructions: 'Requires a stove-top or hot-plate and a pot. Put pot on low-medium heat, add olive oil and diced onion, salt and pepper, and cook until onion is translucent. Add diced garlic and cook for ten more minutes. Mix tomato paste in and cook for five more minutes. Mix in three cups of water and cook five more minutes. Add and mix tomato sauce and chopped basil and reduce heat to low for 25 more minutes.  Note: Season salt and pepper to taste.',
+  time: 60,
+  servings: 4,
+};
+const testRecipe2 = {
   name: 'Default Salad',
   owner: 'jane@foo.com',
   image: '',
@@ -23,8 +31,9 @@ const AdminHome = () => (
       <Tab eventKey="dataDb" title="Data Collections">
         <DataListsAdmin />
       </Tab>
-      <Tab eventKey="search" title="Search Test">
+      <Tab eventKey="search" title="Individual Recipe Test">
         <IndividualRecipe recipe={testRecipe} />
+        <IndividualRecipe recipe={testRecipe2} />
       </Tab>
     </Tabs>
   </Container>
