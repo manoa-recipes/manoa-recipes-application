@@ -2,10 +2,10 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Card, Container, Image } from 'react-bootstrap';
+import { Card, CardGroup, Row, Col, Container, Image } from 'react-bootstrap';
 import LoadingSpinner from './LoadingSpinner';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
-import RecipeIngredientList from './RecipeIngredientList';
+import RecipeIngredient from './RecipeIngredient';
 
 // This page/component displays ALL data related to a specific recipe
 const IndividualRecipe = ({ recipe }) => {
@@ -25,15 +25,28 @@ const IndividualRecipe = ({ recipe }) => {
   }, []);
   return (ready ? (
     <Container className="py-3">
-      <Card>
+      <Card className="p-0">
         <Card.Header>
           <Card.Title>{recipe.name}</Card.Title>
           <Image src={recipe.image} />
-          <Card.Subtitle>Submitted by: {recipe.owner}, Time: {recipe.time} minutes, Serves: {recipe.servings}</Card.Subtitle>
+          <Card.Subtitle>Submitted by: {recipe.owner}</Card.Subtitle>
         </Card.Header>
         <Card.Body>
-          <Card.Text>{recipe.instructions}</Card.Text>
-          <RecipeIngredientList recipeIngredients={recipeIngredients} />
+          <Col>
+            <Row>
+              <Card.Subtitle>Time: {recipe.time} minutes, Serves: {recipe.servings}</Card.Subtitle>
+            </Row>
+            <Row>
+              <Col><Card.Text>{recipe.instructions}</Card.Text></Col>
+              <Col>
+                <CardGroup>
+                  <Col>
+                    {recipeIngredients.map(recipeIngredient => <RecipeIngredient recipeIngredient={recipeIngredient} />)}
+                  </Col>
+                </CardGroup>
+              </Col>
+            </Row>
+          </Col>
         </Card.Body>
       </Card>
     </Container>
