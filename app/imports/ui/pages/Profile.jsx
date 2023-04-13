@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row, Card, ListGroup, Badge } from 'react-bootstrap';
+import { Col, Container, Row, Card, ListGroup, Image } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profiles/Profiles';
@@ -24,55 +24,58 @@ const UserProfile = () => {
   }, []);
   return (ready ? (
     <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col md={7}>
-          <Col className="text-center">
-            <h2>Profile</h2>
-          </Col>
-          <Col>
+      <Row className="d-flex justify-content-center">
+        <Col className="col-3 text-center off-white-background rounded-2 py-4">
+          <Container className="py-4">
+            <Image width="150px" className="rounded-circle border border-white border-2" src="https://www.winsornewton.com/na/wp-content/uploads/sites/50/2019/09/50903849-WN-ARTISTS-OIL-COLOUR-SWATCH-WINSOR-EMERALD-960x960.jpg" />
+          </Container>
+          <h1>My Profile</h1>
+          <h5>{ Meteor.user().username }</h5>
+        </Col>
+        <Col md={7} className="col-4 rounded-2">
+          <Container>
             <Card>
-              <Card.Header>
-                { Meteor.user().username }
+              <Card.Header className="py-2 d-flex align-content-center">
+                <Card.Title>
+                  User Information
+                </Card.Title>
               </Card.Header>
               <Card.Body>
-                <ListGroup as="ol" numbered>
+                <ListGroup as="ol" variant="flush">
                   <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"
                   >
                     <div className="ms-2 me-auto">
-                      <div className="fw-bold">Allergies</div>
+                      <div className="fw-bold">Allergies:</div>
                     </div>
                     { profileData.allergies }
+                    Shellfish
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"
                   >
                     <div className="ms-2 me-auto">
-                      <div className="fw-bold">Subheading</div>
-                      Cras justo odio
+                      <div className="fw-bold">Vegan:</div>
                     </div>
-                    <Badge bg="primary" pill>
-                      14
-                    </Badge>
+                    { profileData.vegan }
+                    No
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"
                   >
                     <div className="ms-2 me-auto">
-                      <div className="fw-bold">Subheading</div>
-                      Cras justo odio
+                      <div className="fw-bold">Gluten free:</div>
                     </div>
-                    <Badge bg="primary" pill>
-                      14
-                    </Badge>
+                    { profileData.glutenFree }
+                    No
                   </ListGroup.Item>
                 </ListGroup>
               </Card.Body>
             </Card>
-          </Col>
+          </Container>
         </Col>
       </Row>
     </Container>
