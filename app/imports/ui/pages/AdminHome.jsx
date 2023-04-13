@@ -3,6 +3,7 @@ import { Container, Tab, Tabs } from 'react-bootstrap';
 import DataListsAdmin from '../components/DataListsAdmin';
 import RelationListsAdmin from '../components/RelationListsAdmin';
 import IndividualRecipe from '../components/IndividualRecipe';
+import SearchRecipeBar from '../components/SearchRecipeBar';
 
 const testRecipe = {
   name: 'Scratch Pasta Sauce',
@@ -32,8 +33,7 @@ const AdminHome = () => (
         <DataListsAdmin />
       </Tab>
       <Tab eventKey="search" title="Individual Recipe Test">
-        <IndividualRecipe recipe={testRecipe} />
-        <IndividualRecipe recipe={testRecipe2} />
+        <SearchRecipeBar />
       </Tab>
     </Tabs>
   </Container>
