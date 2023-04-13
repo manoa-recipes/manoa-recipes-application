@@ -57,14 +57,14 @@ body {
 /* Set the alert background on the signin and signup pages. */
 #signin-page .alert-light{
   --bs-alert-bg: var(--matr-navbar-bg);
-  margin-bottom: 100px;
+  margin-bottom: 220px;
   background:#94AF9F;
   border-radius: 20px;
 }
 
 #signup-page .alert-light{
   --bs-alert-bg: var(--matr-navbar-bg);
-  margin-bottom: 75px;
+  margin-bottom: 140px;
   background:#94AF9F;
   border-radius: 20px;
 }
