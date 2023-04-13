@@ -83,6 +83,11 @@ body {
   padding-bottom: 20px;
 }
 
+.off-white-background {
+  background-image: linear-gradient(180deg, white, #ededed);
+  box-shadow: black;
+}
+
 
 #nav {
   background-color: #ABC4AA;
