@@ -84,8 +84,22 @@ body {
 }
 
 .off-white-background {
+
   background-image: linear-gradient(180deg, white, #ededed);
   box-shadow: black;
+}
+
+.vl {
+  border-left: 6px solid darkmagenta;
+  height: 100%;
+}
+
+.border-gradient {
+  border-style: solid;
+  border-image: linear-gradient(#a63273, lightsalmon) 50;
+  border-radius: 2px;
+  border-color: tomato;
+  border-width: 0 0 0 12px;
 }
 
 

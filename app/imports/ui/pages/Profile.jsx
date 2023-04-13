@@ -25,7 +25,7 @@ const UserProfile = () => {
   return (ready ? (
     <Container className="py-3">
       <Row className="d-flex justify-content-center">
-        <Col className="col-3 text-center off-white-background rounded-2 py-4">
+        <Col className="col-3 text-center border-gradient off-white-background rounded-2 py-4">
           <Container className="py-4">
             <Image width="150px" className="rounded-circle border border-white border-2" src="https://www.winsornewton.com/na/wp-content/uploads/sites/50/2019/09/50903849-WN-ARTISTS-OIL-COLOUR-SWATCH-WINSOR-EMERALD-960x960.jpg" />
           </Container>
