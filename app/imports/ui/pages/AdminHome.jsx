@@ -3,7 +3,7 @@ import { Container, Tab, Tabs } from 'react-bootstrap';
 import DataListsAdmin from '../components/DataListsAdmin';
 import RelationListsAdmin from '../components/RelationListsAdmin';
 import IndividualRecipe from '../components/IndividualRecipe';
-import SearchRecipeBar from '../components/SearchRecipeBar';
+import SearchRecipes from './SearchRecipes';
 
 const testRecipe = {
   name: 'Scratch Pasta Sauce',
@@ -32,8 +32,16 @@ const AdminHome = () => (
       <Tab eventKey="dataDb" title="Data Collections">
         <DataListsAdmin />
       </Tab>
-      <Tab eventKey="search" title="Individual Recipe Test">
-        <SearchRecipeBar />
+      <Tab eventKey="tests" title="Page Tests">
+        <Tabs fill>
+          <Tab eventKey="recipe" title="Individual Recipes">
+            <IndividualRecipe recipe={testRecipe2} />
+            <IndividualRecipe recipe={testRecipe} />
+          </Tab>
+          <Tab eventKey="search" title="Search Test">
+            <SearchRecipes />
+          </Tab>
+        </Tabs>
       </Tab>
     </Tabs>
   </Container>
