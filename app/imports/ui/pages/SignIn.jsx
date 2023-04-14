@@ -42,7 +42,7 @@ const SignIn = () => {
   // Otherwise return the Login form.
   return (
     <Container fluid id="signin-page" className="">
-      <Row id="row-c">
+      <Row>
         <Col md={3}>
           <Col id="text-sign-in" className="text-center">
             <h4>Please login to your account</h4>
@@ -69,7 +69,6 @@ const SignIn = () => {
             </Alert>
           )}
         </Col>
-        <Col id="sign-in-background" />
       </Row>
     </Container>
   );

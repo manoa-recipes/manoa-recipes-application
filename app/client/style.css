@@ -57,26 +57,14 @@ body {
 /* Set the alert background on the signin and signup pages. */
 #signin-page .alert-light{
   --bs-alert-bg: var(--matr-navbar-bg);
-  margin-bottom: 100px;
   background:#94AF9F;
   border-radius: 20px;
 }
 
 #signup-page .alert-light{
   --bs-alert-bg: var(--matr-navbar-bg);
-  margin-bottom: 75px;
   background:#94AF9F;
   border-radius: 20px;
-}
-
-#sign-in-background, #sign-up-background{
-  background: url("images/pic5.jpeg") no-repeat center center fixed;
-  background-size: cover;
-  flex: 1;
-}
-
-#row-c{
-  background: #FFDEB4;
 }
 
 #card-signin-signup{
@@ -84,7 +72,7 @@ body {
 }
 
 #text-sign-in, #text-sign-up{
-  color: #7AA874;
+  color: purple;
 }
 
 /* Define custom styles */
@@ -95,6 +83,25 @@ body {
   padding-bottom: 20px;
 }
 
+.off-white-background {
+
+  background-image: linear-gradient(180deg, white, #ededed);
+  box-shadow: black;
+}
+
+.vl {
+  border-left: 6px solid darkmagenta;
+  height: 100%;
+}
+
+.border-gradient {
+  border-style: solid;
+  border-image: linear-gradient(#a63273, lightsalmon) 50;
+  border-radius: 2px;
+  border-color: tomato;
+  border-width: 0 0 0 12px;
+}
+
 
 #nav {
   background-color: #ABC4AA;
@@ -102,4 +109,29 @@ body {
 
 #text {
   color: #675D50;
+}
+
+.userHomeBackground {
+  background: fixed center url("https://wallpapers.com/images/hd/vegetables-healthy-food-desktop-1fdano01i4e1w365.jpg");
+  background-size: cover;
+  height: 75vh;
+}
+
+#landing-bg-words {
+  background-color: #FAECD6;
+}
+
+#landing-bg-1 {
+  background: url("https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg?quality=90&resize=556,505");
+  background-size: cover;
+}
+
+#landing-bg-2 {
+  background: url("https://insanelygoodrecipes.com/wp-content/uploads/2021/06/Grilled-Chicken-with-Caprese-Salad-683x1024.jpg");
+  background-size: cover;
+}
+
+#landing-bg-3 {
+  background: url("https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/02/Creamy-Cajun-Chicken-6.jpg");
+  background-size: cover;
 }

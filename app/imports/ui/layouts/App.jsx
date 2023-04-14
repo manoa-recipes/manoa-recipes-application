@@ -18,7 +18,8 @@ import SignIn from '../pages/SignIn';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AddRecipe from '../pages/AddRecipe';
-import SearchRecipes from '../pages/SearchRecipes';
+import Vendors from '../pages/Vendors';
+import UserProfile from '../pages/Profile';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -37,10 +38,11 @@ const App = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
-          <Route path="/search" element={<SearchRecipes />} />
           <Route path="/home" element={<ProtectedRoute><UserHome /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
           <Route path="/add" element={<ProtectedRoute><AddRecipe /></ProtectedRoute>} />
+          <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditStuff /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><AdminHome /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />

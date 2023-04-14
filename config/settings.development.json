@@ -1,4 +1,8 @@
 {
+  "monti": {
+    "appId": "GpT69C9Dvsbotmgp6",
+    "appSecret": "04ccaf97-5c64-4111-a069-7365216f0a13"
+  },
   "defaultProfiles": [
     {
       "email": "admin@foo.com",

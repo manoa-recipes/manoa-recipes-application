@@ -48,7 +48,7 @@ const SignUp = ({ location }) => {
 
   return (
     <Container fluid id="signup-page" className="">
-      <Row id="row-c">
+      <Row md={3}>
         <Col md={3}>
           <Col id="text-sign-up" className="text-center">
             <h4>Register your account</h4>
@@ -78,7 +78,6 @@ const SignUp = ({ location }) => {
             </Alert>
           )}
         </Col>
-        <Col id="sign-up-background" />
       </Row>
     </Container>
   );
