@@ -11,8 +11,6 @@ import LoadingSpinner from '../components/LoadingSpinner';
 // Dropdown needs access to the DOM node in order to position the Menu
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <Button
-    variant="primary"
-    href=""
     ref={ref}
     onClick={(e) => {
       e.preventDefault();
@@ -40,7 +38,7 @@ const CustomMenu = React.forwardRef(
         <Form.Control
           autoFocus
           className="mx-3 my-2 w-auto"
-          placeholder="Type to filter..."
+          placeholder="Type an ingredient..."
           onChange={(e) => setValue(e.target.value)}
           value={value}
         />
@@ -55,15 +53,24 @@ const CustomMenu = React.forwardRef(
 );
 const SearchRecipes = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready } = useTracker(() => {
+  const { ready, recipes, ingredients, recipeIngredients } = useTracker(() => {
     const sub1 = Meteor.subscribe(Ingredients.userPublicationName);
     const sub2 = Meteor.subscribe(Recipes.userPublicationName);
     const sub3 = Meteor.subscribe(RecipesIngredients.userPublicationName);
     const rdy = sub1.ready() && sub2.ready() && sub3.ready();
     return {
       ready: rdy,
+      recipes: Recipes.collection.find({}).fetch(),
+      ingredients: Ingredients.collection.find({}).fetch(),
+      recipeIngredients: RecipesIngredients.collection.find({}).fetch(),
     };
   }, []);
+  let toggleText = 'Ingredient';
+  const itemClicked = (ref) => {
+    console.log(toggleText);
+    toggleText = ref;
+    console.log(toggleText);
+  };
 
   // Component that displays the whole page: search bar as a form and results as a card group or list group
   return (ready ? (
@@ -72,16 +79,11 @@ const SearchRecipes = () => {
         <Col>
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-              Custom toggle
+              {toggleText}
             </Dropdown.Toggle>
 
             <Dropdown.Menu as={CustomMenu}>
-              <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-              <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-              <Dropdown.Item eventKey="3" active>
-                Orange
-              </Dropdown.Item>
-              <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
+              {ingredients.map(ingredient => <Dropdown.Item eventKey={ingredient._id} onClick={itemClicked(ingredient.name)}>{ingredient.name}</Dropdown.Item>)}
             </Dropdown.Menu>
           </Dropdown>
         </Col>

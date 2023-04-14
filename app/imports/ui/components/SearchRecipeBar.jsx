@@ -1,7 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Card, Col, Container, Dropdown, Row, Table } from 'react-bootstrap';
+import { Button, Dropdown, Form } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
+import { Search } from 'react-bootstrap-icons';
 import LoadingSpinner from './LoadingSpinner';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
@@ -25,26 +26,27 @@ const SearchRecipeBar = () => {
       ready: rdy,
     };
   }, []);
+  let searchParameter = '';
   return (ready ? (
-    <Card>
-      <Card.Body>
-        <Row>
-          <Col>
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Search By
-              </Dropdown.Toggle>
+    <Form className="d-flex" id="search-bar-nav">
+      <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          {searchParameter}
+        </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Name</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Ingredient</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">email</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-        </Row>
-      </Card.Body>
-    </Card>
+        <Dropdown.Menu>
+          <Dropdown.Item href="name" onClick={searchParameter = 'name'}>Name</Dropdown.Item>
+          <Dropdown.Item href="ingredient">Ingredient</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      <Form.Control
+        type="search"
+        placeholder="Search"
+        className="me-2"
+        aria-label="Search"
+      />
+      <Button><Search /></Button>
+    </Form>
   ) : <LoadingSpinner />);
 };
 

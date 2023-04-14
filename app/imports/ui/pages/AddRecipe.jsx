@@ -2,7 +2,7 @@ import React from 'react';
 // import swal from 'sweetalert';
 // import { Meteor } from 'meteor/meteor';
 import { Card, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { AutoForm, ErrorsField, ListField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NestField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
@@ -27,14 +27,6 @@ const recipeFormSchema = new SimpleSchema({
   'ingredients.$.quantity': { type: Number, defaultValue: 1 },
 });
 const recipeBridge = new SimpleSchema2Bridge(recipeFormSchema);
-//
-// const RecipeIngredient = () => (
-//   <Row>
-//     <Col><TextField name="ingredient" /></Col>
-//     <Col><TextField name="size" /></Col>
-//     <Col><NumField name="quantity" decimal={null} /></Col>
-//   </Row>
-// );
 
 /* Renders the AddRecipe page for adding a document. */
 const AddRecipe = () => {
@@ -83,8 +75,17 @@ const AddRecipe = () => {
                   <LongTextField name="instructions" />
                 </Col>
               </Tab>
-              <Tab eventKey="ingre" title="Ingredients">
-                <ListField name="ingredients" className="bg-light text-dark" addIcon={<PlusCircle className="text-dark" />} removeIcon={<DashCircle className="text-dark" />} />
+              <Tab eventKey="ingre" title="Ingredients" className="justify-content-center">
+                <ListField name="ingredients" addIcon={<PlusCircle className="text-dark" />}>
+                  <ListItemField name="$">
+                    <Row className="align-items-center gap-0">
+                      <Col xs={5} md={7}><TextField name="ingredient" /></Col>
+                      <Col xs={3} md={2}><TextField name="size" noValidate /></Col>
+                      <Col xs={3} md={2}><NumField name="quantity" decimal={null} /></Col>
+                      <Col xs={1} md={1}><ListDelField name="" removeIcon={<DashCircle className="text-dark" />} /></Col>
+                    </Row>
+                  </ListItemField>
+                </ListField>
               </Tab>
             </Tabs>
             <SubmitField value="Submit" />

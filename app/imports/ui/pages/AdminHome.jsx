@@ -1,9 +1,11 @@
 import React from 'react';
-import { Container, Tab, Tabs } from 'react-bootstrap';
+import { Container, Form, Button, Tab, Tabs } from 'react-bootstrap';
 import DataListsAdmin from '../components/DataListsAdmin';
 import RelationListsAdmin from '../components/RelationListsAdmin';
 import IndividualRecipe from '../components/IndividualRecipe';
 import SearchRecipes from './SearchRecipes';
+import { Search } from 'react-bootstrap-icons';
+import SearchRecipeBar from '../components/SearchRecipeBar';
 
 const testRecipe = {
   name: 'Scratch Pasta Sauce',
@@ -39,7 +41,7 @@ const AdminHome = () => (
             <IndividualRecipe recipe={testRecipe} />
           </Tab>
           <Tab eventKey="search" title="Search Test">
-            <SearchRecipes />
+            <SearchRecipeBar />
           </Tab>
         </Tabs>
       </Tab>
