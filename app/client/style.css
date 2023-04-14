@@ -18,6 +18,7 @@
   /* Highlight Colors */
 
   /* Selection Colors */
+
 }
 
 /* Change bootstrap variable values.
@@ -52,6 +53,10 @@ body {
   background: fixed center url("https://wallpapers.com/images/hd/vegetables-healthy-food-desktop-1fdano01i4e1w365.jpg");
   background-size: cover;
   height: 75vh;
+
+  /* Trying to overwrite bootstrap "Variant" colors (NOT WORKING) */
+  --bs-primary: darkgreen;
+  --bs-primary-rgb: 32, 64, 24;
 }
 
 /* Set the alert background on the signin and signup pages. */

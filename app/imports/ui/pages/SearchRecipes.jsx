@@ -1,37 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Dropdown, Form, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import SimpleSchema from 'simpl-schema';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { AutoForm, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-// Schema for the search bar
-const formSchema = new SimpleSchema({
-  searchBy: {
-    type: String,
-    allowedValues: ['name', 'ingredient'],
-    defaultValue: 'name',
-  },
-  searchTerm: {
-    type: String,
-    defaultValue: '',
-  },
-  filterBy: {
-    type: String,
-    allowedValues: ['none', 'vegan', 'glutenFree'],
-    defaultValue: 'none',
-  },
-});
-const bridge = new SimpleSchema2Bridge(formSchema);
+// The forwardRef is important!!
+// Dropdown needs access to the DOM node in order to position the Menu
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <Button
+    variant="primary"
+    href=""
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+    &#x25bc;
+  </Button>
+));
 
-// A component to hold the search bar and search results
-/** 1) The form extracts search data from the user input on the search bar.
- *  2) The component displays the search results as a list under the bar. */
+// forwardRef again here!
+// Dropdown needs access to the DOM of the Menu to measure it
+const CustomMenu = React.forwardRef(
+  ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+    const [value, setValue] = useState('');
+
+    return (
+      <div
+        ref={ref}
+        style={style}
+        className={className}
+        aria-labelledby={labeledBy}
+      >
+        <Form.Control
+          autoFocus
+          className="mx-3 my-2 w-auto"
+          placeholder="Type to filter..."
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+        />
+        <ul className="list-unstyled">
+          {React.Children.toArray(children).filter(
+            (child) => !value || child.props.children.toLowerCase().startsWith(value),
+          )}
+        </ul>
+      </div>
+    );
+  },
+);
 const SearchRecipes = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready } = useTracker(() => {
@@ -43,26 +64,28 @@ const SearchRecipes = () => {
       ready: rdy,
     };
   }, []);
-  // Sub-Component to display the list of search results
-  const submit = (data, fRef) => {};
-  const searchByChanged = (data) => {};
-  let fRef = null;
+
   // Component that displays the whole page: search bar as a form and results as a card group or list group
   return (ready ? (
     <Container>
-      <Card title="SearchBar">
-        <Card.Header>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
-            <Row className="align-items-center">
-              <Col><SelectField name="searchBy" onChange={data => searchByChanged(data)} /></Col>
-              <Col><TextField name="searchTerm" /></Col>
-              <Col><SelectField name="filterBy" /></Col>
-              <Col><SubmitField value="submit" /></Col>
-            </Row>
-          </AutoForm>
-        </Card.Header>
-        <Card.Body />
-      </Card>
+      <Row className="align-items-center">
+        <Col>
+          <Dropdown>
+            <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+              Custom toggle
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu as={CustomMenu}>
+              <Dropdown.Item eventKey="1">Red</Dropdown.Item>
+              <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
+              <Dropdown.Item eventKey="3" active>
+                Orange
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Col>
+      </Row>
     </Container>
   ) : <LoadingSpinner />);
 };
