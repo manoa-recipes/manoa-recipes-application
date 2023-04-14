@@ -5,33 +5,34 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { Stuffs } from '../../api/stuff/Stuff';
 import LoadingSpinner from '../components/LoadingSpinner';
 import RecipeCard from '../components/RecipeCard';
+import { Recipes } from '../../api/recipes/Recipes';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const UserHome = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  // const { ready } = useTracker(() => {
+  const { ready, recipes } = useTracker(() => {
   // Note that this subscription will get cleaned up
   // when your component is unmounted or deps change.
   // Get access to Stuff documents.
-  // const subscription = Meteor.subscribe(Stuffs.userPublicationName);
-  // Determine if the subscription is ready
-  // const rdy = subscription.ready();
-  // Get the Stuff documents
-  // const stuffItems = Stuffs.collection.find({}).fetch();
-  // return {
-  // stuffs: stuffItems,
-  // ready: rdy,
-  // };
-  // }, []);
+    const subscription = Meteor.subscribe(Recipes.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy = subscription.ready();
+    // Get the Stuff documents
+    const recipesItems = Recipes.collection.find({}).fetch();
+    return {
+      recipes: recipesItems,
+      ready: rdy,
+    };
+  }, []);
 
-  const recipes = [{
+  const recipess = [{
     name: 'Lettuce and Tomato Salad', description: 'The classic salad',
     image: 'https://lh3.googleusercontent.com/4eyzo2D9zdI8iyIRHGC_Ehe4rzW7j3DIxZWctid6rx65yfsnvr31mIt2BEQeVqQy2Zork9Ysy-QTO4i6oOL6uQ=w1280-h1280-c-rj-v1-e365',
     instructions: 'Wash the lettuce and tomato, chop the lettuce and tomato, eat',
     time: '10 minutes',
   },
   ];
-  return (
+  return (ready ? (
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col>
@@ -44,7 +45,7 @@ const UserHome = () => {
         </Col>
       </Row>
     </Container>
-  );
+  ) : <LoadingSpinner />);
 };
 
 export default UserHome;
