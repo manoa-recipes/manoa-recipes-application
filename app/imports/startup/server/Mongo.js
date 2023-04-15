@@ -67,10 +67,10 @@ const addRecipeIngredient = ({ recipe, ingredient, size, quantity }) => {
 };
 
 // Add document to the Recipes collection
-const addRecipe = ({ name, owner, instructions, time, servings }) => {
+const addRecipe = ({ name, owner, image, instructions, time, servings }) => {
   console.log(`addRecipe(${name}, ${owner}, ...)`);
-  if (verbose) { console.log(`... RecipesIngredients.collection.insert(\n... {\n...   name: ...,\n...   owner: ...,\n...   instructions: ${instructions},\n...   time: ${time},\n...   servings: ${servings},\n... })`); }
-  Recipes.collection.insert({ name: name, owner: owner, instructions: instructions, time: time, servings: servings });
+  if (verbose) { console.log(`... RecipesIngredients.collection.insert(\n... {\n...   name: ...,\n...   owner: ...,\n...    image: ${image},\n...    instructions: ${instructions},\n...   time: ${time},\n...   servings: ${servings},\n... })`); }
+  Recipes.collection.insert({ name: name, owner: owner, image: image, instructions: instructions, time: time, servings: servings });
 };
 
 // Add document to the Vendors collection
