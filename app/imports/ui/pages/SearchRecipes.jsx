@@ -79,7 +79,7 @@ const SearchRecipes = () => {
         <Col>
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-              {toggleText}
+              {}
             </Dropdown.Toggle>
 
             <Dropdown.Menu as={CustomMenu}>
