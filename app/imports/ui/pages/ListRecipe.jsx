@@ -2,7 +2,6 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { _ } from 'meteor/underscore';
 import LoadingSpinner from '../components/LoadingSpinner';
 import RecipeCard from '../components/RecipeCard';
 import { Recipes } from '../../api/recipes/Recipes';
@@ -33,7 +32,7 @@ const UserHome = () => {
             <h2>Featured Recipe</h2>
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4">
-            <Col><RecipeCard recipe={_.sample(recipes)} /></Col>
+            {recipes.map((recipe) => (<Col key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}
           </Row>
         </Col>
       </Row>
