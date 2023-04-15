@@ -40,7 +40,7 @@ const UserHome = () => {
             <h2>Featured Recipe</h2>
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4">
-            {recipes.map((recipe, index) => (<Col key={index}><RecipeCard recipe={recipe} /></Col>))}
+            {recipes.map((recipe) => (<Col key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}
           </Row>
         </Col>
       </Row>

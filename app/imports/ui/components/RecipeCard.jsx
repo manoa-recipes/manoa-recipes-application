@@ -5,8 +5,10 @@ import { Clock } from 'react-bootstrap-icons';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const RecipeCard = ({ recipe }) => (
-  <Card style={{ width: '18rem' }} className="h-100">
-    <Image src={recipe.image} />
+  <Card className="h-100">
+    <Card.Header>
+      <Image src={recipe.image} />
+    </Card.Header>
     <Card.Title className="px-3">{recipe.name}</Card.Title>
     <Card.Subtitle className="px-3">{recipe.owner}</Card.Subtitle>
     <Card.Body>
@@ -24,9 +26,9 @@ RecipeCard.propTypes = {
     owner: PropTypes.string,
     image: PropTypes.string,
     instructions: PropTypes.string,
-    time: PropTypes.number,
+    time: PropTypes.string,
     servings: PropTypes.number,
-    // _id: PropTypes.string,
+    _id: PropTypes.string,
   }).isRequired,
 };
 

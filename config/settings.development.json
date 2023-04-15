@@ -45,15 +45,15 @@
       "owner": "jane@foo.com",
       "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
       "instructions": "Wash the lettuce and tomato thoroughly.  Assemble the chopped lettuce and tomato.  ",
-      "time": 10,
+      "time": "10 minutes",
       "servings": 2
     },
     {
       "name": "Scratch Pasta Sauce",
       "owner": "john@foo.com",
-      "image": "https://www.themediterraneandish.com/wp-content/uploads/2020/04/homemade-spaghetti-sauce-4.jpg",
+      "image": "https://avatars0.githubusercontent.com/u/7494478?s=460&v=4",
       "instructions": "Requires a stove-top or hot-plate and a pot. Put pot on low-medium heat, add olive oil and diced onion, salt and pepper, and cook until onion is translucent. Add diced garlic and cook for ten more minutes. Mix tomato paste in and cook for five more minutes. Mix in three cups of water and cook five more minutes. Add and mix tomato sauce and chopped basil and reduce heat to low for 25 more minutes.  Note: Season salt and pepper to taste.",
-      "time": 60,
+      "time": "60 minutes",
       "servings": 4
     }
   ],
