@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Image } from 'react-bootstrap';
 import { Clock } from 'react-bootstrap-icons';
+import { Route, Link } from 'react-router-dom';
+
 import IndividualRecipe from './IndividualRecipe';
 import Landing from '../pages/Landing';
-import { Route } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const RecipeCard = ({ recipe }) => (
-  <a href={<IndividualRecipe />}>
+  <Link className="cardBody" to="/">
     <Card style={{ width: '18rem' }} className="h-100">
       <Card.Img variant="top" src={recipe.image} style={{ height: '40vh' }} />
       <Card.Title className="px-3">{recipe.name}</Card.Title>
@@ -18,7 +19,7 @@ const RecipeCard = ({ recipe }) => (
         <Card.Text><Clock /> {recipe.time}</Card.Text>
       </Card.Body>
     </Card>
-  </a>
+  </Link>
 
 );
 

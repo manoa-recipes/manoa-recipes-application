@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Card, CardGroup, Row, Col, Container, Image } from 'react-bootstrap';
+import { useParams } from 'react-router';
 import LoadingSpinner from './LoadingSpinner';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import RecipeIngredient from './RecipeIngredient';
@@ -10,6 +11,7 @@ import RecipeIngredient from './RecipeIngredient';
 // This page/component displays ALL data related to a specific recipe
 const IndividualRecipe = ({ recipe }) => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+  const { _id } = useParams();
   const { ready, recipeIngredients } = useTracker(() => {
     const subRecipeIngredients = Meteor.subscribe(RecipesIngredients.userPublicationName);
 
@@ -22,7 +24,7 @@ const IndividualRecipe = ({ recipe }) => {
       recipeIngredients: ingredientItems,
       ready: rdy,
     };
-  }, []);
+  }, [_id]);
   return (ready ? (
     <Container className="py-3">
       <Card className="p-0">
@@ -60,6 +62,7 @@ IndividualRecipe.propTypes = {
     instructions: PropTypes.string,
     time: PropTypes.number,
     servings: PropTypes.number,
+    _id: PropTypes.string,
   }).isRequired,
 };
 

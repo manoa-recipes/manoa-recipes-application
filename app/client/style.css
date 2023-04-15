@@ -136,3 +136,9 @@ body {
   background-size: cover;
 }
 
+.cardBody {
+  text-decoration: none;
+  color: inherit;
+}
+
+
