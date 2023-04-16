@@ -64,7 +64,7 @@ const AddRecipe = () => {
           <Card.Body>
             <ListField name="ingredients" className="bg-light text-dark align-items-center" formNoValidate>
               <ListItemField name="$">
-                <Row className="align-items-center g-0">
+                <Row className="align-items-center">
                   <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
                   <Col xs={3} md={2}><NumField name="quantity" decimal={false} defaultValue={1} /></Col>
                   <Col xs={3} lg={2}><TextField name="size" /></Col>
