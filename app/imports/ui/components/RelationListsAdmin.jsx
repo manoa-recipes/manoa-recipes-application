@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Col, Row, Container, Table } from 'react-bootstrap';
+import { Col, Row, Container, Table, Card, Accordion } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
@@ -43,23 +43,28 @@ const RecipesIngredientsListAdmin = () => {
     };
   }, []);
   return (ready ? (
-    <Container className="p-0">
-      <h5>RecipesIngredients Collection</h5>
-      <Table striped bordered>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Recipe</th>
-            <th>Ingredient</th>
-            <th>Size</th>
-            <th>Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {recipesIngredients.map((recipeIngredient) => <RecipeIngredientAdmin key={recipeIngredient._id} recipeIngredient={recipeIngredient} />)}
-        </tbody>
-      </Table>
-    </Container>
+    <Card.Body>
+      <Accordion>
+        <Accordion.Header><h5>RecipesIngredients Collection</h5></Accordion.Header>
+        <Accordion.Body>
+          <Table striped bordered variant="light" color="dark">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Recipe</th>
+                <th>Ingredient</th>
+                <th>Size</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recipesIngredients.map((recipeIngredient) => <RecipeIngredientAdmin key={recipeIngredient._id} recipeIngredient={recipeIngredient} />)}
+            </tbody>
+          </Table>
+        </Accordion.Body>
+      </Accordion>
+    </Card.Body>
+
   ) : <LoadingSpinner />);
 };
 
@@ -101,33 +106,37 @@ const VendorsIngredientsListAdmin = () => {
     };
   }, []);
   return (ready ? (
-    <Container className="p-0">
-      <h5>VendorsIngredients Collection</h5>
-      <Table striped bordered>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>address</th>
-            <th>ingredient</th>
-            <th>inStock</th>
-            <th>size</th>
-            <th>price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vendorsIngredients.map((vendorIngredient) => <VendorIngredientAdmin key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
-        </tbody>
-      </Table>
-    </Container>
+    <Card.Body>
+      <Accordion>
+        <Accordion.Header className="text-center"><h5>VendorsIngredients Collection</h5></Accordion.Header>
+        <Accordion.Body>
+          <Table striped bordered variant="light">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>address</th>
+                <th>ingredient</th>
+                <th>inStock</th>
+                <th>size</th>
+                <th>price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vendorsIngredients.map((vendorIngredient) => <VendorIngredientAdmin key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
+            </tbody>
+          </Table>
+        </Accordion.Body>
+      </Accordion>
+    </Card.Body>
   ) : <LoadingSpinner />);
 };
 
 /* Display all relation data: */
 const RelationListsAdmin = () => (
-  <Col>
-    <Row><RecipesIngredientsListAdmin /></Row>
-    <Row><VendorsIngredientsListAdmin /></Row>
-  </Col>
+  <Card bg="light">
+    <RecipesIngredientsListAdmin />
+    <VendorsIngredientsListAdmin />
+  </Card>
 );
 
 export default RelationListsAdmin;

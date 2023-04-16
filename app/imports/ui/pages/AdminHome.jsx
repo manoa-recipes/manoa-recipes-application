@@ -23,17 +23,13 @@ const testRecipe2 = {
 
 /* This component is merely to organize all admin data */
 const AdminHome = () => (
-  <Container className="p-0 text-center">
-    <Tabs fill>
-      <Tab eventKey="relaDb" title="Relational Collections">
+  <Container className="p-2 text-center">
+    <Tabs>
+      <Tab eventKey="joinDb" title="Join Collections">
         <RelationListsAdmin />
       </Tab>
       <Tab eventKey="dataDb" title="Data Collections">
         <DataListsAdmin />
-      </Tab>
-      <Tab eventKey="search" title="Individual Recipe Test">
-        <IndividualRecipe recipe={testRecipe} />
-        <IndividualRecipe recipe={testRecipe2} />
       </Tab>
     </Tabs>
   </Container>
