@@ -21,7 +21,7 @@ const recipeFormSchema = new SimpleSchema({
   name: { type: String, optional: false },
   image: { type: String, optional: true, defaultValue: '' },
   instructions: { type: String, optional: false },
-  time: { type: Number, optional: false },
+  time: { type: String, optional: false },
   servings: { type: Number, optional: false },
   ingredients: {
     type: Array,
@@ -78,7 +78,7 @@ const EditRecipe = () => {
               <Row><TextField name="name" placeholder={recipe.name} value={recipe.name} /></Row>
               <Row><TextField name="image" placeholder={recipe.image} value={recipe.image} /></Row>
               <Row>
-                <Col><NumField name="time" decimal={null} placeholder={recipe.time} value={recipe.time} label="Time in minutes" /></Col>
+                <Col><TextField name="time" decimal={null} placeholder={recipe.time} value={recipe.time} /></Col>
                 <Col><NumField name="servings" decimal={null} placeholder={recipe.servings} value={recipe.servings} /></Col>
               </Row>
             </Col>
