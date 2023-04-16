@@ -15,6 +15,8 @@ import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { updateRecipeMethod } from '../../startup/both/Methods';
 
+const verbose = true;
+
 // Schema to specify the structure of the data to appear in the AddRecipe form.
 const recipeFormSchema = new SimpleSchema({
   // Recipes schema
@@ -39,6 +41,7 @@ const recipeBridge = new SimpleSchema2Bridge(recipeFormSchema);
 const EditRecipe = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
+  if (verbose) { console.log('EditRecipe.\n_id: ', _id); }
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { recipe, ready, ingredientItems } = useTracker(() => {
     // Get access to all collections.
@@ -47,8 +50,15 @@ const EditRecipe = () => {
     const sub3 = Meteor.subscribe(Ingredients.userPublicationName);
     // Determine if the subscriptions are ready
     const rdy = sub1.ready() && sub2.ready() && sub3.ready();
+    if (verbose) {
+      console.log('Recipes: ', Recipes.collection.find({}).fetch());
+      console.log('RecipesIngredients: ', Recipes.collection.find({}).fetch());
+      console.log('Ingredients: ', Recipes.collection.find({}).fetch());
+      console.log('Ready: ', rdy);
+    }
     // Get the document
     const document = Recipes.collection.findOne({ _id: _id });
+    if (verbose) { console.log('Document: ', document, '\nReady: ', rdy); }
     return {
       recipe: document,
       ingredientItems: RecipesIngredients.collection.find({ recipe: document.name }).fetch(),
@@ -56,6 +66,7 @@ const EditRecipe = () => {
     };
   }, [_id]);
   const [ingredients, setIngredients] = useState(ingredientItems);
+  if (verbose) { console.log('ingredients: ', ingredients, '\nReady: ', ready); }
   // On successful submit, insert the data.
   const submit = (data) => {
     const { name, owner, image, instructions, time, servings } = data;
