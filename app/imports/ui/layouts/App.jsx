@@ -8,7 +8,6 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import UserHome from '../pages/UserHome';
 import AdminHome from '../pages/AdminHome';
-import EditStuff from '../pages/EditStuff';
 import NotFound from '../pages/NotFound';
 import SignUp from '../pages/SignUp';
 import SignOut from '../pages/SignOut';
@@ -20,6 +19,7 @@ import AddRecipe from '../pages/AddRecipe';
 import Vendors from '../pages/Vendors';
 import UserProfile from '../pages/Profile';
 import ListRecipe from '../pages/ListRecipe';
+import EditRecipe from '../pages/EditRecipe';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -41,9 +41,9 @@ const App = () => {
           <Route path="/home" element={<ProtectedRoute><UserHome /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListRecipe /></ProtectedRoute>} />
-          <Route path="/add" element={<ProtectedRoute><AddRecipe /></ProtectedRoute>} />
+          <Route path="/add-recipe" element={<ProtectedRoute><AddRecipe /></ProtectedRoute>} />
           <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
-          <Route path="/edit/:_id" element={<ProtectedRoute><EditStuff /></ProtectedRoute>} />
+          <Route path="/edit-recipe/:_id" element={<ProtectedRoute><EditRecipe /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><AdminHome /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
