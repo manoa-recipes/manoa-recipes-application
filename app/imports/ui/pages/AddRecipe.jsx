@@ -15,7 +15,7 @@ const recipeFormSchema = new SimpleSchema({
   // owner: String,
   image: { type: String, optional: true, defaultValue: '' },
   instructions: { type: String, optional: false },
-  time: { type: Number, optional: false },
+  time: { type: String, optional: false },
   servings: { type: Number, optional: false },
   ingredients: {
     type: Array,
