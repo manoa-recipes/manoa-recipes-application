@@ -187,7 +187,7 @@ RecipeAdmin.propTypes = {
     name: PropTypes.string,
     owner: PropTypes.string,
     instructions: PropTypes.string,
-    time: PropTypes.number,
+    time: PropTypes.string,
     servings: PropTypes.number,
     _id: PropTypes.string,
   }).isRequired,
