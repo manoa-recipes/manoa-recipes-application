@@ -81,7 +81,7 @@ const updateRecipeMethod = 'Recipes.update';
 Meteor.methods({
   'Recipes.update'({ name, owner, image, instructions, time, servings, ingredients }) {
     // First update the relevant Recipe document ...update({ uniqueField }, { all fields... })
-    Recipes.collection.update({ name }, { name, owner, image, instructions, time, servings });
+    Recipes.collection.update({ name }, { $set: { name, owner, image, instructions, time, servings } });
     // Remove all previous relational documents for this recipe before repopulating them from the new list
     RecipesIngredients.collection.remove({ recipe: name });
     // At least one ingredient must exist in the array, update/insert the Ingredients collection
