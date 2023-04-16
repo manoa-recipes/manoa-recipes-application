@@ -6,6 +6,7 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row } from 'react-bootstrap';
+import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
 import { AutoForm, ErrorsField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { useParams } from 'react-router';
 import { Recipes } from '../../api/recipes/Recipes';
@@ -13,7 +14,6 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { updateRecipeMethod } from '../../startup/both/Methods';
-import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
 
 const verbose = true;
 const recipeFormSchema = new SimpleSchema({
@@ -44,7 +44,7 @@ const EditRecipe = () => {
   const { _id } = useParams();
   if (verbose) { console.log('EditRecipe _id: ', _id); }
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { recipe, ready, ingredientDocs } = useTracker(() => {
+  const { recipe, ready, ingredients } = useTracker(() => {
     // Get access to all collections.
     const sub1 = Meteor.subscribe(Recipes.userPublicationName);
     const sub2 = Meteor.subscribe(RecipesIngredients.userPublicationName);
@@ -59,19 +59,19 @@ const EditRecipe = () => {
     }
     // Ensure document is defined before accessing the name field (Causes very bad errors if no check is done)
     const ingredientItems = document ? RecipesIngredients.collection.find({ recipe: document.name }).fetch() : [];
-    if (verbose) { console.log('Ingredient Documents: ', ingredientItems, '\nReady: ', rdy); }
+    if (verbose) { console.log('Ingredient Docs (useTracker): ', ingredientItems, '\nReady: ', rdy); }
     return {
       recipe: document,
-      ingredientDocs: ingredientItems,
+      ingredients: ingredientItems,
       ready: rdy,
     };
   }, [_id]);
-  const [ingredients, setIngredients] = useState(ingredientDocs);
-  if (verbose) { console.log('ingredients: ', ingredients, '\nReady: ', ready); }
+  if (verbose) { console.log('Ingredient Docs (Component): ', ingredients, '\nReady: ', ready); }
   const model = _.extend({}, recipe, { ingredients });
+  if (verbose) { console.log('Form Model: ', model, '\nReady: ', ready); }
   const submit = (data) => {
-    const { name, owner, image, instructions, time, servings } = data;
-    Meteor.call(updateRecipeMethod, { name, owner, image, instructions, time, servings, ingredients }, (error) => {
+    const { name, owner, image, instructions, time, servings, formIngredients } = data;
+    Meteor.call(updateRecipeMethod, { name, owner, image, instructions, time, servings, formIngredients }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
