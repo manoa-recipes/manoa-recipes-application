@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Col, Row, Container, Table, Card, Accordion } from 'react-bootstrap';
+import { Table, Card, Accordion } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
