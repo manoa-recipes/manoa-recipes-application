@@ -76,25 +76,6 @@ Meteor.methods({
   },
 });
 
-/** From: AddRecipe page.
- *  Note: this needs to be consistent to avoid unforeseeable errors ~4/15/2023 */
-// // Recipes schema
-// name: { type: String, index: true, unique: true },
-// // owner: String, is retrieved from the user, not the form
-// image: { type: String, optional: true, defaultValue: '' },
-// instructions: { type: String, optional: false },
-// time: { type: Number, optional: false },
-// servings: { type: Number, optional: false },
-// ingredients: { // 'ingredients' array elements are actually RecipesIngredients documents
-//    type: Array,
-//    minCount: 1, // Every recipe needs at least one VALID document
-//  },
-// // RecipesIngredients schema
-// 'ingredients.$': Object,
-// 'ingredients.$.ingredient': String,
-// 'ingredients.$.size': { type: String, defaultValue: 'whole' },
-// 'ingredients.$.quantity': { type: Number, defaultValue: 1 },
-
 const updateRecipeMethod = 'Recipes.update';
 
 Meteor.methods({

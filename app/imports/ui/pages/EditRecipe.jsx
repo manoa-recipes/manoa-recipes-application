@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import swal from 'sweetalert';
-import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
-import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, HiddenField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
-import { _ } from 'meteor/underscore';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { AutoForm, ErrorsField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
-import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { useParams } from 'react-router';
 import { Recipes } from '../../api/recipes/Recipes';
@@ -16,56 +14,76 @@ import { Ingredients } from '../../api/ingredients/Ingredients';
 import { updateRecipeMethod } from '../../startup/both/Methods';
 
 const verbose = true;
+const recipeBridge = new SimpleSchema2Bridge(Recipes.schema);
 
-// Schema to specify the structure of the data to appear in the AddRecipe form.
-const recipeFormSchema = new SimpleSchema({
-  // Recipes schema
-  name: { type: String, optional: false },
-  image: { type: String, optional: true, defaultValue: '' },
-  instructions: { type: String, optional: false },
-  time: { type: String, optional: false },
-  servings: { type: Number, optional: false },
-  ingredients: {
-    type: Array,
-    minCount: 1, // Every recipe needs at least one ingredient
-  },
-  // RecipesIngredients schema
-  'ingredients.$': Object,
-  'ingredients.$.ingredient': String,
-  'ingredients.$.size': { type: String, defaultValue: 'whole' },
-  'ingredients.$.quantity': { type: Number, defaultValue: 1 },
-});
-const recipeBridge = new SimpleSchema2Bridge(recipeFormSchema);
+const IngredientListItem = ({ ingredient, index }) => (
+  <Container>
+    <Row className="align-items-center">
+      <Col xs={2}>{index})</Col>
+      <Col xs={10}>
+        <Row>
+          <Col>{ingredient.quantity}</Col>
+          <Col>{ingredient.size}</Col>
+          <Col>{ingredient.ingredient}</Col>
+        </Row>
+      </Col>
+    </Row>
+  </Container>
+);
+IngredientListItem.propTypes = {
+  ingredient: PropTypes.shape({
+    ingredient: PropTypes.string,
+    size: PropTypes.string,
+    quantity: PropTypes.number,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+};
+
+const IngredientList = ({ ingredients }) => (
+  <Card>
+    <Card.Header>Ingredients</Card.Header>
+    <Card.Body>
+      {ingredients.map((ingredient, index) => (<IngredientListItem ingredient={ingredient} index={index + 1} />))}
+    </Card.Body>
+  </Card>
+);
+IngredientList.propTypes = {
+  ingredients: PropTypes.arrayOf({
+    ingredient: PropTypes.string,
+    size: PropTypes.string,
+    quantity: PropTypes.number,
+  }).isRequired,
+};
 
 /* Renders the EditStuff page for editing a single document. */
 const EditRecipe = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
-  if (verbose) { console.log('EditRecipe.\n_id: ', _id); }
+  if (verbose) { console.log('EditRecipe _id: ', _id); }
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { recipe, ready, ingredientItems } = useTracker(() => {
+  const { recipe, ready, ingredientDocs } = useTracker(() => {
     // Get access to all collections.
     const sub1 = Meteor.subscribe(Recipes.userPublicationName);
     const sub2 = Meteor.subscribe(RecipesIngredients.userPublicationName);
     const sub3 = Meteor.subscribe(Ingredients.userPublicationName);
     // Determine if the subscriptions are ready
     const rdy = sub1.ready() && sub2.ready() && sub3.ready();
+    // Get the document
+    const document = Recipes.collection.findOne(_id);
     if (verbose) {
       console.log('Recipes: ', Recipes.collection.find({}).fetch());
-      console.log('RecipesIngredients: ', Recipes.collection.find({}).fetch());
-      console.log('Ingredients: ', Recipes.collection.find({}).fetch());
-      console.log('Ready: ', rdy);
+      console.log('Document: ', document, 'Ready: ', rdy);
     }
-    // Get the document
-    const document = Recipes.collection.findOne({ _id: _id });
-    if (verbose) { console.log('Document: ', document, '\nReady: ', rdy); }
+
+    const ingredientItems = RecipesIngredients.collection.find({ recipe: document.name }).fetch();
+    if (verbose) { console.log('Ingredient Documents: ', ingredientItems, '\nReady: ', rdy); }
     return {
       recipe: document,
-      ingredientItems: RecipesIngredients.collection.find({ recipe: document.name }).fetch(),
+      ingredientDocs: ingredientItems,
       ready: rdy,
     };
   }, [_id]);
-  const [ingredients, setIngredients] = useState(ingredientItems);
+  const [ingredients, setIngredients] = useState(ingredientDocs);
   if (verbose) { console.log('ingredients: ', ingredients, '\nReady: ', ready); }
   // On successful submit, insert the data.
   const submit = (data) => {
@@ -77,6 +95,10 @@ const EditRecipe = () => {
         swal('Success', 'Recipe updated successfully', 'success');
       }
     });
+  };
+
+  const onClick = () => {
+
   };
 
   return ready ? (
@@ -95,17 +117,8 @@ const EditRecipe = () => {
             </Col>
           </Card.Header>
           <Card.Body>
-            <ListField name="ingredients" className="bg-light text-dark align-items-center">
-              <ListItemField name="$">
-                <Row className="align-items-center g-0">
-                  <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
-                  <Col xs={3} md={2}><NumField name="quantity" decimal={false} defaultValue={1} /></Col>
-                  <Col xs={3} lg={2}><TextField name="size" /></Col>
-                  <Col xs={5} md={6} lg={7}><TextField name="ingredient" placeholder="Type an ingredient..." /></Col>
-                </Row>
-              </ListItemField>
-            </ListField>
-            <ListAddField name="ingredients.$" addIcon={<PlusCircle className="text-dark" />} />
+            <IngredientList ingredients={ingredients} />
+            <Button onClick={onClick}>Edit Ingredients</Button>
           </Card.Body>
           <Card.Body>
             <Col>
