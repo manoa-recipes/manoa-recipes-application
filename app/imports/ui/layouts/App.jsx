@@ -21,7 +21,6 @@ import Vendors from '../pages/Vendors';
 import UserProfile from '../pages/Profile';
 import ListRecipe from '../pages/ListRecipe';
 
-
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
   const { ready } = useTracker(() => {
