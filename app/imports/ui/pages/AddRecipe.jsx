@@ -1,20 +1,21 @@
 import React from 'react';
-// import swal from 'sweetalert';
-// import { Meteor } from 'meteor/meteor';
-import { Card, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
-import { AutoForm, ErrorsField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NestField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import swal from 'sweetalert';
+import { Meteor } from 'meteor/meteor';
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import { AutoForm, ErrorsField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
+import { addRecipeMethod } from '../../startup/both/Methods';
 
 // Schema to specify the structure of the data to appear in the AddRecipe form.
 const recipeFormSchema = new SimpleSchema({
   // Recipes schema
-  name: { type: String, index: true, unique: true },
-  // owner: String, is retrieved from the user, not the form
+  name: { type: String, optional: false },
+  // owner: String,
   image: { type: String, optional: true, defaultValue: '' },
   instructions: { type: String, optional: false },
-  time: { type: Number, optional: false },
+  time: { type: String, optional: false },
   servings: { type: Number, optional: false },
   ingredients: {
     type: Array,
@@ -30,64 +31,55 @@ const recipeBridge = new SimpleSchema2Bridge(recipeFormSchema);
 
 /* Renders the AddRecipe page for adding a document. */
 const AddRecipe = () => {
+  const owner = Meteor.user().username;
 
   // On submit, insert the data.
-  const submit = () => {};
-  /**
-  const submit = (data, formRef) => {
-    const { name, quantity, condition } = data;
-    const owner = Meteor.user().username;
-    Stuffs.collection.insert(
-      { name, quantity, condition, owner },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Item added successfully', 'success');
-          formRef.reset();
-        }
-      },
-    );
+  const submit = (data) => {
+    const { name, image, instructions, time, servings, ingredients } = data;
+    Meteor.call(addRecipeMethod, { name, owner, image, instructions, time, servings, ingredients }, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Recipe added successfully', 'success');
+      }
+    });
   };
-   */
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
-  let fRef = null;
   return (
-    <Container className="p-2">
-      <AutoForm ref={ref => { fRef = ref; }} schema={recipeBridge} onSubmit={data => submit(data, fRef)}>
-        <Card>
+    <Container className="p-2 text-end">
+      <AutoForm schema={recipeBridge} onSubmit={data => submit(data)}>
+        <Card className="text-center">
+          <Card.Header><Card.Title><h2>Add Recipe</h2></Card.Title></Card.Header>
           <Card.Header>
-            <Card.Title className="text-center">Add Recipe</Card.Title>
+            <Col>
+              <Row><TextField name="name" placeholder="Type a recipe Name..." /></Row>
+              <Row><TextField name="image" placeholder="..." /></Row>
+              <Row>
+                <Col><NumField name="time" decimal={null} /></Col>
+                <Col><NumField name="servings" decimal={null} /></Col>
+              </Row>
+            </Col>
           </Card.Header>
           <Card.Body>
-            <Tabs fill>
-              <Tab eventKey="instr" title="Instructions">
-                <Col>
-                  <Row><TextField name="name" /></Row>
-                  <Row><TextField name="image" /></Row>
-                  <Row>
-                    <Col><NumField name="time" decimal={null} /></Col>
-                    <Col><NumField name="servings" decimal={null} /></Col>
-                  </Row>
-                </Col>
-                <Col>
-                  <LongTextField name="instructions" />
-                </Col>
-              </Tab>
-              <Tab eventKey="ingre" title="Ingredients" className="justify-content-center">
-                <ListField name="ingredients" addIcon={<PlusCircle className="text-dark" />}>
-                  <ListItemField name="$">
-                    <Row className="align-items-center gap-0">
-                      <Col xs={5} md={7}><TextField name="ingredient" /></Col>
-                      <Col xs={3} md={2}><TextField name="size" noValidate /></Col>
-                      <Col xs={3} md={2}><NumField name="quantity" decimal={null} /></Col>
-                      <Col xs={1} md={1}><ListDelField name="" removeIcon={<DashCircle className="text-dark" />} /></Col>
-                    </Row>
-                  </ListItemField>
-                </ListField>
-              </Tab>
-            </Tabs>
+            <ListField name="ingredients" className="bg-light text-dark align-items-center" formNoValidate>
+              <ListItemField name="$">
+                <Row className="align-items-center g-0">
+                  <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
+                  <Col xs={3} md={2}><NumField name="quantity" decimal={false} defaultValue={1} /></Col>
+                  <Col xs={3} lg={2}><TextField name="size" /></Col>
+                  <Col xs={5} md={6} lg={7}><TextField name="ingredient" placeholder="Type an ingredient..." /></Col>
+                </Row>
+              </ListItemField>
+            </ListField>
+            <ListAddField name="ingredients.$" addIcon={<PlusCircle className="text-dark" />} />
+          </Card.Body>
+          <Card.Body>
+            <Col>
+              <LongTextField name="instructions" />
+            </Col>
+          </Card.Body>
+          <Card.Body className="text-end">
             <SubmitField value="Submit" />
             <ErrorsField />
           </Card.Body>

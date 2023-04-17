@@ -2,7 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Col, Row, Container, Table } from 'react-bootstrap';
+import { Table, Card, Accordion } from 'react-bootstrap';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Profiles } from '../../api/profiles/Profiles';
 import { Vendors } from '../../api/vendors/Vendors';
@@ -39,20 +39,24 @@ const IngredientsListAdmin = () => {
     };
   }, []);
   return (ready ? (
-    <Container className="p-0">
-      <h5>Ingredients</h5>
-      <Table striped bordered>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>Name (*)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ingredients.map((ingredient) => <IngredientAdmin key={ingredient._id} ingredient={ingredient} />)}
-        </tbody>
-      </Table>
-    </Container>
+    <Card.Body>
+      <Accordion>
+        <Accordion.Header><h5>Ingredients</h5></Accordion.Header>
+        <Accordion.Body>
+          <Table striped bordered variant="light">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Name (*)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ingredients.map((ingredient) => <IngredientAdmin key={ingredient._id} ingredient={ingredient} />)}
+            </tbody>
+          </Table>
+        </Accordion.Body>
+      </Accordion>
+    </Card.Body>
   ) : <LoadingSpinner />);
 };
 
@@ -90,22 +94,26 @@ const ProfilesListAdmin = () => {
     };
   }, []);
   return (ready ? (
-    <Container className="p-0">
-      <h5>Profiles</h5>
-      <Table striped bordered>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>email (*)</th>
-            <th>vegan</th>
-            <th>glutenFree</th>
-          </tr>
-        </thead>
-        <tbody>
-          {profiles.map((profile) => <ProfileAdmin key={profile._id} profile={profile} />)}
-        </tbody>
-      </Table>
-    </Container>
+    <Card.Body>
+      <Accordion>
+        <Accordion.Header><h5>Profiles</h5></Accordion.Header>
+        <Accordion.Body>
+          <Table striped bordered variant="light">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>email (*)</th>
+                <th>vegan</th>
+                <th>glutenFree</th>
+              </tr>
+            </thead>
+            <tbody>
+              {profiles.map((profile) => <ProfileAdmin key={profile._id} profile={profile} />)}
+            </tbody>
+          </Table>
+        </Accordion.Body>
+      </Accordion>
+    </Card.Body>
   ) : <LoadingSpinner />);
 };
 
@@ -141,21 +149,25 @@ const VendorsListAdmin = () => {
     };
   }, []);
   return (ready ? (
-    <Container className="p-0">
-      <h5>Vendors Collection</h5>
-      <Table striped bordered>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>address (*)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vendors.map((vendor) => <VendorAdmin key={vendor._id} vendor={vendor} />)}
-        </tbody>
-      </Table>
-    </Container>
+    <Card.Body>
+      <Accordion>
+        <Accordion.Header><h5>Vendors Collection</h5></Accordion.Header>
+        <Accordion.Body>
+          <Table striped bordered variant="light">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>address (*)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vendors.map((vendor) => <VendorAdmin key={vendor._id} vendor={vendor} />)}
+            </tbody>
+          </Table>
+        </Accordion.Body>
+      </Accordion>
+    </Card.Body>
   ) : <LoadingSpinner />);
 };
 
@@ -175,7 +187,7 @@ RecipeAdmin.propTypes = {
     name: PropTypes.string,
     owner: PropTypes.string,
     instructions: PropTypes.string,
-    time: PropTypes.number,
+    time: PropTypes.string,
     servings: PropTypes.number,
     _id: PropTypes.string,
   }).isRequired,
@@ -197,36 +209,39 @@ const RecipesListAdmin = () => {
     };
   }, []);
   return (ready ? (
-    <Container className="p-0">
-      <h5>Recipes Collection</h5>
-      <Table striped bordered>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>name (*)</th>
-            <th>owner</th>
-            <th>instructions</th>
-            <th>time</th>
-            <th>servings</th>
-          </tr>
-        </thead>
-        <tbody>
-          {recipes.map((recipe) => <RecipeAdmin key={recipe._id} recipe={recipe} />)}
-        </tbody>
-      </Table>
-    </Container>
+    <Card.Body>
+      <Accordion>
+        <Accordion.Header><h5>Recipes Collection</h5></Accordion.Header>
+        <Accordion.Body>
+          <Table striped bordered variant="light">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>name (*)</th>
+                <th>owner</th>
+                <th>instructions</th>
+                <th>time</th>
+                <th>servings</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recipes.map((recipe) => <RecipeAdmin key={recipe._id} recipe={recipe} />)}
+            </tbody>
+          </Table>
+        </Accordion.Body>
+      </Accordion>
+    </Card.Body>
   ) : <LoadingSpinner />);
 };
 
 /* Organize all admin data */
 const DataListsAdmin = () => (
-  <Col>
-    <Row>
-      <Col><IngredientsListAdmin /></Col>
-      <Col><ProfilesListAdmin /><VendorsListAdmin /></Col>
-    </Row>
-    <Row><RecipesListAdmin /></Row>
-  </Col>
+  <Card bg="light">
+    <IngredientsListAdmin />
+    <ProfilesListAdmin />
+    <VendorsListAdmin />
+    <RecipesListAdmin />
+  </Card>
 );
 
 export default DataListsAdmin;
