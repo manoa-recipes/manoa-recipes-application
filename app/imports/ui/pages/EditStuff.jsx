@@ -9,6 +9,12 @@ import { useParams } from 'react-router';
 import { Stuffs } from '../../api/stuff/Stuff';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+// TO-DO:
+// added sample data in settings, but ask if there are default documents provided
+// I can't do anything if there isn't any default data.... since they won't even load
+// especially for edit profile lol
+// also ask about displaying arrays? and inputting items into an array. oh god.
+
 const bridge = new SimpleSchema2Bridge(Stuffs.schema);
 
 /* Renders the EditStuff page for editing a single document. */

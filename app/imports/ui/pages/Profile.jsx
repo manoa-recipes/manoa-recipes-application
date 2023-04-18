@@ -23,6 +23,7 @@ const UserProfile = () => {
       ready: rdy,
     };
   }, []);
+
   return (ready ? (
     <Container className="py-3">
       <Row className="d-flex justify-content-center">
