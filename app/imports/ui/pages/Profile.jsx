@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Card, ListGroup, Image } from 'react-bootstrap';
+import Link from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profiles/Profiles';
@@ -71,7 +72,9 @@ const UserProfile = () => {
                     </div>
                     { profileData.glutenFree }
                     No
+                    {profileData._id}
                   </ListGroup.Item>
+                  <Link to={`/edit-profile/${profileData._id}`}>Edit</Link>
                 </ListGroup>
               </Card.Body>
             </Card>
