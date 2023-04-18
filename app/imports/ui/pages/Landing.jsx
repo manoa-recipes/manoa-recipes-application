@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 /* A simple static component to render some text for the landing page. */
 const Landing = () => (
   <div>
-    <Row className="align-middle text-center vh-100 mw-100">
+    <Row className="align-middle text-center vh-100 w-100">
       <Col xs={8} id="landing-bg-1" className="border border-dark" />
       <Col xs={4} className="d-flex flex-column justify-content-center border border-dark" id="landing-bg-words">
         <h1>Welcome to Manoa Recipes!</h1>
