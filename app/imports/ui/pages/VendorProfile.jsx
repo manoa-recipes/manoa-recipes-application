@@ -67,6 +67,16 @@ const VendorProfile = () => {
                     className="d-flex justify-content-between align-items-start"
                   >
                     <div className="ms-2 me-auto">
+                      <div className="fw-bold">Hours:</div>
+                    </div>
+                    { profileData.allergies }
+                    10:00am-5:00pm
+                  </ListGroup.Item>
+                  <ListGroup.Item
+                    as="li"
+                    className="d-flex justify-content-between align-items-start"
+                  >
+                    <div className="ms-2 me-auto">
                       <div className="fw-bold">Products:</div>
                     </div>
                     { profileData.vegan }
