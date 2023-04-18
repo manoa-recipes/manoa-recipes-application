@@ -1,5 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 import { useTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -25,44 +26,46 @@ const EditRecipe = () => {
   // console.log('EditRecipe called:\n  _id: ', _id);
 
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { recipe, startIngredients, ready } = useTracker(() => {
+  const { recipe, startIngredients, editAccess, ready } = useTracker(() => {
     // Access to Recipes collection.
     const sub1 = Meteor.subscribe(Recipes.userPublicationName);
     // Access to RecipesIngredients collection.
     const sub2 = Meteor.subscribe(RecipesIngredients.userPublicationName);
     // Determine if the subscriptions are ready
-    const rdy = sub1.ready() && sub2.ready();
+    const rdy = sub1.ready() && sub2.ready() && Roles.subscription.ready();
 
     /* Output to console for tracing bugs */
     // console.log('useTracker collections:', '\n  Recipes: ', Recipes.collection.find({}).fetch(), '\n  RecipesIngredients: ', RecipesIngredients.collection.find({}).fetch());
 
     /* The specific recipe document */
     const document = Recipes.collection.findOne(_id);
+    /* Logged in users username */
+    const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
+    const isAdmin = (Meteor.userId() !== null) ? Roles.userIsInRole(Meteor.userId(), 'admin') : false;
+    const isOwner = (user === (document ? document.owner : 'tempOwner'));
 
     /** Ensure document is defined before accessing the name field */
     const ingredientItems = document ? RecipesIngredients.collection.find({ recipe: document.name }).fetch() : [];
 
     /* Output to console for tracing bugs */
     // console.log('useTracker documents:', '\n  recipe: ', document, '\n  ingredients: ', ingredientItems);
+    console.log('useTracker:\n  user: ', user, '\n  Admin: ', isAdmin, '\n  Owner: ', isOwner, '\n  Edit Access: ', isAdmin || isOwner);
 
     return {
       recipe: document,
       startIngredients: ingredientItems,
+      editAccess: isAdmin || isOwner,
       ready: rdy,
     };
   }, [_id]);
 
-  // Set the data model for the form
+  // A model to fill the form with starting data
   const model = _.extend({}, recipe, { ingredients: startIngredients });
 
   // console.log('Form Model: ', model);
   /** This function needs to properly call the method to update the database */
   const submit = (data) => {
     const { name, owner, image, instructions, time, servings, ingredients } = data;
-    // if (verbose) { console.log('Form submit button:\n  data: ', data, '\n  formIngredients: ', ingredients); }
-    /* I don't know another way to extract the default values from the form.
-    Loading up the model isn't providing the fields already present, like the name.
-    If I provide the value, like in the HiddenField for the owner, the user can't change the field in the form. */
     // console.log('UpdateRecipeMethod being called:\n  input: ', { _id, name, owner, image, instructions, time, servings, ingredients });
     Meteor.call(updateRecipeMethod, { _id, name, owner, image, instructions, time, servings, ingredients }, (error) => {
       if (error) {
@@ -75,7 +78,7 @@ const EditRecipe = () => {
   // console.log('EditRecipe rendering:\n  Ready: ', ready, '\n  Recipe: ', recipe, '\n  Model: ', model);
   /* If: subscriptions are ready and the recipe is defined: Render the page
   *  Else: render the loading spinner */
-  return ready && recipe ? (
+  return ready && editAccess ? (
     <Container className="p-2 text-end">
       <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)} validate="onChange">
         <Card className="text-center">
@@ -118,6 +121,7 @@ const EditRecipe = () => {
       </AutoForm>
     </Container>
   ) : <LoadingSpinner />;
+
 };
 
 export default EditRecipe;
