@@ -66,7 +66,7 @@ const RecipeIngredient = ({ recipeIngredient }) => {
   return ready ? (
     <Card bg={variant} text={variant === 'light' ? 'dark' : 'white'}>
       <Accordion>
-        <Card.Header className="bg-info">
+        <Card.Header>
           <Accordion.Header>
             <Row>
               <Col>{recipeIngredient.quantity}</Col>
@@ -75,11 +75,13 @@ const RecipeIngredient = ({ recipeIngredient }) => {
             </Row>
           </Accordion.Header>
         </Card.Header>
-        <Card.Body>
-          <Col>
-            {vendorIngredients.length > 0 ? vendorIngredients.map(vendorIngredient => <VendorIngredient vendorIngredient={vendorIngredient} />) : <Row className="text-center"><p>No Vendor data</p></Row>}
-          </Col>
-        </Card.Body>
+        <Accordion.Body>
+          <Card.Body>
+            <Col>
+              {vendorIngredients.length > 0 ? vendorIngredients.map(vendorIngredient => <VendorIngredient vendorIngredient={vendorIngredient} />) : <Row className="text-center"><p>No Vendor data</p></Row>}
+            </Col>
+          </Card.Body>
+        </Accordion.Body>
       </Accordion>
     </Card>
   ) : <LoadingSpinner />;

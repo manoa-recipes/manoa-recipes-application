@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { useTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { Navigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
@@ -23,6 +24,7 @@ const bridge = new SimpleSchema2Bridge(RecipeFormSchema);
 const EditRecipe = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
+  const [redirect, setRedirect] = useState(false);
   // console.log('EditRecipe called:\n  _id: ', _id);
 
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -49,7 +51,7 @@ const EditRecipe = () => {
 
     /* Output to console for tracing bugs */
     // console.log('useTracker documents:', '\n  recipe: ', document, '\n  ingredients: ', ingredientItems);
-    console.log('useTracker:\n  user: ', user, '\n  Admin: ', isAdmin, '\n  Owner: ', isOwner, '\n  Edit Access: ', isAdmin || isOwner);
+    // console.log('useTracker:\n  user: ', user, '\n  Admin: ', isAdmin, '\n  Owner: ', isOwner, '\n  Edit Access: ', isAdmin || isOwner);
 
     return {
       recipe: document,
@@ -72,17 +74,22 @@ const EditRecipe = () => {
         swal('Error', error.message, 'error');
       } else {
         swal('Success', 'Recipe updated successfully', 'success');
+        setRedirect(true);
       }
     });
   };
   // console.log('EditRecipe rendering:\n  Ready: ', ready, '\n  Recipe: ', recipe, '\n  Model: ', model);
+  // Redirect the user to the IndividualRecipe page for the edited document after submit
+  if (redirect) {
+    return (<Navigate to={`/view-recipe/${_id}`} />);
+  }
   /* If: subscriptions are ready and the recipe is defined: Render the page
   *  Else: render the loading spinner */
   return ready && editAccess ? (
     <Container className="p-2 text-end">
       <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)} validate="onChange">
         <Card className="text-center">
-          <Card.Header><Card.Title><h2>Edit Recipe</h2></Card.Title></Card.Header>
+          <Card.Header><Card.Title><h2>Edit {recipe.name}</h2></Card.Title></Card.Header>
           <Card.Header>
             <Col>
               <Row><AutoField name="name" /></Row>
