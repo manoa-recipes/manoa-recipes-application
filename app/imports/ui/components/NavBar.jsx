@@ -13,7 +13,7 @@ const NavBar = () => {
   }), []);
 
   return (
-    <Navbar expand="lg" id="nav">
+    <Navbar expand="lg" id="nav" width="100%">
       <Container id="text">
         <Navbar.Brand as={NavLink} to="/">
           <Image roundedCircle src="images/manoa-recipes.png" alt="logo" width={75} fluid />
