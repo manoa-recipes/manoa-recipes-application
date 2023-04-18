@@ -21,6 +21,8 @@ const UserProfile = () => {
 
     // Get the Stuff documents
 
+    // JANE ISN'T VEGAN ANYMORE??? *******
+
     // const profile = Profiles.collection.findOne(_id);
     const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
     const profileItems = Profiles.collection.find({ email: user }).fetch();
