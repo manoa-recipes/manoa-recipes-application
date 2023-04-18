@@ -41,9 +41,6 @@ const SearchRecipes = () => {
     setField(event);
     // console.log('Event: ', event, '\nKey: ', key, '\nRef: ', ref);
   };
-  const onChange = (event) => {
-    // console.log('Event: ', event);
-  };
 
   /* FormControl Reference */
   let fRef = null;
@@ -67,7 +64,6 @@ const SearchRecipes = () => {
                 key="search-field"
                 ref={ref => { fRef = ref; }}
                 placeholder={field === 'recipe' ? 'Type a Recipe Name...' : 'Type an Ingredient...'}
-                onChange={(event) => onChange(event, fRef)}
               />
               <Button variant="light" value="submit"><Search /></Button>
             </InputGroup>
