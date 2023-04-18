@@ -2,36 +2,18 @@ import React from 'react';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, HiddenField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
 import { addRecipeMethod } from '../../startup/both/Methods';
+import { RecipeFormSchema } from '../forms/RecipeFormInfo';
 
-// Schema to specify the structure of the data to appear in the AddRecipe form.
-const recipeFormSchema = new SimpleSchema({
-  // Recipes schema
-  name: { type: String, optional: false },
-  // owner: String,
-  image: { type: String, optional: true, defaultValue: '' },
-  instructions: { type: String, optional: false },
-  time: { type: String, optional: false },
-  servings: { type: Number, optional: false },
-  ingredients: {
-    type: Array,
-    minCount: 1, // Every recipe needs at least one ingredient
-  },
-  // RecipesIngredients schema
-  'ingredients.$': Object,
-  'ingredients.$.ingredient': String,
-  'ingredients.$.size': { type: String, defaultValue: 'whole' },
-  'ingredients.$.quantity': { type: Number, defaultValue: 1 },
-});
-const recipeBridge = new SimpleSchema2Bridge(recipeFormSchema);
+const recipeBridge = new SimpleSchema2Bridge(RecipeFormSchema);
 
 /* Renders the AddRecipe page for adding a document. */
 const AddRecipe = () => {
   const owner = Meteor.user().username;
+  // console.log('Logged in user: ', owner);
 
   // On submit, insert the data.
   const submit = (data) => {
@@ -64,9 +46,10 @@ const AddRecipe = () => {
           <Card.Body>
             <ListField name="ingredients" className="bg-light text-dark align-items-center" formNoValidate>
               <ListItemField name="$">
-                <Row className="align-items-center g-0">
+                <HiddenField name="recipe" defaultValue="recipe name" />
+                <Row className="align-items-center">
                   <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
-                  <Col xs={3} md={2}><NumField name="quantity" decimal={false} defaultValue={1} /></Col>
+                  <Col xs={3} md={2}><NumField name="quantity" decimal={false} /></Col>
                   <Col xs={3} lg={2}><TextField name="size" /></Col>
                   <Col xs={5} md={6} lg={7}><TextField name="ingredient" placeholder="Type an ingredient..." /></Col>
                 </Row>
@@ -80,6 +63,7 @@ const AddRecipe = () => {
             </Col>
           </Card.Body>
           <Card.Body className="text-end">
+            <HiddenField name="owner" value={owner} />
             <SubmitField value="Submit" />
             <ErrorsField />
           </Card.Body>
