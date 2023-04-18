@@ -18,6 +18,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import AddRecipe from '../pages/AddRecipe';
 import Vendors from '../pages/Vendors';
 import UserProfile from '../pages/Profile';
+import VendorProfile from '../pages/VendorProfile';
 import ListRecipe from '../pages/ListRecipe';
 import EditRecipe from '../pages/EditRecipe';
 import IndividualRecipe from '../components/IndividualRecipe';
@@ -40,7 +41,8 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
           <Route path="/home" element={<ProtectedRoute><UserHome /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+          <Route path="/user_profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+          <Route path="/vendor_profile" element={<ProtectedRoute><VendorProfile /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListRecipe /></ProtectedRoute>} />
           <Route path="/add-recipe" element={<ProtectedRoute><AddRecipe /></ProtectedRoute>} />
           <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
