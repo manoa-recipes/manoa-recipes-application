@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Accordion, Badge, Card, Col, Row } from 'react-bootstrap';
+import { Badge, Card, Col, Row } from 'react-bootstrap';
 import { Profiles } from '../../api/profiles/Profiles';
 import LoadingSpinner from './LoadingSpinner';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
@@ -65,22 +65,18 @@ const RecipeIngredient = ({ recipeIngredient }) => {
   // Display the component for the ingredient
   return ready ? (
     <Card bg={variant} text={variant === 'light' ? 'dark' : 'white'}>
-      <Accordion>
-        <Card.Header className="bg-info">
-          <Accordion.Header>
-            <Row>
-              <Col>{recipeIngredient.quantity}</Col>
-              <Col>{recipeIngredient.size}</Col>
-              <Col>{recipeIngredient.ingredient}</Col>
-            </Row>
-          </Accordion.Header>
-        </Card.Header>
-        <Card.Body>
-          <Col>
-            {vendorIngredients.length > 0 ? vendorIngredients.map(vendorIngredient => <VendorIngredient vendorIngredient={vendorIngredient} />) : <Row className="text-center"><p>No Vendor data</p></Row>}
-          </Col>
-        </Card.Body>
-      </Accordion>
+      <Card.Header>
+        <Row>
+          <Col>{recipeIngredient.quantity}</Col>
+          <Col>{recipeIngredient.size}</Col>
+          <Col>{recipeIngredient.ingredient}</Col>
+        </Row>
+      </Card.Header>
+      <Card.Body>
+        <Col>
+          {vendorIngredients.length > 0 ? vendorIngredients.map(vendorIngredient => <VendorIngredient vendorIngredient={vendorIngredient} />) : <Row className="text-center"><p>No Vendor data</p></Row>}
+        </Col>
+      </Card.Body>
     </Card>
   ) : <LoadingSpinner />;
 };
