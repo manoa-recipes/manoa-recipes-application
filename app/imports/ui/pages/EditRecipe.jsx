@@ -1,77 +1,70 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
-import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
-import { AutoForm, ErrorsField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoField, AutoForm, ErrorsField, HiddenField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { useParams } from 'react-router';
 import { Recipes } from '../../api/recipes/Recipes';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
-import { Ingredients } from '../../api/ingredients/Ingredients';
 import { updateRecipeMethod } from '../../startup/both/Methods';
+import { RecipeFormSchema } from '../forms/RecipeFormInfo';
 
-const verbose = true;
-const recipeFormSchema = new SimpleSchema({
-  // Recipes schema
-  name: { type: String, optional: false },
-  // owner: String,
-  image: { type: String, optional: true, defaultValue: '' },
-  instructions: { type: String, optional: false },
-  time: { type: String, optional: false },
-  servings: { type: Number, optional: false },
-  ingredients: {
-    type: Array,
-    minCount: 1, // Every recipe needs at least one ingredient
-  },
-  // RecipesIngredients schema
-  'ingredients.$': Object,
-  'ingredients.$.ingredient': String,
-  'ingredients.$.size': { type: String, defaultValue: 'whole' },
-  'ingredients.$.quantity': { type: Number, defaultValue: 1 },
-});
-const recipeBridge = new SimpleSchema2Bridge(recipeFormSchema);
+/* Bridge for the form */
+const bridge = new SimpleSchema2Bridge(RecipeFormSchema);
 
-/** This file needs to display the ingredients list in a way that is editable */
-
-/* Renders the EditStuff page for editing a single document. */
+/** This function renders the Recipe information as an Autoform for editing.
+ *   The object id is extracted from the URL. */
 const EditRecipe = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
-  if (verbose) { console.log('EditRecipe _id: ', _id); }
+  // console.log('EditRecipe called:\n  _id: ', _id);
+
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { recipe, ready, ingredients } = useTracker(() => {
-    // Get access to all collections.
+  const { recipe, startIngredients, ready } = useTracker(() => {
+    // Access to Recipes collection.
     const sub1 = Meteor.subscribe(Recipes.userPublicationName);
+    // Access to RecipesIngredients collection.
     const sub2 = Meteor.subscribe(RecipesIngredients.userPublicationName);
-    const sub3 = Meteor.subscribe(Ingredients.userPublicationName);
     // Determine if the subscriptions are ready
-    const rdy = sub1.ready() && sub2.ready() && sub3.ready();
-    // Get the document
+    const rdy = sub1.ready() && sub2.ready();
+
+    /* Output to console for tracing bugs */
+    // console.log('useTracker collections:', '\n  Recipes: ', Recipes.collection.find({}).fetch(), '\n  RecipesIngredients: ', RecipesIngredients.collection.find({}).fetch());
+
+    /* The specific recipe document */
     const document = Recipes.collection.findOne(_id);
-    if (verbose) {
-      console.log('Recipes: ', Recipes.collection.find({}).fetch());
-      console.log('Document: ', document, 'Ready: ', rdy);
-    }
-    // Ensure document is defined before accessing the name field (Causes very bad errors if no check is done)
+
+    /** Ensure document is defined before accessing the name field */
     const ingredientItems = document ? RecipesIngredients.collection.find({ recipe: document.name }).fetch() : [];
-    if (verbose) { console.log('Ingredient Docs (useTracker): ', ingredientItems, '\nReady: ', rdy); }
+
+    /* Output to console for tracing bugs */
+    // console.log('useTracker documents:', '\n  recipe: ', document, '\n  ingredients: ', ingredientItems);
+
     return {
       recipe: document,
-      ingredients: ingredientItems,
+      startIngredients: ingredientItems,
       ready: rdy,
     };
   }, [_id]);
-  if (verbose) { console.log('Ingredient Docs (Component): ', ingredients, '\nReady: ', ready); }
-  const model = _.extend({}, recipe, { ingredients });
-  if (verbose) { console.log('Form Model: ', model, '\nReady: ', ready); }
+
+  // Set the data model for the form
+  const model = _.extend({}, recipe, { ingredients: startIngredients });
+
+  // console.log('Form Model: ', model);
+  /** This function needs to properly call the method to update the database */
   const submit = (data) => {
-    const { name, owner, image, instructions, time, servings, formIngredients } = data;
-    Meteor.call(updateRecipeMethod, { name, owner, image, instructions, time, servings, formIngredients }, (error) => {
+    const { name, owner, image, instructions, time, servings, ingredients } = data;
+    // if (verbose) { console.log('Form submit button:\n  data: ', data, '\n  formIngredients: ', ingredients); }
+    /* I don't know another way to extract the default values from the form.
+    Loading up the model isn't providing the fields already present, like the name.
+    If I provide the value, like in the HiddenField for the owner, the user can't change the field in the form. */
+    // console.log('UpdateRecipeMethod being called:\n  input: ', { _id, name, owner, image, instructions, time, servings, ingredients });
+    Meteor.call(updateRecipeMethod, { _id, name, owner, image, instructions, time, servings, ingredients }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -79,27 +72,31 @@ const EditRecipe = () => {
       }
     });
   };
-  return ready ? (
+  // console.log('EditRecipe rendering:\n  Ready: ', ready, '\n  Recipe: ', recipe, '\n  Model: ', model);
+  /* If: subscriptions are ready and the recipe is defined: Render the page
+  *  Else: render the loading spinner */
+  return ready && recipe ? (
     <Container className="p-2 text-end">
-      <AutoForm model={model} schema={recipeBridge} onSubmit={data => submit(data)}>
+      <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)} validate="onChange">
         <Card className="text-center">
           <Card.Header><Card.Title><h2>Edit Recipe</h2></Card.Title></Card.Header>
           <Card.Header>
             <Col>
-              <Row><TextField name="name" placeholder={recipe.name} defaultValue={recipe.name} /></Row>
-              <Row><TextField name="image" placeholder={recipe.image} value={recipe.image} /></Row>
+              <Row><AutoField name="name" /></Row>
+              <Row><TextField name="image" /></Row>
               <Row>
-                <Col><TextField name="time" decimal={null} placeholder={recipe.time} value={recipe.time} /></Col>
-                <Col><NumField name="servings" decimal={null} placeholder={recipe.servings} value={recipe.servings} /></Col>
+                <Col><TextField name="time" /></Col>
+                <Col><NumField name="servings" key="servings" decimal={null} /></Col>
               </Row>
             </Col>
           </Card.Header>
           <Card.Body>
             <ListField name="ingredients" className="bg-light text-dark align-items-center" formNoValidate>
               <ListItemField name="$">
+                <HiddenField name="recipe" value={recipe.name} />
                 <Row className="align-items-center">
                   <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
-                  <Col xs={3} md={2}><NumField name="quantity" decimal={false} defaultValue={1} /></Col>
+                  <Col xs={3} md={2}><NumField name="quantity" decimal={false} /></Col>
                   <Col xs={3} lg={2}><TextField name="size" /></Col>
                   <Col xs={5} md={6} lg={7}><TextField name="ingredient" placeholder="Type an ingredient..." /></Col>
                 </Row>
@@ -113,6 +110,7 @@ const EditRecipe = () => {
             </Col>
           </Card.Body>
           <Card.Body className="text-end">
+            <HiddenField name="owner" value={recipe.owner} />
             <SubmitField value="Submit" />
             <ErrorsField />
           </Card.Body>

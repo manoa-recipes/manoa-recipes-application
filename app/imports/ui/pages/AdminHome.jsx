@@ -7,11 +7,11 @@ import RelationListsAdmin from '../components/RelationListsAdmin';
 const AdminHome = () => (
   <Container className="p-2 text-center">
     <Tabs>
-      <Tab eventKey="joinDb" title="Join Collections">
-        <RelationListsAdmin />
-      </Tab>
       <Tab eventKey="dataDb" title="Data Collections">
         <DataListsAdmin />
+      </Tab>
+      <Tab eventKey="joinDb" title="Join Collections">
+        <RelationListsAdmin />
       </Tab>
     </Tabs>
   </Container>
