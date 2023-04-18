@@ -67,7 +67,7 @@ body {
   border-radius: 20px;
 }
 
-#card-signin-signup{
+#card-signin-email, #card-signup-password{
   background:#94AF9F;
 }
 
