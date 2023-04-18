@@ -1,29 +1,35 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Card, ListGroup, Image } from 'react-bootstrap';
-import Link from 'react-router-dom';
+// import Link from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profiles/Profiles';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const UserProfile = () => {
+  // const { _id } = useParams();
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, profileData } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
+
     // Determine if the subscription is ready
     const rdy = subscription.ready();
+
     // Get the Stuff documents
-    const profileItems = Profiles.collection.find({ email: Meteor.user().username }).fetch();
+
+    // const profile = Profiles.collection.findOne(_id);
+    const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
+    const profileItems = Profiles.collection.find({ email: user }).fetch();
     return {
       profileData: profileItems,
       ready: rdy,
     };
   }, []);
-
+  console.log(profileData);
   return (ready ? (
     <Container className="py-3">
       <Row className="d-flex justify-content-center">
@@ -51,8 +57,7 @@ const UserProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Allergies:</div>
                     </div>
-                    { profileData.allergies }
-                    Shellfish
+                    { (profileData.allergies === '') ? profileData.allergies : 'None'}
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
@@ -61,8 +66,7 @@ const UserProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Vegan:</div>
                     </div>
-                    { profileData.vegan }
-                    No
+                    { profileData.vegan ? 'Yes' : 'No' }
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
@@ -71,11 +75,9 @@ const UserProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Gluten free:</div>
                     </div>
-                    { profileData.glutenFree }
-                    No
-                    {profileData._id}
+                    { profileData.glutenFree ? 'Yes' : 'No' }
                   </ListGroup.Item>
-                  <Link to={`/edit-profile/${profileData._id}`}>Edit</Link>
+
                 </ListGroup>
               </Card.Body>
             </Card>
