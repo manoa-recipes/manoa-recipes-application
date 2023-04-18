@@ -20,7 +20,7 @@
     },
     {
       "email": "john@foo.com",
-      "role": "vendor",
+      "role": "user",
       "vegan": false,
       "glutenFree": true,
       "allergies": []

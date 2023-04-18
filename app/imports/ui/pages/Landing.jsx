@@ -1,9 +1,9 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Container } from 'react-bootstrap';
 
 /* A simple static component to render some text for the landing page. */
 const Landing = () => (
-  <div id="landing-page">
+  <Container fluid>
     <Row className="align-middle text-center vh-100">
       <Col xs={8} id="landing-bg-1" className="border border-dark" />
       <Col xs={4} className="d-flex flex-column justify-content-center border border-dark" id="landing-bg-words">
@@ -22,7 +22,7 @@ const Landing = () => (
         <h1>Share Your Own Recipes</h1>
       </Col>
     </Row>
-  </div>
+  </Container>
 );
 
 export default Landing;
