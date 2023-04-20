@@ -20,21 +20,21 @@
     },
     {
       "email": "john@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": false,
       "glutenFree": true,
       "allergies": []
     },
     {
       "email": "jane@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": true,
       "glutenFree": false,
       "allergies": []
     },
     {
       "email": "dracula@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": false,
       "glutenFree": false,
       "allergies": [
@@ -48,7 +48,7 @@
       "name": "Default Salad",
       "owner": "jane@foo.com",
       "image": "https://lh3.googleusercontent.com/4eyzo2D9zdI8iyIRHGC_Ehe4rzW7j3DIxZWctid6rx65yfsnvr31mIt2BEQeVqQy2Zork9Ysy-QTO4i6oOL6uQ=w1280-h1280-c-rj-v1-e365",
-      "instructions": "Wash the lettuce and tomato thoroughly.  Assemble the chopped lettuce and tomato.  ",
+      "instructions": "Wash the lettuce and tomato thoroughly. Assemble the chopped lettuce and tomato.  ",
       "time": "10 minutes",
       "servings": 2
     },

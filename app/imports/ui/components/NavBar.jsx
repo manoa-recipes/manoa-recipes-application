@@ -13,7 +13,7 @@ const NavBar = () => {
   }), []);
 
   return (
-    <Navbar expand="lg" id="nav">
+    <Navbar expand="lg" id="nav" width="100%">
       <Container id="text">
         <Navbar.Brand as={NavLink} to="/">
           <Image roundedCircle src="images/manoa-recipes.png" alt="logo" width={75} fluid />
@@ -26,8 +26,13 @@ const NavBar = () => {
               <Nav.Link id="add-recipes-nav" as={NavLink} to="/add-recipe" key="add">Add Recipe</Nav.Link>,
               <Nav.Link id="list-recipes-nav" as={NavLink} to="/list" key="list">List Recipes</Nav.Link>,
               <Nav.Link id="vendor-nav" as={NavLink} to="/vendor" key="vendor">Vendors</Nav.Link>,
-              <Nav.Link id="profile-nav" as={NavLink} to="/profile" key="profile">Profile</Nav.Link>,
             ]) : ''}
+            {Roles.userIsInRole(Meteor.userId(), ['user', 'admin']) ? (
+              <Nav.Link id="user-profile-nav" as={NavLink} to="/user_profile" key="profile">User Profile</Nav.Link>
+            ) : ''}
+            {Roles.userIsInRole(Meteor.userId(), ['vendor', 'admin']) ? (
+              <Nav.Link id="vendor-profile-nav" as={NavLink} to="/vendor_profile" key="vendor-profile">Vendor Profile</Nav.Link>
+            ) : ''}
             {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
               <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>
             ) : ''}
