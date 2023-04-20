@@ -21,17 +21,18 @@ const UserProfile = () => {
 
     // Get the Stuff documents
 
-    // JANE ISN'T VEGAN ANYMORE??? *******
+    // object is defined in console, but when i try to get the keys they're undefined.
 
     // const profile = Profiles.collection.findOne(_id);
     const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
-    const profileItems = Profiles.collection.find({ email: user }).fetch();
+    const profile = Profiles.collection.find({ email: user }).fetch();
+    const profileItems = JSON.parse(JSON.stringify(profile));   // actually makes items readable....
     return {
       profileData: profileItems,
       ready: rdy,
     };
   }, []);
-  console.log(profileData);
+  // console.log(profileData);
   return (ready ? (
     <Container className="py-3">
       <Row className="d-flex justify-content-center">
@@ -39,6 +40,7 @@ const UserProfile = () => {
           <Container className="py-4">
             <Image width="150px" className="rounded-circle border border-white border-2" src="https://www.winsornewton.com/na/wp-content/uploads/sites/50/2019/09/50903849-WN-ARTISTS-OIL-COLOUR-SWATCH-WINSOR-EMERALD-960x960.jpg" />
           </Container>
+          { console.log(Object.keys(profileData)) }
           <h1>My Profile</h1>
           <h5>{ Meteor.user().username }</h5>
         </Col>
