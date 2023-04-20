@@ -27,25 +27,20 @@ const SignUp = ({ location }) => {
 
   const submit = (doc) => {
     const { email, password, role } = doc;
-    const userID = Accounts.createUser({ email, username: email, password, role }, (err) => {
-      if (role === 'vendor') {
-        Roles.createRole(role, { unlessExists: true });
-        Roles.addUsersToRoles(userID, role);
-      }
-      if (role === 'user') {
-        Roles.createRole(role, { unlessExists: true });
-        Roles.addUsersToRoles(userID, role);
-      }
+    const userID = Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         setError(err.reason);
-      } else {
-        setError('');
-        setRedirectToRef(true);
+        return;
       }
+      if (role === 'vendor' || role === 'user') {
+        Roles.createRole(role, { unlessExists: true });
+        Roles.addUsersToRoles(userID, role);
+      }
+      setRedirectToRef(true);
     });
   };
 
-  const { from } = location?.state || { from: { pathname: '/add' } };
+  const { from } = location?.state || { from: { pathname: '/home' } };
   if (redirectToReferer) {
     return <Navigate to={from} />;
   }
