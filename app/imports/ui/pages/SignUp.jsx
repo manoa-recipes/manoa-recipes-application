@@ -30,7 +30,11 @@ const SignUp = ({ location }) => {
     const userID = Accounts.createUser({ email, username: email, password, role }, (err) => {
       if (role === 'vendor') {
         Roles.createRole(role, { unlessExists: true });
-        Roles.addUsersToRoles(userID, 'vendor');
+        Roles.addUsersToRoles(userID, role);
+      }
+      if (role === 'user') {
+        Roles.createRole(role, { unlessExists: true });
+        Roles.addUsersToRoles(userID, role);
       }
       if (err) {
         setError(err.reason);
