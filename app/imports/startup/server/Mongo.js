@@ -28,6 +28,9 @@ function createUser(email, role) {
   const userID = Accounts.createUser({ username: email, email, password: 'changeme' });
   if (role === 'admin') { promoteUser(userID, role); }
   if (role === 'vendor') { promoteUser(userID, role); }
+
+  // adding user role
+  if (role === 'user') { promoteUser(userID, role); }
 }
 
 // Add document to the Ingredients collection

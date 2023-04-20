@@ -20,21 +20,21 @@
     },
     {
       "email": "john@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": false,
       "glutenFree": true,
       "allergies": []
     },
     {
       "email": "jane@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": true,
       "glutenFree": false,
       "allergies": []
     },
     {
       "email": "dracula@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": false,
       "glutenFree": false,
       "allergies": [
