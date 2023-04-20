@@ -24,10 +24,18 @@ test('Test that signin and signout work', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-test.only('Test that signup work', async (testController) => {
+test.only('Test that signup works', async (testController) => {
+  // Go to the signup page
   await navBar.gotoSignUpPage(testController);
-  await signupPage.signupUser(testController, credentials.username, credentials.password);
-  await navBar.isLoggedIn(testController, credentials.username);
+
+  // Sign up a new user
+  const username = 'testuser@example12.com';
+  const password = 'testpassword';
+  await signupPage.signupUser(testController, username, password);
+
+  await navBar.isLoggedIn(testController, username);
+
+  // Log out the user
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
 });
