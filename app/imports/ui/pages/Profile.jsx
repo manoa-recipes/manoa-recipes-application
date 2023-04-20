@@ -19,20 +19,15 @@ const UserProfile = () => {
     // Determine if the subscription is ready
     const rdy = subscription.ready();
 
-    // Get the Stuff documents
-
-    // object is defined in console, but when i try to get the keys they're undefined.
-
-    // const profile = Profiles.collection.findOne(_id);
+    // Get the profile document
+    // ***note: to access any data from the document, use profileItems[0].key
     const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
-    const profile = Profiles.collection.find({ email: user }).fetch();
-    const profileItems = JSON.parse(JSON.stringify(profile));   // actually makes items readable....
+    const profileItems = Profiles.collection.find({ email: user }).fetch();
     return {
       profileData: profileItems,
       ready: rdy,
     };
   }, []);
-  // console.log(profileData);
   return (ready ? (
     <Container className="py-3">
       <Row className="d-flex justify-content-center">
@@ -40,7 +35,6 @@ const UserProfile = () => {
           <Container className="py-4">
             <Image width="150px" className="rounded-circle border border-white border-2" src="https://www.winsornewton.com/na/wp-content/uploads/sites/50/2019/09/50903849-WN-ARTISTS-OIL-COLOUR-SWATCH-WINSOR-EMERALD-960x960.jpg" />
           </Container>
-          { console.log(Object.keys(profileData)) }
           <h1>My Profile</h1>
           <h5>{ Meteor.user().username }</h5>
         </Col>
@@ -61,7 +55,7 @@ const UserProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Allergies:</div>
                     </div>
-                    { (profileData.allergies === '') ? profileData.allergies : 'None'}
+                    { (!Array.isArray(profileData[0].allergies) || !profileData[0].allergies.length) ? 'None' : profileData[0].allergies }
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
@@ -70,7 +64,7 @@ const UserProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Vegan:</div>
                     </div>
-                    { profileData.vegan ? 'Yes' : 'No' }
+                    { profileData[0].vegan ? 'Yes' : 'No' }
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
@@ -79,7 +73,7 @@ const UserProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Gluten free:</div>
                     </div>
-                    { profileData.glutenFree ? 'Yes' : 'No' }
+                    { profileData[0].glutenFree ? 'Yes' : 'No' }
                   </ListGroup.Item>
 
                 </ListGroup>
