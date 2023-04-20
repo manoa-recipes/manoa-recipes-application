@@ -19,6 +19,7 @@ const VendorIngredient = ({ vendorIngredient }) => {
       ready: rdy,
     };
   }, []);
+  // If ready, render page, else show the loading spinner
   return ready ? (
     <Row>
       <Col>{vendor}</Col>

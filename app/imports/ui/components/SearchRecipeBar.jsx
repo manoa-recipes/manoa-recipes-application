@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Col, Container, Dropdown, Form, Row } from 'react-bootstrap';
+import { Button, Dropdown, Form } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Search } from 'react-bootstrap-icons';
 import LoadingSpinner from './LoadingSpinner';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
@@ -10,8 +9,9 @@ import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+const CustomToggle = forwardRef(({ children, onClick }, ref) => (
   <Button
+    href=""
     ref={ref}
     onClick={(e) => {
       e.preventDefault();
@@ -25,7 +25,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 
 // forwardRef again here!
 // Dropdown needs access to the DOM of the Menu to measure it
-const CustomMenu = React.forwardRef(
+const CustomMenu = forwardRef(
   ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
     const [value, setValue] = useState('');
 
@@ -39,7 +39,7 @@ const CustomMenu = React.forwardRef(
         <Form.Control
           autoFocus
           className="mx-3 my-2 w-auto"
-          placeholder="Type an ingredient..."
+          placeholder="Type to filter..."
           onChange={(e) => setValue(e.target.value)}
           value={value}
         />
@@ -66,37 +66,23 @@ const SearchRecipeBar = () => {
       recipeIngredients: RecipesIngredients.collection.find({}).fetch(),
     };
   }, []);
-  let toggleText = 'Ingredient';
-  const itemClicked = (ref) => {
-    console.log(toggleText);
-    toggleText = ref;
-    console.log(toggleText);
-  };
 
   // Component that displays the whole page: search bar as a form and results as a card group or list group
   return (ready ? (
-    <Container>
-      <Form className="d-flex" id="search-bar-nav">
-        <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            {searchParameters}
-          </Dropdown.Toggle>
+    <Dropdown>
+      <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+        Custom toggle
+      </Dropdown.Toggle>
 
-          <Dropdown.Menu>
-            {searchParameters.map()}
-            <Dropdown.Item href="searchby-name">Name</Dropdown.Item>
-            <Dropdown.Item href="searchby-ingredient">Ingredient</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <Form.Control
-          type="search"
-          placeholder="Search"
-          className="me-2"
-          aria-label="Search"
-        />
-        <Button><Search /></Button>
-      </Form>
-    </Container>
+      <Dropdown.Menu as={CustomMenu}>
+        <Dropdown.Item eventKey="1">Red</Dropdown.Item>
+        <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
+        <Dropdown.Item eventKey="3" active>
+          Orange
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   ) : <LoadingSpinner />);
 };
 

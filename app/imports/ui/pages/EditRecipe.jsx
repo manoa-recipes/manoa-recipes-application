@@ -15,6 +15,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { updateRecipeMethod } from '../../startup/both/Methods';
 import { RecipeFormSchema } from '../forms/RecipeFormInfo';
+import NotAuthorized from './NotAuthorized';
 
 /* Bridge for the form */
 const bridge = new SimpleSchema2Bridge(RecipeFormSchema);
@@ -83,52 +84,55 @@ const EditRecipe = () => {
   if (redirect) {
     return (<Navigate to={`/view-recipe/${_id}`} />);
   }
-  /* If: subscriptions are ready and the recipe is defined: Render the page
-  *  Else: render the loading spinner */
-  return ready && editAccess ? (
-    <Container className="p-2 text-end">
-      <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)} validate="onChange">
-        <Card className="text-center">
-          <Card.Header><Card.Title><h2>Edit {recipe.name}</h2></Card.Title></Card.Header>
-          <Card.Header>
-            <Col>
-              <Row><AutoField name="name" /></Row>
-              <Row><TextField name="image" /></Row>
-              <Row>
-                <Col><TextField name="time" /></Col>
-                <Col><NumField name="servings" key="servings" decimal={null} /></Col>
-              </Row>
-            </Col>
-          </Card.Header>
-          <Card.Body>
-            <ListField name="ingredients" className="bg-light text-dark align-items-center" formNoValidate>
-              <ListItemField name="$">
-                <HiddenField name="recipe" value={recipe.name} />
-                <Row className="align-items-center">
-                  <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
-                  <Col xs={3} md={2}><NumField name="quantity" decimal={false} /></Col>
-                  <Col xs={3} lg={2}><TextField name="size" /></Col>
-                  <Col xs={5} md={6} lg={7}><TextField name="ingredient" placeholder="Type an ingredient..." /></Col>
+  /* If ready and editAccess, render the page
+  *  Else If ready and NOT editAccess, show NotAuthorized page
+  *  Else NOT ready, show the loading spinner */
+  if (ready) {
+    return editAccess ? (
+      <Container className="p-2 text-end">
+        <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)} validate="onChange">
+          <Card className="text-center">
+            <Card.Header><Card.Title><h2>Edit {recipe.name}</h2></Card.Title></Card.Header>
+            <Card.Header>
+              <Col>
+                <Row><AutoField name="name" /></Row>
+                <Row><TextField name="image" /></Row>
+                <Row>
+                  <Col><TextField name="time" /></Col>
+                  <Col><NumField name="servings" key="servings" decimal={null} /></Col>
                 </Row>
-              </ListItemField>
-            </ListField>
-            <ListAddField name="ingredients.$" addIcon={<PlusCircle className="text-dark" />} />
-          </Card.Body>
-          <Card.Body>
-            <Col>
-              <LongTextField name="instructions" />
-            </Col>
-          </Card.Body>
-          <Card.Body className="text-end">
-            <HiddenField name="owner" value={recipe.owner} />
-            <SubmitField value="Submit" />
-            <ErrorsField />
-          </Card.Body>
-        </Card>
-      </AutoForm>
-    </Container>
-  ) : <LoadingSpinner />;
-
+              </Col>
+            </Card.Header>
+            <Card.Body>
+              <ListField name="ingredients" className="bg-light text-dark align-items-center" formNoValidate>
+                <ListItemField name="$">
+                  <HiddenField name="recipe" value={recipe.name} />
+                  <Row className="align-items-center">
+                    <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
+                    <Col xs={3} md={2}><NumField name="quantity" decimal={false} /></Col>
+                    <Col xs={3} lg={2}><TextField name="size" /></Col>
+                    <Col xs={5} md={6} lg={7}><TextField name="ingredient" placeholder="Type an ingredient..." /></Col>
+                  </Row>
+                </ListItemField>
+              </ListField>
+              <ListAddField name="ingredients.$" addIcon={<PlusCircle className="text-dark" />} />
+            </Card.Body>
+            <Card.Body>
+              <Col>
+                <LongTextField name="instructions" />
+              </Col>
+            </Card.Body>
+            <Card.Body className="text-end">
+              <HiddenField name="owner" value={recipe.owner} />
+              <SubmitField value="Submit" />
+              <ErrorsField />
+            </Card.Body>
+          </Card>
+        </AutoForm>
+      </Container>
+    ) : <NotAuthorized />;
+  }
+  return <LoadingSpinner />;
 };
 
 export default EditRecipe;
