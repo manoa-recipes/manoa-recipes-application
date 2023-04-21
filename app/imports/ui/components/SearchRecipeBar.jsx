@@ -1,12 +1,62 @@
 import React, { useState, forwardRef } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Dropdown, Form } from 'react-bootstrap';
+import { Button, Container, Dropdown, Form } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from './LoadingSpinner';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 
+// The forwardRef is important!!
+// Dropdown needs access to the DOM node in order to position the Menu
+const TempToggle = forwardRef(({ children, onClick }, ref) => {
+  console.log('TempToggle ref param: ', ref, '\n  children: ', children, '\n  onClick: ', onClick);
+  return (
+    <Button
+      title="TempToggle"
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+      &#x25bc;
+    </Button>
+  );
+});
+
+// forwardRef again here!
+// Dropdown needs access to the DOM of the Menu to measure it
+const TempMenu = forwardRef(
+  ({ children, style, className, 'aria-labelledby': labeledBy, show }, ref) => {
+    console.log('TempMenu ref param: ', ref);
+    const [value, setValue] = useState('');
+
+    return (
+      <Container
+        ref={ref}
+        style={style}
+        className={className}
+        aria-labelledby={labeledBy}
+      >
+        <Form.Control
+          autoFocus
+          className="mx-3 my-2 w-auto"
+          placeholder="Type to filter..."
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+        />
+        <ul className="list-unstyled">
+          {React.Children.toArray(children).filter(
+            (child) => !value || child.props.children.toLowerCase().startsWith(value),
+          )}
+        </ul>
+      </Container>
+    );
+  },
+);
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
 const CustomToggle = forwardRef(({ children, onClick }, ref) => (

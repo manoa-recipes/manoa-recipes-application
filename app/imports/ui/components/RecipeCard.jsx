@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Image } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Clock } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const RecipeCard = ({ recipe }) => (
@@ -13,6 +14,7 @@ const RecipeCard = ({ recipe }) => (
       <Card.Text>{recipe.instructions}</Card.Text>
       <Card.Text><Clock /> {recipe.time}</Card.Text>
     </Card.Body>
+    <Link to={`/view-recipe/${recipe._id}`} />
   </Card>
 
 );

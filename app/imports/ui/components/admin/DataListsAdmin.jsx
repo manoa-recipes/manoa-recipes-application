@@ -3,11 +3,11 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Table, Card, Accordion } from 'react-bootstrap';
-import { Ingredients } from '../../api/ingredients/Ingredients';
-import { Profiles } from '../../api/profiles/Profiles';
-import { Vendors } from '../../api/vendors/Vendors';
-import { Recipes } from '../../api/recipes/Recipes';
-import LoadingSpinner from './LoadingSpinner';
+import { Ingredients } from '../../../api/ingredients/Ingredients';
+import { Profiles } from '../../../api/profiles/Profiles';
+import { Vendors } from '../../../api/vendors/Vendors';
+import { Recipes } from '../../../api/recipes/Recipes';
+import LoadingSpinner from '../LoadingSpinner';
 
 // Components to display Ingredients documents
 const IngredientAdmin = ({ ingredient }) => (
