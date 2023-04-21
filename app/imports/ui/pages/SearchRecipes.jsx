@@ -1,24 +1,51 @@
 import React, { forwardRef, useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
-import { array } from 'prop-types';
-import SimpleSchema from 'simpl-schema';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { Button, Card, Col, Row, Container, Dropdown, FormControl, InputGroup, Form } from 'react-bootstrap';
+import { Button, Card, Col, Row, Container, Dropdown, FormControl, InputGroup, Form, SplitButton, FormSelect, ListGroup } from 'react-bootstrap';
 import { Search } from 'react-bootstrap-icons';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import LoadingSpinner from '../components/LoadingSpinner';
-import RecipeCard from '../components/RecipeCard';
+import DropdownMenu from 'react-bootstrap/DropdownMenu';
 
+/* Possible search fields */
+const searchFields = [
+  { keyVal: 'recipe', fieldName: 'Recipe Name' },
+  { keyVal: 'ingredient', fieldName: 'Ingredients' },
+  { keyVal: 'owner', fieldName: 'Chef' },
+];
+
+// The forwardRef is important!!
+// Dropdown needs access to the DOM node in order to position the Menu
+const TempToggle = forwardRef(({ children, onClick }, ref) => {
+  console.log('TempToggle ref param: ', ref, '\n  children: ', children, '\n  onClick: ', onClick);
+  return (
+    <Button
+      title="TempToggle"
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+      &#x25bc;
+    </Button>
+  );
+});
+
+// forwardRef again here!
+// Dropdown needs access to the DOM of the Menu to measure it
 const TempMenu = forwardRef(
-  ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+  ({ children, style, className, 'aria-labelledby': labeledBy, show }, ref) => {
+    console.log('TempMenu ref param: ', ref);
     const [value, setValue] = useState('');
 
     return (
-      <div
+      <Container
         ref={ref}
         style={style}
         className={className}
@@ -36,109 +63,103 @@ const TempMenu = forwardRef(
             (child) => !value || child.props.children.toLowerCase().startsWith(value),
           )}
         </ul>
-      </div>
+      </Container>
     );
   },
 );
 
 const SearchRecipes = () => {
-  const [field, setField] = useState('recipe');
-  const [showMenu, setShowMenu] = useState(false);
-  const [term, setTerm] = useState([]);
-  const [results, setResults] = useState([]);
+  // The index of the search field
+  const [field, setField] = useState(0);
+  // The current input word
+  const [searchTerm, setSearchTerm] = useState('');
+  // The terms in the list
+  const [terms, setTerms] = useState(undefined);
+  // The selected terms of the list
+  const [selected, setSelected] = useState(undefined);
+  // The FormControl is focused
+  const [focused, setFocused] = useState(false);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, recipes, recipeIngredients } = useTracker(() => {
+  const { ready, ingredientsDocs, recipes, recipeIngredients } = useTracker(() => {
     const sub1 = Meteor.subscribe(Ingredients.userPublicationName);
     const sub2 = Meteor.subscribe(Recipes.userPublicationName);
     const sub3 = Meteor.subscribe(RecipesIngredients.userPublicationName);
     const rdy = sub1.ready() && sub2.ready() && sub3.ready();
     return {
       ready: rdy,
+      ingredientsDocs: Ingredients.collection.find({}).fetch(),
       recipes: Recipes.collection.find({}).fetch(),
       recipeIngredients: RecipesIngredients.collection.find({}).fetch(),
     };
   }, []);
+  if (ready && (selected === undefined)) {
+    console.log('Initializing "selected" array.');
+    setSelected(new Array(ingredientsDocs.length).fill(false));
+  }
+  if (ready && (terms === undefined)) {
+    console.log('Initializing "terms" array (of ingredients).');
+    setTerms(_.pluck(ingredientsDocs, 'name'));
+  }
+  console.log('SearchRecipes post-useTracker:\n  ready: ', ready, '\n  selected: ', selected, '\n  field: ', searchFields[field], '\n  terms: ', terms);
 
-  const ingredientNames = ready ? _.pluck(Ingredients.collection.find({}).fetch(), 'name') : [];
-  // console.log(ingredientNames);
-  const bridge = new SimpleSchema2Bridge(new SimpleSchema({
-    ingredients: { type: array, optional: true },
-    'ingredients.$': { type: String, allowedValues: ingredientNames },
-  }));
-  const onSelect = (key, event) => {
+  const fieldSelect = (event, key) => {
+    console.log('searchFieldSelect:\n  event: ', event, '\n  key: ', key);
     setField(key);
-    // console.log('Event: ', event, '\nKey: ', key, '\nRef: ', ref);
   };
-  const onBlur = (e) => {
-    console.log('onBlur: ', e.type);
-    setShowMenu(false);
+  const handleSearchTerms = (event) => {
+    console.log('handleSearchTerms:\n  event: ', event);
   };
-  const onFocus = (e) => {
-    console.log('onFocus: ', e.type);
-    setShowMenu(true);
+  const handleSearchMenu = (event) => {
+    console.log('handleSearchMenu:\n  event: ', event);
   };
 
   /* FormControl Reference */
   let fRef = null;
 
-  // Component that displays the whole page: search bar as a form and results as a card group or list group
-  return (ready ? (
-    <Container fluid className="p-0">
-      <Col>
-        <Row>
-          <Card className="py-1">
-            <InputGroup>
-              <InputGroup.Text>Search By:</InputGroup.Text>
-              <Dropdown onSelect={(key, event) => onSelect(key, event)}>
-                <Dropdown.Toggle>{field === 'recipe' ? 'Recipe Name' : 'Ingredient'}</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item eventKey="recipe" active={field === 'recipe'}>Recipe Name</Dropdown.Item>
-                  <Dropdown.Item eventKey="ingredient" active={field === 'ingredient'}>Ingredient</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <Col>
-                <FormControl
-                  key="search-field"
-                  ref={ref => { fRef = ref; }}
-                  placeholder={field === 'recipe' ? 'Type a Recipe Name...' : 'Type an Ingredient...'}
-                />
-              </Col>
-              <Button variant="light" value="submit"><Search /></Button>
-            </InputGroup>
-          </Card>
-          <Form
-            as={Dropdown}
+  /* Component that displays the whole page: search bar as a form and results as a card group or list group
+  *  Dropdown.Menu catches _events_: _sources_ from it's children:
+  *    onSelect, Dropdown.Item
+  */
+  return (ready && selected !== undefined && terms !== undefined ? (
+    <Form>
+      <InputGroup>
+        <InputGroup.Text>Search By:</InputGroup.Text>
+        <Dropdown
+          key="field-select"
+          onSelect={(key, e) => fieldSelect(e, key)}
+        >
+          <Dropdown.Toggle>{searchFields[field].fieldName}</Dropdown.Toggle>
+          <Dropdown.Menu>
+            {searchFields.map((searchField, index) => (
+              <Dropdown.Item
+                key={searchField.keyVal}
+                eventKey={index}
+              >
+                {searchField.fieldName}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+        <Col>
+          <FormControl
+            type="search"
+            ref={ref => { fRef = ref; }}
+            placeholder="Type to filter..."
+            onChange={(e) => handleSearchMenu(e)}
+            value={searchTerm}
+          />
+          <ListGroup
+            as={Dropdown.Menu}
+            onSelect={(key, e) => handleSearchMenu(e, key)}
+            show={focused}
+            scr
           >
-            <Row xs={1} md={2}>
-              <Col className="w-auto" />
-              <Col className="flex-row">
-                <Form.Control
-                  autoFocus={false}
-                  onBlur={onBlur}
-                  onFocus={onFocus}
-                  key="search-field"
-                  ref={ref => { fRef = ref; }}
-                  placeholder={field === 'recipe' ? 'Type a Recipe Name...' : 'Type an Ingredient...'}
-                />
-                <Dropdown.Menu show={showMenu} >
-                  <Dropdown.Item eventKey="first" />
-                </Dropdown.Menu>
-              </Col>
-            </Row>
-          </Form>
-        </Row>
-        {field === 'recipe' ? (
-          <Row xs={1} md={2} lg={3} className="p-1 g-4 justify-content-center">
-            {recipes.map((recipe) => (<Col key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}
-          </Row>
-        ) : (
-          <Row className="pb-2 text-dark bg-dark">
-            <Col xs={4} md={3} lg={2} className="align-items-center justify-content-end bg-dark" />
-            <Col />
-          </Row>
-        )}
-      </Col>
-    </Container>
+            {terms.map((term, index) => (!selected[index] ? (<Dropdown.Item key={index} eventKey={index}>{term}</Dropdown.Item>) : ''))}
+          </ListGroup>
+        </Col>
+        <Button value="submit"><Search /></Button>
+      </InputGroup>
+    </Form>
   ) : <LoadingSpinner />);
 };
 

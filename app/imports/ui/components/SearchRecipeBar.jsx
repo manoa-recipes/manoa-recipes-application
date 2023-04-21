@@ -75,6 +75,7 @@ const SearchRecipeBar = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu as={CustomMenu}>
+        {ingredients.map(ingredient => (<Dropdown.Item eventKey={ingredient.name}>{ingredient.name}</Dropdown.Item>))}
         <Dropdown.Item eventKey="1">Red</Dropdown.Item>
         <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
         <Dropdown.Item eventKey="3" active>
