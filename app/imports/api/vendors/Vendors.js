@@ -12,6 +12,7 @@ class VendorsCollection {
     this.schema = new SimpleSchema({
       name: { type: String, defaultValue: 'Store' },
       address: { type: String, index: true, unique: true },
+      hours: { type: String, optional: false },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);

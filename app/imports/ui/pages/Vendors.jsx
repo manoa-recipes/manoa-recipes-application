@@ -1,38 +1,43 @@
 import React from 'react';
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
-import RecipeCard from '../components/RecipeCard';
+import { Meteor } from 'meteor/meteor';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useTracker } from 'meteor/react-meteor-data';
+import LoadingSpinner from '../components/LoadingSpinner';
+import VendorCard from '../components/VendorCard';
+import { Vendors } from '../../api/vendors/Vendors';
 
-/* A simple static component to render some text for the landing page. */
-const Vendors = () => (
-  <Container className="py-3">
-    <Row className="justify-content-center">
-      <Col>
-        <Col className="text-center">
-          <h2>Vendors</h2>
+/* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+const VendorList = () => {
+  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+  const { ready, vendors } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
+    // Get access to Stuff documents.
+    const subscription = Meteor.subscribe(Vendors.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy = subscription.ready();
+    // Get the Stuff documents
+    const vendorList = Vendors.collection.find({}).fetch();
+    return {
+      vendors: vendorList,
+      ready: rdy,
+    };
+  }, []);
+
+  return (ready ? (
+    <Container className="py-3">
+      <Row className="justify-content-center">
+        <Col>
+          <Col className="text-center">
+            <h2>Vendors</h2>
+          </Col>
+          <Row xs={1} md={2} lg={3} className="g-4">
+            {vendors.map((vendor) => (<Col key={vendor._id}><VendorCard vendor={vendor} /></Col>))}
+          </Row>
         </Col>
-        <Row xs={1} md={2} lg={3} className="g-4">
-          <Card style={{ width: '18rem' }}>
-            {/* eslint-disable-next-line max-len */}
-            <Card.Img variant="top" src="https://cdn.corporate.walmart.com/dims4/WMT/0b04aa6/2147483647/strip/true/crop/2400x1260+0+0/resize/1200x630!/quality/90/?url=https%3A%2F%2Fcdn.corporate.walmart.com%2F6f%2Fd3%2Ff3f5a16f44a88d88b8059defd0a9%2Foption-signage.jpg" />
-            <Card.Body>
-              <Card.Title>Walmart</Card.Title>
-              <Card.Text>
-                <div>Address:</div>
-                <div>700 Ke’eaumoku St</div>
-                <div>Honolulu, HI 96814</div>
-                <div />
-                <div>Phone:</div>
-                <div>(808) 955-8441</div>
-                <div>Hours: M, T, W, Th, F, Sat, Sun: </div>
-                <div>6 AM - 11 PM</div>
-              </Card.Text>
+      </Row>
+    </Container>
+  ) : <LoadingSpinner />);
+};
 
-            </Card.Body>
-          </Card>
-        </Row>
-      </Col>
-    </Row>
-  </Container>
-);
-
-export default Vendors;
+export default VendorList;

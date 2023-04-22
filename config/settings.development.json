@@ -76,8 +76,8 @@
   ],
 
   "defaultVendors": [
-    { "name": "ICS Office", "address": "POST 307, University of Hawaii" },
-    { "name": "ICS Class Room", "address": "Basement of Hamilton Library, University of Hawaii" }
+    { "name": "Walmart", "address": "POST 307, University of Hawaii", "hours": "Mondays - Sundays: 6am - 11pm" },
+    { "name": "Safeway", "address": "Basement of Hamilton Library, University of Hawaii", "hours": "Mondays - Sundays: 24 hours" }
   ],
 
   "defaultVendorsIngredients": [
