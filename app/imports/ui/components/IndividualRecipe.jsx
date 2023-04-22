@@ -42,7 +42,7 @@ const IndividualRecipe = () => {
         <Card.Header>
           <Card.Title>{recipe.name}</Card.Title>
           <Card.Subtitle>Submitted by: {recipe.owner}</Card.Subtitle>
-          <Image src={recipe.image} fluid />
+          <Image src={recipe.image} fluid style={{ height: '40vh' }} />
         </Card.Header>
         <Card.Body>
           <Col>
