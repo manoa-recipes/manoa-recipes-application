@@ -4,10 +4,10 @@ import RecipeCard from '../components/RecipeCard';
 
 /* A simple static component to render some text for the landing page. */
 const Vendors = () => (
-  <Container className="py-3">
+  <Container className="py-3" id="vendor-page">
     <Row className="justify-content-center">
       <Col>
-        <Col className="text-center">
+        <Col className="text-center" id="vendor-card">
           <h2>Vendors</h2>
         </Col>
         <Row xs={1} md={2} lg={3} className="g-4">

@@ -46,6 +46,10 @@ class NavBar {
     await testController.click('#user-home-nav');
   }
 
+  async gotoVendorsPage(testController) {
+    await testController.click('#vendor-nav');
+  }
+
   /** Pull down login menu, go to sign up page. */
   async gotoSignUpPage(testController) {
     await this.ensureLogout(testController);

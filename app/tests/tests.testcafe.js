@@ -4,12 +4,12 @@ import { signoutPage } from './signout.page';
 import { navBar } from './navbar.component';
 import { signupPage } from './signup.page';
 import { userhomepage } from './userhome.page';
+import { vendorspage } from './vendors.page';
 
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
-
 fixture('meteor-application-template-react localhost test with default db')
   .page('http://localhost:3000');
 
@@ -36,10 +36,18 @@ test('Test that signup works', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-test.only('Test that userhome page shows up', async (testController) => {
+test('Test that userhome page shows up and the card is visible', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoUserHomePage(testController);
   await userhomepage.isDisplayed(testController);
   await userhomepage.hasCard(testController);
+});
+
+test.only('Test that Vendor page shows up and the card is visible', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoVendorsPage(testController);
+  await vendorspage.isDisplayed(testController);
+  await vendorspage.hasCard(testController);
 });
