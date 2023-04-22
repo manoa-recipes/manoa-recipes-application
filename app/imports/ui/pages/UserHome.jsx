@@ -26,8 +26,8 @@ const UserHome = () => {
   }, []);
 
   return (ready ? (
-    <Container className="py-3">
-      <Row className="justify-content-center">
+    <Container className="py-3" id="userhome-page">
+      <Row className="justify-content-center" id="recipe-card">
         <Col>
           <Col className="text-center">
             <h2>Featured Recipe</h2>

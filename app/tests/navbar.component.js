@@ -42,6 +42,10 @@ class NavBar {
     await testController.click('#navbar-sign-out');
   }
 
+  async gotoUserHomePage(testController) {
+    await testController.click('#user-home-nav');
+  }
+
   /** Pull down login menu, go to sign up page. */
   async gotoSignUpPage(testController) {
     await this.ensureLogout(testController);

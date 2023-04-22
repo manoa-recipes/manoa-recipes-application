@@ -3,6 +3,7 @@ import { signinPage } from './signin.page';
 import { signoutPage } from './signout.page';
 import { navBar } from './navbar.component';
 import { signupPage } from './signup.page';
+import { userhomepage } from './userhome.page';
 
 /* global fixture:false, test:false */
 
@@ -24,18 +25,21 @@ test('Test that signin and signout work', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-test.only('Test that signup works', async (testController) => {
-  // Go to the signup page
+test('Test that signup works', async (testController) => {
   await navBar.gotoSignUpPage(testController);
-
   // Sign up a new user
-  const username = 'testuser@example12.com';
+  const username = 'testuser@example13.com';
   const password = 'testpassword';
   await signupPage.signupUser(testController, username, password);
-
   await navBar.isLoggedIn(testController, username);
-
-  // Log out the user
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
+});
+
+test.only('Test that userhome page shows up', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoUserHomePage(testController);
+  await userhomepage.isDisplayed(testController);
+  await userhomepage.hasCard(testController);
 });
