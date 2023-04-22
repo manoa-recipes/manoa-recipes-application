@@ -79,8 +79,8 @@ const addRecipe = ({ name, owner, image, instructions, time, servings }) => {
 // Add document to the Vendors collection
 const addVendor = ({ name, address }) => {
   console.log(`addVendor(${name}, ${address})`);
-  if (verbose) { console.log('... Vendors.collection.insert({ name: ..., address: ... })'); }
-  Vendors.collection.insert({ name, address });
+  if (verbose) { console.log('... Vendors.collection.insert({ name: ..., address: ..., hours: ... })'); }
+  Vendors.collection.insert({ name, address, hours });
 };
 
 // Add document to the VendorsIngredients collection
