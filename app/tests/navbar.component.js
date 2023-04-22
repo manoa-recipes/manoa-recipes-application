@@ -50,6 +50,10 @@ class NavBar {
     await testController.click('#vendor-nav');
   }
 
+  async gotoProfilePage(testController) {
+    await testController.click('#profile-nav');
+  }
+
   /** Pull down login menu, go to sign up page. */
   async gotoSignUpPage(testController) {
     await this.ensureLogout(testController);
@@ -58,7 +62,7 @@ class NavBar {
       await testController.click('button.navbar-toggler');
     }
     await testController.click('#login-dropdown');
-    await testController.click('#login-dropdown-sign-up');
+    await testController.click('.login-dropdown-sign-up');
   }
 }
 

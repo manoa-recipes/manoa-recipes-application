@@ -5,6 +5,7 @@ import { navBar } from './navbar.component';
 import { signupPage } from './signup.page';
 import { userhomepage } from './userhome.page';
 import { vendorspage } from './vendors.page';
+import { profilepage } from './profile.page';
 
 /* global fixture:false, test:false */
 
@@ -44,10 +45,18 @@ test('Test that userhome page shows up and the card is visible', async (testCont
   await userhomepage.hasCard(testController);
 });
 
-test.only('Test that Vendor page shows up and the card is visible', async (testController) => {
+test('Test that Vendor page shows up and the card is visible', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoVendorsPage(testController);
   await vendorspage.isDisplayed(testController);
   await vendorspage.hasCard(testController);
+});
+
+test.only('Test that profile page shows up. Test "My-profile" and "user information" is displayed.', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoProfilePage(testController);
+  await profilepage.isDisplayed(testController);
+  await profilepage.hasCard(testController);
 });
