@@ -26,10 +26,10 @@ test('Test that signin and signout work', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-test('Test that signup works', async (testController) => {
+test.only('Test that signup works', async (testController) => {
   await navBar.gotoSignUpPage(testController);
   // Sign up a new user
-  const username = 'testuser@example13.com';
+  const username = `testuser-${Date.now()}@example.com`;
   const password = 'testpassword';
   await signupPage.signupUser(testController, username, password);
   await navBar.isLoggedIn(testController, username);
@@ -53,7 +53,7 @@ test('Test that Vendor page shows up and the card is visible', async (testContro
   await vendorspage.hasCard(testController);
 });
 
-test.only('Test that profile page shows up. Test "My-profile" and "user information" is displayed.', async (testController) => {
+test('Test that profile page shows up. Test "My-profile" and "user information" is displayed.', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoProfilePage(testController);
