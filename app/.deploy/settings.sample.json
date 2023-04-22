@@ -11,6 +11,9 @@
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
   ],
 
+  "defaultContacts": [
+  { "email": "john@foo.com", "vegan": false, "glutenFree": false, "allergies": ["shellfish"]}],
+
   "monti": {
     "appId": "changeme",
     "appSecret": "changeme"

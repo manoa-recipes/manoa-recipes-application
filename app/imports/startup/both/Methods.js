@@ -1,11 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects } from '../../api/projects/Projects';
-import { Profiles } from '../../api/profiles/Profiles';
-import { ProfilesInterests } from '../../api/profiles/ProfilesInterests';
-import { ProfilesProjects } from '../../api/profiles/ProfilesProjects';
-import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
+import { Ingredients } from '../../api/ingredients/Ingredients';
+import { Recipes } from '../../api/recipes/Recipes';
+import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 
-/**
+/** === I'm leaving all this here for reference ===
+ *
  * In Bowfolios, insecure mode is enabled, so it is possible to update the server's Mongo database by making
  * changes to the client MiniMongo DB.
  *
@@ -29,40 +28,67 @@ import { ProjectsInterests } from '../../api/projects/ProjectsInterests';
  * back if any of the intermediate updates failed. Left as an exercise to the reader.
  */
 
-const updateProfileMethod = 'Profiles.update';
+/** === I'm leaving all this here for reference === */
+// const updateProfileMethod = 'Profiles.update';
+//
+// // The server-side Profiles.update Meteor Method is called by the client-side Home page after pushing the update button.
+// // Its purpose is to update the Profiles, ProfilesInterests, and ProfilesProjects collections to reflect the
+// // updated situation specified by the user.
+// Meteor.methods({
+//   'Profiles.update'({ email, firstName, lastName, bio, title, picture, interests, projects }) {
+//     Profiles.collection.update({ email }, { $set: { email, firstName, lastName, bio, title, picture } });
+//     ProfilesInterests.collection.remove({ profile: email });
+//     ProfilesProjects.collection.remove({ profile: email });
+//     interests.map((interest) => ProfilesInterests.collection.insert({ profile: email, interest }));
+//     projects.map((project) => ProfilesProjects.collection.insert({ profile: email, project }));
+//   },
+// });
+//
+// const addProjectMethod = 'Projects.add';
+//
+// Meteor.methods({
+//   'Projects.add'({ name, description, picture, interests, participants, homepage }) {
+//     Projects.collection.insert({ name, description, picture, homepage });
+//     ProfilesProjects.collection.remove({ project: name });
+//     ProjectsInterests.collection.remove({ project: name });
+//     if (interests) {
+//       interests.map((interest) => ProjectsInterests.collection.insert({ project: name, interest }));
+//     } else {
+//       throw new Meteor.Error('At least one interest is required.');
+//     }
+//     if (participants) {
+//       participants.map((participant) => ProfilesProjects.collection.insert({ project: name, profile: participant }));
+//     }
+//   },
+// });
 
-/**
- * The server-side Profiles.update Meteor Method is called by the client-side Home page after pushing the update button.
- * Its purpose is to update the Profiles, ProfilesInterests, and ProfilesProjects collections to reflect the
- * updated situation specified by the user.
- */
+/** Method to add a NEW recipe to the database (Modifies 3 collections) */
+const addRecipeMethod = 'Recipes.add';
+
 Meteor.methods({
-  'Profiles.update'({ email, firstName, lastName, bio, title, picture, interests, projects }) {
-    Profiles.collection.update({ email }, { $set: { email, firstName, lastName, bio, title, picture } });
-    ProfilesInterests.collection.remove({ profile: email });
-    ProfilesProjects.collection.remove({ profile: email });
-    interests.map((interest) => ProfilesInterests.collection.insert({ profile: email, interest }));
-    projects.map((project) => ProfilesProjects.collection.insert({ profile: email, project }));
+  'Recipes.add'({ name, owner, image, instructions, time, servings, ingredients }) {
+    // First add to the Recipes collection
+    Recipes.collection.insert({ name, owner, image, instructions, time, servings });
+    // At least one ingredient must exist in the array, update/insert the Ingredients collection
+    ingredients.map(ingredient => Ingredients.collection.update({ name: ingredient.ingredient }, { $set: { name: ingredient.ingredient } }, { upsert: true }));
+    // Finally insert into the RecipesIngredients collection
+    ingredients.map((ingredient) => RecipesIngredients.collection.insert({ recipe: name, ingredient: ingredient.ingredient, size: ingredient.size, quantity: ingredient.quantity }));
   },
 });
 
-const addProjectMethod = 'Projects.add';
+const updateRecipeMethod = 'Recipes.update';
 
-/** Creates a new project in the Projects collection, and also updates ProfilesProjects and ProjectsInterests. */
 Meteor.methods({
-  'Projects.add'({ name, description, picture, interests, participants, homepage }) {
-    Projects.collection.insert({ name, description, picture, homepage });
-    ProfilesProjects.collection.remove({ project: name });
-    ProjectsInterests.collection.remove({ project: name });
-    if (interests) {
-      interests.map((interest) => ProjectsInterests.collection.insert({ project: name, interest }));
-    } else {
-      throw new Meteor.Error('At least one interest is required.');
-    }
-    if (participants) {
-      participants.map((participant) => ProfilesProjects.collection.insert({ project: name, profile: participant }));
-    }
+  'Recipes.update'({ _id, name, owner, image, instructions, time, servings, ingredients }) {
+    // First update the relevant Recipe document ...update({ uniqueField }, { all fields... })
+    Recipes.collection.update(_id, { $set: { name, owner, image, instructions, time, servings } });
+    // Remove all previous relational documents for this recipe before repopulating them from the new list
+    RecipesIngredients.collection.remove({ recipe: name });
+    // At least one ingredient must exist in the array, update/insert the Ingredients collection
+    ingredients.map(ingredient => Ingredients.collection.update({ name: ingredient.ingredient }, { $set: { name: ingredient.ingredient } }, { upsert: true }));
+    // Finally insert the new list into the RecipesIngredients collection
+    ingredients.map((ingredient) => RecipesIngredients.collection.insert({ recipe: name, ingredient: ingredient.ingredient, size: ingredient.size, quantity: ingredient.quantity }));
   },
 });
 
-export { updateProfileMethod, addProjectMethod };
+export { addRecipeMethod, updateRecipeMethod };
