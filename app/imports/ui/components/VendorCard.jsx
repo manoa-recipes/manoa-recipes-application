@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'react-bootstrap';
+import { Card, Col } from 'react-bootstrap';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const VendorCard = ({ vendor }) => (
-  <Card style={{ width: '18rem' }} className="h-100">
-    <Card.Title className="px-3">{vendor.name}</Card.Title>
-    <Card.Subtitle className="px-3">{vendor.address}</Card.Subtitle>
-    <Card.Body>{vendor.hours}</Card.Body>
+  <Card style={{ width: '20rem' }} className="h-100">
+    <div className="row g-0">
+      <div className="col-md-6">
+        <Card.Img variant="top" src={vendor.image} style={{ width: '20vh' }} />
+      </div>
+      <div className="col-md-6">
+        <Card.Body>
+          <Card.Title>{vendor.name}</Card.Title>
+          <Card.Text>{vendor.address}</Card.Text>
+        </Card.Body>
+      </div>
+    </div>
   </Card>
 
 );
