@@ -28,6 +28,9 @@ function createUser(email, role) {
   const userID = Accounts.createUser({ username: email, email, password: 'changeme' });
   if (role === 'admin') { promoteUser(userID, role); }
   if (role === 'vendor') { promoteUser(userID, role); }
+
+  // adding user role
+  if (role === 'user') { promoteUser(userID, role); }
 }
 
 // Add document to the Ingredients collection
@@ -74,10 +77,10 @@ const addRecipe = ({ name, owner, image, instructions, time, servings }) => {
 };
 
 // Add document to the Vendors collection
-const addVendor = ({ name, address }) => {
-  console.log(`addVendor(${name}, ${address})`);
-  if (verbose) { console.log('... Vendors.collection.insert({ name: ..., address: ... })'); }
-  Vendors.collection.insert({ name, address });
+const addVendor = ({ name, address, hours, image }) => {
+  console.log(`addVendor(${name}, ${address}, ${hours}, ${image})`);
+  if (verbose) { console.log('... Vendors.collection.insert({ name: ..., address: ..., hours: ..., image: ... })'); }
+  Vendors.collection.insert({ name, address, hours, image });
 };
 
 // Add document to the VendorsIngredients collection

@@ -18,10 +18,11 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import AddRecipe from '../pages/AddRecipe';
 import Vendors from '../pages/Vendors';
 import UserProfile from '../pages/Profile';
+import VendorProfile from '../pages/VendorProfile';
 import ListRecipe from '../pages/ListRecipe';
 import EditRecipe from '../pages/EditRecipe';
 import IndividualRecipe from '../components/IndividualRecipe';
-import SearchResults from '../pages/SearchResults';
+import EditProfile from '../pages/EditProfile';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -41,11 +42,12 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
           <Route path="/home" element={<ProtectedRoute><UserHome /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+          <Route path="/edit_user_profile/:_id" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
+          <Route path="/user_profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+          <Route path="/vendor_profile" element={<ProtectedRoute><VendorProfile /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListRecipe /></ProtectedRoute>} />
           <Route path="/add-recipe" element={<ProtectedRoute><AddRecipe /></ProtectedRoute>} />
           <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
-          <Route path="/search/:terms" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           <Route path="/view-recipe/:_id" element={<ProtectedRoute><IndividualRecipe /></ProtectedRoute>} />
           <Route path="/edit-recipe/:_id" element={<ProtectedRoute><EditRecipe /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><AdminHome /></AdminProtectedRoute>} />

@@ -20,21 +20,21 @@
     },
     {
       "email": "john@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": false,
       "glutenFree": true,
       "allergies": []
     },
     {
       "email": "jane@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": true,
       "glutenFree": false,
       "allergies": []
     },
     {
       "email": "dracula@foo.com",
-      "role": "",
+      "role": "user",
       "vegan": false,
       "glutenFree": false,
       "allergies": [
@@ -48,7 +48,7 @@
       "name": "Default Salad",
       "owner": "jane@foo.com",
       "image": "https://lh3.googleusercontent.com/4eyzo2D9zdI8iyIRHGC_Ehe4rzW7j3DIxZWctid6rx65yfsnvr31mIt2BEQeVqQy2Zork9Ysy-QTO4i6oOL6uQ=w1280-h1280-c-rj-v1-e365",
-      "instructions": "Wash the lettuce and tomato thoroughly.  Assemble the chopped lettuce and tomato.  ",
+      "instructions": "Wash the lettuce and tomato thoroughly. Assemble the chopped lettuce and tomato.  ",
       "time": "10 minutes",
       "servings": 2
     },
@@ -76,8 +76,8 @@
   ],
 
   "defaultVendors": [
-    { "name": "ICS Office", "address": "POST 307, University of Hawaii" },
-    { "name": "ICS Class Room", "address": "Basement of Hamilton Library, University of Hawaii" }
+    { "name": "Walmart", "address": "POST 307, University of Hawaii", "hours": "Mondays - Sundays: 6am - 11pm", "image": "https://cdn.britannica.com/16/204716-050-8BB76BE8/Walmart-store-Mountain-View-California.jpg" },
+    { "name": "Safeway", "address": "Basement of Hamilton Library, University of Hawaii", "hours": "Mondays - Sundays: 24 hours", "image": "https://static.foxbusiness.com/foxbusiness.com/content/uploads/2020/03/Safeway-Store-iStock.jpg" }
   ],
 
   "defaultVendorsIngredients": [

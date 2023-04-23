@@ -1,28 +1,22 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Card, ListGroup, Image } from 'react-bootstrap';
-// import Link from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profiles/Profiles';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const UserProfile = () => {
-  // const { _id } = useParams();
+const VendorProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, profileData } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
-
     // Determine if the subscription is ready
     const rdy = subscription.ready();
-
-    // Get the profile document
-    // ***note: to access any data from the document, use profileItems[0].key
-    const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
-    const profileItems = Profiles.collection.find({ email: user }).fetch();
+    // Get the Stuff documents
+    const profileItems = Profiles.collection.find({ email: Meteor.user().username }).fetch();
     return {
       profileData: profileItems,
       ready: rdy,
@@ -43,7 +37,7 @@ const UserProfile = () => {
             <Card>
               <Card.Header className="py-2 d-flex align-content-center">
                 <Card.Title>
-                  User Information
+                  Vendor Information
                 </Card.Title>
               </Card.Header>
               <Card.Body>
@@ -53,29 +47,41 @@ const UserProfile = () => {
                     className="d-flex justify-content-between align-items-start"
                   >
                     <div className="ms-2 me-auto">
-                      <div className="fw-bold">Allergies:</div>
+                      <div className="fw-bold">Name:</div>
                     </div>
-                    { (!Array.isArray(profileData[0].allergies) || !profileData[0].allergies.length) ? 'None' : profileData[0].allergies }
+                    { profileData.allergies }
+                    ICS Office
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"
                   >
                     <div className="ms-2 me-auto">
-                      <div className="fw-bold">Vegan:</div>
+                      <div className="fw-bold">Address:</div>
                     </div>
-                    { profileData[0].vegan ? 'Yes' : 'No' }
+                    { profileData.allergies }
+                    POST 307, University of Hawaii
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"
                   >
                     <div className="ms-2 me-auto">
-                      <div className="fw-bold">Gluten free:</div>
+                      <div className="fw-bold">Hours:</div>
                     </div>
-                    { profileData[0].glutenFree ? 'Yes' : 'No' }
+                    { profileData.allergies }
+                    10:00am-5:00pm
                   </ListGroup.Item>
-
+                  <ListGroup.Item
+                    as="li"
+                    className="d-flex justify-content-between align-items-start"
+                  >
+                    <div className="ms-2 me-auto">
+                      <div className="fw-bold">Products:</div>
+                    </div>
+                    { profileData.vegan }
+                    Tomato
+                  </ListGroup.Item>
                 </ListGroup>
               </Card.Body>
             </Card>
@@ -86,4 +92,4 @@ const UserProfile = () => {
   ) : <LoadingSpinner />);
 };
 
-export default UserProfile;
+export default VendorProfile;

@@ -29,7 +29,7 @@ const UserHome = () => {
       <Row className="justify-content-center">
         <Col>
           <Col className="text-center">
-            <h2>Featured Recipe</h2>
+            <h2>All Recipes</h2>
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4">
             {recipes.map((recipe) => (<Col key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}
