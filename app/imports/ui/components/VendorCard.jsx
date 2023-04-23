@@ -12,7 +12,8 @@ const VendorCard = ({ vendor }) => (
       <div className="col-md-6">
         <Card.Body>
           <Card.Title>{vendor.name}</Card.Title>
-          <Card.Text>{vendor.address}</Card.Text>
+          <Card.Text>Address: {vendor.address}</Card.Text>
+          <Card.Text>Hours: {vendor.hours}</Card.Text>
         </Card.Body>
       </div>
     </div>
