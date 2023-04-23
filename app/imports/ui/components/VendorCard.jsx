@@ -4,10 +4,10 @@ import { Card, Col } from 'react-bootstrap';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const VendorCard = ({ vendor }) => (
-  <Card style={{ width: '20rem' }} className="h-100">
+  <Card className="h-100">
     <div className="row g-0">
       <div className="col-md-6">
-        <Card.Img variant="top" src={vendor.image} style={{ width: '20vh' }} />
+        <Card.Img src={vendor.image} className="vendorCard" style={{ height: '200px' }} />
       </div>
       <div className="col-md-6">
         <Card.Body>

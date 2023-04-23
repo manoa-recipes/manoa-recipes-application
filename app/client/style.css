@@ -141,3 +141,9 @@ body {
   --bs-link-color: none;
   --bs-link-hover-color: none;
 }
+
+.vendorCard {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
