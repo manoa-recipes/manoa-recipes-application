@@ -2,10 +2,10 @@ import React, { useState, forwardRef } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Button, Container, Dropdown, Form } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import LoadingSpinner from './LoadingSpinner';
-import { Ingredients } from '../../api/ingredients/Ingredients';
-import { Recipes } from '../../api/recipes/Recipes';
-import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
+import LoadingSpinner from '../LoadingSpinner';
+import { Ingredients } from '../../../api/ingredients/Ingredients';
+import { Recipes } from '../../../api/recipes/Recipes';
+import { RecipesIngredients } from '../../../api/recipes/RecipesIngredients';
 
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu

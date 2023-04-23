@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { Button, Card, Col, Row, Container, Dropdown, InputGroup, FormControl } from 'react-bootstrap';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
+import DropdownItem from 'react-bootstrap/DropdownItem';
 import { Search } from 'react-bootstrap-icons';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Ingredients } from '../../api/ingredients/Ingredients';
@@ -82,20 +83,20 @@ const SearchRecipes = () => {
   /* FormControl Reference */
   let fRef = null;
 
-  console.log(
-    'SearchRecipes pre-render:\n  ready: ',
-    ready,
-    '\n  field: ',
-    searchFields[field],
-    '\n  terms: ',
-    terms,
-    '\n  selected: ',
-    selected,
-    '\n  focused: ',
-    focused,
-    '\n  searchTerm: ',
-    searchTerm,
-  );
+  // console.log(
+  //   'SearchRecipes pre-render:\n  ready: ',
+  //   ready,
+  //   '\n  field: ',
+  //   searchFields[field],
+  //   '\n  terms: ',
+  //   terms,
+  //   '\n  selected: ',
+  //   selected,
+  //   '\n  focused: ',
+  //   focused,
+  //   '\n  searchTerm: ',
+  //   searchTerm,
+  // );
 
   return (ready && selected !== undefined && terms !== undefined ? (
     <InputGroup>
@@ -121,7 +122,6 @@ const SearchRecipes = () => {
         id="search-term-field"
         onFocus={(e) => handleSearchMenu(e)}
         onBlur={(e) => handleSearchMenu(e)}
-        onClick={(e) => console.log('Outside  onSelect: ', e)}
       >
         <FormControl
           type="search"
@@ -135,15 +135,14 @@ const SearchRecipes = () => {
           id="search-term-field-menu"
           show={focused}
         >
-          {terms.map((term, index) => ((!selected[index]) ? (
-            <Dropdown.Item
-              id="search-term-field-item"
+          {terms.map((term, index) => (
+            <DropdownItem
               key={index}
               eventKey={index}
             >
               {term}
-            </Dropdown.Item>
-          ) : ''))}
+            </DropdownItem>
+          ))}
         </DropdownMenu>
       </Col>
       <Button value="submit"><Search /></Button>
