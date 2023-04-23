@@ -50,6 +50,10 @@ class NavBar {
     await testController.click('#vendor-nav');
   }
 
+  async gotoListRecipePage(testController) {
+    await testController.click('#list-recipes-nav');
+  }
+
   async gotoProfilePage(testController) {
     await testController.click('#profile-nav');
   }

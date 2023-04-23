@@ -25,14 +25,14 @@ const UserHome = () => {
   }, []);
 
   return (ready ? (
-    <Container className="py-3">
+    <Container className="py-3" id="list-recipe-page">
       <Row className="justify-content-center">
         <Col>
-          <Col className="text-center">
+          <Col className="text-center" id="featured-recipe">
             <h2>Featured Recipe</h2>
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4">
-            {recipes.map((recipe) => (<Col key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}
+            {recipes.map((recipe) => (<Col id="list-recipe-card" key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}
           </Row>
         </Col>
       </Row>

@@ -6,6 +6,7 @@ import { signupPage } from './signup.page';
 import { userhomepage } from './userhome.page';
 import { vendorspage } from './vendors.page';
 import { profilepage } from './profile.page';
+import { listrecipePage } from './listrecipe.page';
 
 /* global fixture:false, test:false */
 
@@ -26,7 +27,7 @@ test('Test that signin and signout work', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-test.only('Test that signup works', async (testController) => {
+test('Test that signup works', async (testController) => {
   await navBar.gotoSignUpPage(testController);
   // Sign up a new user
   const username = `testuser-${Date.now()}@example.com`;
@@ -59,4 +60,12 @@ test('Test that profile page shows up. Test "My-profile" and "user information" 
   await navBar.gotoProfilePage(testController);
   await profilepage.isDisplayed(testController);
   await profilepage.hasCard(testController);
+});
+
+test.only('Test that list recipe page shows up and the card is visible', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListRecipePage(testController);
+  await listrecipePage.isDisplayed(testController);
+  await listrecipePage.hasCard(testController);
 });
