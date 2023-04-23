@@ -54,6 +54,10 @@ class NavBar {
     await testController.click('#list-recipes-nav');
   }
 
+  async gotoAddRecipePage(testController) {
+    await testController.click('#add-recipes-nav');
+  }
+
   async gotoProfilePage(testController) {
     await testController.click('#profile-nav');
   }

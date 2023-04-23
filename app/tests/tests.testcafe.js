@@ -7,11 +7,13 @@ import { userhomepage } from './userhome.page';
 import { vendorspage } from './vendors.page';
 import { profilepage } from './profile.page';
 import { listrecipePage } from './listrecipe.page';
+import { addrecipePage } from './addrecipe.page';
 
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
+const testaddrecipe = { name: 'test', image: 'testcafe.image', time: '30', servings: '1', quantity: '2', size: 'half', ingredient: 'Tomato', instructions: 'for test cafe' };
 fixture('meteor-application-template-react localhost test with default db')
   .page('http://localhost:3000');
 
@@ -62,10 +64,19 @@ test('Test that profile page shows up. Test "My-profile" and "user information" 
   await profilepage.hasCard(testController);
 });
 
-test.only('Test that list recipe page shows up and the card is visible', async (testController) => {
+test('Test that list recipe page shows up and the card is visible', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoListRecipePage(testController);
   await listrecipePage.isDisplayed(testController);
   await listrecipePage.hasCard(testController);
+});
+
+test.only('Test that list recipe page shows up and the card is visible', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoAddRecipePage(testController);
+  await addrecipePage.isDisplayed(testController);
+  await addrecipePage.hasCard(testController);
+  await addrecipePage.add_recipe(testController, testaddrecipe.name, testaddrecipe.image, testaddrecipe.time, testaddrecipe.servings, testaddrecipe.quantity, testaddrecipe.size, testaddrecipe.ingredient, testaddrecipe.instructions);
 });
