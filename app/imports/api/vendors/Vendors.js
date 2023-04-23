@@ -13,6 +13,7 @@ class VendorsCollection {
       name: { type: String, defaultValue: 'Store' },
       address: { type: String, index: true, unique: true },
       hours: { type: String, optional: false },
+      image: { type: String, optional: true },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);

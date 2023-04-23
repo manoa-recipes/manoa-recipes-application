@@ -30,7 +30,7 @@ const VendorList = () => {
         <Col>
           <Col className="text-center">
             <h2>Vendors</h2>
-            <h4>Click on each store to see what's in stock</h4>
+            <h4><i>Click on each store to see what&apos;s in stock.</i></h4>
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4">
             {vendors.map((vendor) => (<Col key={vendor._id}><VendorCard vendor={vendor} /></Col>))}

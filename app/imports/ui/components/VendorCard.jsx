@@ -18,6 +18,7 @@ VendorCard.propTypes = {
     name: PropTypes.string,
     address: PropTypes.string,
     hours: PropTypes.string,
+    image: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };
