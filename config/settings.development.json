@@ -81,7 +81,7 @@
       "email": "merchant@foo.com" },
 
 
-    { "name": "Safeway", "address": "Basement of Hamilton Library, University of Hawaii", "hours": "Mondays - Sundays: 24 hours", "image": "https://static.foxbusiness.com/foxbusiness.com/content/uploads/2020/03/Safeway-Store-iStock.jpg" }
+    { "name": "Safeway", "address": "Basement of Hamilton Library, University of Hawaii", "hours": "Mondays - Sundays: 24 hours", "image": "https://static.foxbusiness.com/foxbusiness.com/content/uploads/2020/03/Safeway-Store-iStock.jpg", "email":  "vendor@foo.com" }
   ],
 
   "defaultVendorsIngredients": [

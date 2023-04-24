@@ -30,7 +30,7 @@ const VendorProfile = () => {
       <Row className="d-flex justify-content-center">
         <Col className="col-3 text-center border-gradient off-white-background rounded-2 py-4" id="my-profile">
           <Container className="py-4">
-            <Image width="150px" className="rounded-circle border border-white border-2" src="https://www.winsornewton.com/na/wp-content/uploads/sites/50/2019/09/50903849-WN-ARTISTS-OIL-COLOUR-SWATCH-WINSOR-EMERALD-960x960.jpg" />
+            <Image width="150px" className="rounded-circle border border-white border-2" src={vendorData[0].image} />
           </Container>
           <h1>My Profile</h1>
           <h5>{ Meteor.user().username }</h5>
@@ -52,8 +52,9 @@ const VendorProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Name:</div>
                     </div>
-                    { vendorData.name }
+                    { vendorData[0].name }
                   </ListGroup.Item>
+
                   <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"
@@ -61,9 +62,9 @@ const VendorProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Address:</div>
                     </div>
-
-                    POST 307, University of Hawaii
+                    { vendorData[0].address }
                   </ListGroup.Item>
+
                   <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"
@@ -71,9 +72,9 @@ const VendorProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Hours:</div>
                     </div>
-
-                    10:00am-5:00pm
+                    { vendorData[0].hours }
                   </ListGroup.Item>
+
                   <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"
