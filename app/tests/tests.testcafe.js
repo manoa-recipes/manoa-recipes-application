@@ -84,13 +84,13 @@ test('Test that list recipe page shows up and the card is displayed', async (tes
   await listrecipePage.hasCard(testController);
 });
 
-test('Test that admin page shows up and works', async (testController) => {
+test.only('Test that admin page shows up and works', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials_admin.username, credentials_admin.password);
   await navBar.gotoAdminPage(testController);
   await adminPage.isDisplayed(testController);
   await adminPage.admin_ingredients(testController);
-  await adminPage.admin_profiles(testController);
+  await adminPage.admin_profiles_data(testController);
   await adminPage.admin_vendors_collection(testController);
   await adminPage.admin_recipes_collection(testController);
   await adminPage.admin_recipesIngredients_collection(testController);

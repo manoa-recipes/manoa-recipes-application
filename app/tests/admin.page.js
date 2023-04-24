@@ -13,13 +13,14 @@ class AdminPage {
   }
 
   async admin_ingredients(testController) {
+    await testController.click(Selector('button').withText('Data Collections'));
     await testController.click('#admin-ingredients');
     await testController.expect(Selector('table').withText('id').exists).ok();
     await testController.expect(Selector('table').withText('Name (*)').exists).ok();
     await testController.expect(Selector('table tbody tr').count).gte(5);
   }
 
-  async admin_profiles(testController) {
+  async admin_profiles_data(testController) {
     await testController.click('#admin-profiles');
     await testController.expect(Selector('table').withText('id').exists).ok();
     await testController.expect(Selector('table').withText('email (*)').exists).ok();
