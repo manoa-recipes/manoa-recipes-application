@@ -44,8 +44,7 @@ const VendorProfile = () => {
     const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
     const vendorProfile = Vendors.collection.find({ email: user }).fetch();
 
-    const address = vendorProfile.address;
-    const vendorStuff = VendorsIngredients.collection.find({ address: address }).fetch();
+    const vendorStuff = VendorsIngredients.collection.find({ email: user }).fetch();
 
     return {
       vendorData: vendorProfile,

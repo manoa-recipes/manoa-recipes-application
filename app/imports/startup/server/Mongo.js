@@ -84,11 +84,11 @@ const addVendor = ({ name, address, hours, image, email }) => {
 };
 
 // Add document to the VendorsIngredients collection
-const addVendorIngredient = ({ address, ingredient, inStock, size, price }) => {
-  console.log(`addVendorIngredient(${address}, ${ingredient}, ...)`);
+const addVendorIngredient = ({ email, address, ingredient, inStock, size, price }) => {
+  console.log(`addVendorIngredient(${email}, ${address}, ${ingredient}, ...)`);
   addIngredient(ingredient);
   if (verbose) { console.log(`... VendorsIngredients.collection.insert(\n... {\n...   address: ...,\n...   ingredient: ...,\n...   inStock: ${inStock},\n...   size: ${size},\n...   price: ${price}\n... })`); }
-  VendorsIngredients.collection.insert({ address, ingredient, inStock, size, price });
+  VendorsIngredients.collection.insert({ email, address, ingredient, inStock, size, price });
 };
 
 /** Function to populate the collections with default data when installed for the first time. */

@@ -83,6 +83,7 @@
 
   "defaultVendorsIngredients": [
     {
+      "email": "merchant@foo.com",
       "address": "POST 307, University of Hawaii",
       "ingredient": "tomato",
       "inStock": true,
@@ -90,6 +91,7 @@
       "price": 0.79
     },
     {
+      "email": "merchant@foo.com",
       "address": "POST 307, University of Hawaii",
       "ingredient": "lettuce",
       "inStock": false,
@@ -97,6 +99,7 @@
       "price": 1.29
     },
     {
+      "email": "vendor@foo.com",
       "address": "Basement of Hamilton Library, University of Hawaii",
       "ingredient": "lettuce",
       "inStock": true,
@@ -104,6 +107,7 @@
       "price": 1.39
     },
     {
+      "email": "vendor@foo.com",
       "address": "Basement of Hamilton Library, University of Hawaii",
       "ingredient": "tomato",
       "inStock": true,
