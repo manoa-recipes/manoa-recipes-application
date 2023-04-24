@@ -45,7 +45,7 @@ const RecipesIngredientsListAdmin = () => {
   return (ready ? (
     <Card.Body>
       <Accordion>
-        <Accordion.Header><h5>RecipesIngredients Collection</h5></Accordion.Header>
+        <Accordion.Header id="recipesIngredients-collection"><h5>RecipesIngredients Collection</h5></Accordion.Header>
         <Accordion.Body>
           <Table striped bordered variant="light" color="dark">
             <thead>
@@ -108,7 +108,7 @@ const VendorsIngredientsListAdmin = () => {
   return (ready ? (
     <Card.Body>
       <Accordion>
-        <Accordion.Header className="text-center"><h5>VendorsIngredients Collection</h5></Accordion.Header>
+        <Accordion.Header id="admin-vendorsIngredients-collection" className="text-center"><h5>VendorsIngredients Collection</h5></Accordion.Header>
         <Accordion.Body>
           <Table striped bordered variant="light">
             <thead>
