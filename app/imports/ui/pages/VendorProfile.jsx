@@ -3,22 +3,25 @@ import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Card, ListGroup, Image } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Profiles } from '../../api/profiles/Profiles';
+import { Vendors } from '../../api/vendors/Vendors';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const VendorProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, profileData } = useTracker(() => {
+  const { ready, vendorData } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Profiles.userPublicationName);
+    const subscription = Meteor.subscribe(Vendors.userPublicationName);
+
     // Determine if the subscription is ready
     const rdy = subscription.ready();
-    // Get the Stuff documents
-    const profileItems = Profiles.collection.find({ email: Meteor.user().username }).fetch();
+
+    // Get the vendor profile document
+    const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
+    const vendorItems = Vendors.collection.find({ email: user }).fetch();
     return {
-      profileData: profileItems,
+      vendorData: vendorItems,
       ready: rdy,
     };
   }, []);
@@ -49,8 +52,7 @@ const VendorProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Name:</div>
                     </div>
-                    { profileData.allergies }
-                    ICS Office
+                    { vendorData.name }
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
@@ -59,7 +61,7 @@ const VendorProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Address:</div>
                     </div>
-                    { profileData.allergies }
+
                     POST 307, University of Hawaii
                   </ListGroup.Item>
                   <ListGroup.Item
@@ -69,7 +71,7 @@ const VendorProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Hours:</div>
                     </div>
-                    { profileData.allergies }
+
                     10:00am-5:00pm
                   </ListGroup.Item>
                   <ListGroup.Item
@@ -79,7 +81,7 @@ const VendorProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Products:</div>
                     </div>
-                    { profileData.vegan }
+
                     Tomato
                   </ListGroup.Item>
                 </ListGroup>

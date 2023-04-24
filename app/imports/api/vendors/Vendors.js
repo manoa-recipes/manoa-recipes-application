@@ -14,6 +14,7 @@ class VendorsCollection {
       address: { type: String, index: true, unique: true },
       hours: { type: String, optional: false },
       image: { type: String, optional: true },
+      email: { type: String },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);

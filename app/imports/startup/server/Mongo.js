@@ -77,10 +77,10 @@ const addRecipe = ({ name, owner, image, instructions, time, servings }) => {
 };
 
 // Add document to the Vendors collection
-const addVendor = ({ name, address, hours, image }) => {
-  console.log(`addVendor(${name}, ${address}, ${hours}, ${image})`);
+const addVendor = ({ name, address, hours, image, email }) => {
+  console.log(`addVendor(${name}, ${address}, ${hours}, ${image}), ${email}`);
   if (verbose) { console.log('... Vendors.collection.insert({ name: ..., address: ..., hours: ..., image: ... })'); }
-  Vendors.collection.insert({ name, address, hours, image });
+  Vendors.collection.insert({ name, address, hours, image, email });
 };
 
 // Add document to the VendorsIngredients collection
