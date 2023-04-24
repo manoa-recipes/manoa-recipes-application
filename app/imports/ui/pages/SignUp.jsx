@@ -27,21 +27,20 @@ const SignUp = ({ location }) => {
 
   const submit = (doc) => {
     const { email, password, role } = doc;
-    const userID = Accounts.createUser({ email, username: email, password, role }, (err) => {
-      if (role === 'vendor') {
-        Roles.createRole(role, { unlessExists: true });
-        Roles.addUsersToRoles(userID, 'vendor');
-      }
+    const userID = Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         setError(err.reason);
-      } else {
-        setError('');
-        setRedirectToRef(true);
+        return;
       }
+      if (role === 'vendor' || role === 'user') {
+        Roles.createRole(role, { unlessExists: true });
+        Roles.addUsersToRoles(userID, role);
+      }
+      setRedirectToRef(true);
     });
   };
 
-  const { from } = location?.state || { from: { pathname: '/add' } };
+  const { from } = location?.state || { from: { pathname: '/home' } };
   if (redirectToReferer) {
     return <Navigate to={from} />;
   }
@@ -56,10 +55,10 @@ const SignUp = ({ location }) => {
           <AutoForm schema={bridge} onSubmit={(data) => submit(data)}>
             <Card id="card-signin-signup">
               <Card.Body>
-                <TextField id="card-signin-signup" name="email" placeholder="E-mail address" />
-                <TextField id="card-signin-signup" name="password" placeholder="Password" type="password" />
+                <TextField id="card-signup-email" name="email" placeholder="E-mail address" />
+                <TextField id="card-signup-password" name="password" placeholder="Password" type="password" />
                 <SelectField id="card-signin-signup" name="role" />
-                <SubmitField />
+                <SubmitField id="signup-form-submit" />
                 <ErrorsField />
               </Card.Body>
             </Card>

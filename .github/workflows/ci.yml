@@ -1,4 +1,4 @@
-name: ci-meteor-application-template-react
+name: ci-manoa-recipe
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-v5-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: '16.x'
 
@@ -38,4 +38,4 @@ jobs:
         run: |
           meteor npm install
           meteor npm run lint
-#          meteor npm run testcafe-ci
+          meteor npm run testcafe-ci

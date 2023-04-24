@@ -6,7 +6,7 @@ import Profile from './Profile';
 
 /* This component is merely to organize all admin data */
 const AdminHome = () => (
-  <Container className="p-2 text-center">
+  <Container className="p-2 text-center" id="admin-page">
     <Tabs>
       <Tab eventKey="admin-profile" title="Profile">
         <Profile />
@@ -15,7 +15,7 @@ const AdminHome = () => (
         <DataListsAdmin />
       </Tab>
       <Tab eventKey="joinDb" title="Join Collections">
-        <RelationListsAdmin />
+        <RelationListsAdmin id="admin-join-collections" />
       </Tab>
     </Tabs>
   </Container>

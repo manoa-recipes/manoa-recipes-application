@@ -42,6 +42,34 @@ class NavBar {
     await testController.click('#navbar-sign-out');
   }
 
+  async gotoUserHomePage(testController) {
+    await testController.click('#user-home-nav');
+  }
+
+  async gotoVendorsPage(testController) {
+    await testController.click('#vendor-nav');
+  }
+
+  async gotoListRecipePage(testController) {
+    await testController.click('#list-recipes-nav');
+  }
+
+  async gotoAddRecipePage(testController) {
+    await testController.click('#add-recipes-nav');
+  }
+
+  async gotoProfilePage(testController) {
+    await testController.click('#user-profile-nav');
+  }
+
+  async gotoVendorprofilePage(testController) {
+    await testController.click('#vendor-profile-nav');
+  }
+
+  async gotoAdminPage(testController) {
+    await testController.click('#list-stuff-admin-nav');
+  }
+
   /** Pull down login menu, go to sign up page. */
   async gotoSignUpPage(testController) {
     await this.ensureLogout(testController);
