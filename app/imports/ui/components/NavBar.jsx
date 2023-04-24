@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Roles } from 'meteor/alanning:roles';
 import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import SearchBar from './search/SearchBar';
 
 const NavBar = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -22,7 +23,6 @@ const NavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
             {currentUser ? ([
-              <Nav.Link id="search-nav" as={NavLink} to="/search/recipe/''" key="search">Search</Nav.Link>,
               <Nav.Link id="user-home-nav" as={NavLink} to="/home" key="home">Home</Nav.Link>,
               <Nav.Link id="add-recipes-nav" as={NavLink} to="/add-recipe" key="add">Add Recipe</Nav.Link>,
               <Nav.Link id="list-recipes-nav" as={NavLink} to="/list" key="list">List Recipes</Nav.Link>,
@@ -64,6 +64,7 @@ const NavBar = () => {
             )}
           </Nav>
         </Navbar.Collapse>
+        <SearchBar />
       </Container>
     </Navbar>
   );

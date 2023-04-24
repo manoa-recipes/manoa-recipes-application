@@ -1,153 +1,51 @@
 import React, { useState } from 'react';
-import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/underscore';
-import PropTypes from 'prop-types';
-import { Button, Col, Dropdown, InputGroup, FormControl, Row, DropdownButton } from 'react-bootstrap';
+import SimpleSchema from 'simpl-schema';
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { Button, Col, Row, Container } from 'react-bootstrap';
+import { AutoForm, TextField } from 'uniforms-bootstrap5';
 import { Search } from 'react-bootstrap-icons';
-import { useTracker } from 'meteor/react-meteor-data';
-import { Ingredients } from '../../../api/ingredients/Ingredients';
-import { Recipes } from '../../../api/recipes/Recipes';
-import LoadingSpinner from '../LoadingSpinner';
-
-// Minimum length for the search term to call the function to filter the list
-const searchTermMinimumLength = 2;
-
-const SearchMenuItem = ({ data, index }) => {
-  if (data.field === 'recipe') {
-    return (
-      <Button
-        href={`/view-recipe/${data._id}`}
-        key={index}
-        onClick={(e) => console.log(e)}
-      >
-        {data.name}
-      </Button>
-    );
-  }
-  return (
-    <Button
-      href={`/search/'${data.name}'`}
-      key={index}
-      onClick={(e) => console.log(e)}
-    >
-      {data.name}
-    </Button>
-  );
-};
-SearchMenuItem.propTypes = {
-  data: PropTypes.shape({
-    term: PropTypes.string,
-    field: PropTypes.string,
-    name: PropTypes.string,
-    _id: PropTypes.string,
-  }).isRequired,
-  index: PropTypes.number.isRequired,
-};
+import { Navigate } from 'react-router-dom';
+// Let's try it again with uniforms instead
+const bridge = new SimpleSchema2Bridge(new SimpleSchema({ term: { type: String, optional: true, defaultValue: '' } }));
 
 const SearchBar = () => {
-  // The current input word
-  const [searchTerm, setSearchTerm] = useState('');
-  // Boolean to show the Dropdown when the FormControl is focused/selected
-  const [focused, setFocused] = useState(false);
-  // Full list of search menu items
-  const [fullList, setFullList] = useState(undefined);
-  // Full list of search menu items
-  const [filterList, setFilterList] = useState(undefined);
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, ingredients, recipes } = useTracker(() => {
-    const sub1 = Meteor.subscribe(Ingredients.userPublicationName);
-    const sub2 = Meteor.subscribe(Recipes.userPublicationName);
-    const rdy = sub1.ready() && sub2.ready();
-    return {
-      ready: rdy,
-      ingredients: Ingredients.collection.find({}).fetch(),
-      recipes: Recipes.collection.find({}).fetch(),
-    };
-  }, []);
-  const docToItem = (element) => ({ term: searchTerm, field: element.field, name: element.name.toLowerCase(), _id: element._id });
-  // Initialize the list when ready, and only if fullList hasn't been created yet
-  if (ready && (fullList === undefined)) {
-    // Build the list with the collections (both docs' unique keys are called "name"
-    const initialList = recipes.map(recipe => docToItem(_.extend({}, recipe, { field: 'recipe' }))).concat(ingredients.map(ingredient => docToItem(_.extend({}, ingredient, { field: 'ingredient' }))));
-    setFullList(initialList);
-    setFilterList(initialList);
-  }
-  // Returns true when the string starts with the searchTerm
-  const startsWithFilter = (element) => element.name.startsWith(searchTerm);
-  // Returns true when the string contains the searchTerm, but only if it does not start with the searchTerm
-  const includesFilter = (element) => element.name.includes(searchTerm) && (!element.name.startsWith(searchTerm));
-  const termIsLongEnough = () => (searchTerm.length >= searchTermMinimumLength);
-  const termHasChanged = () => { if (filterList.length > 0) { return searchTerm !== filterList[0].term; } return false; };
+  const [formTerm, setFormTerm] = useState({ term: '' });
+  const [redirect, setRedirect] = useState(false);
+  const handleSearchMenu = (e) => setRedirect(e.term === formTerm.term);
 
-  if (fullList && termHasChanged() && termIsLongEnough()) {
-    const startList = _.filter(fullList, startsWithFilter);
-    const containList = _.filter(fullList, includesFilter);
-    // If startList exists, concat containList onto it, else use containList
-    const newFilter = startList ? _.filter(fullList, startsWithFilter).concat(containList) : containList;
-    // At most there are three _.filter() calls
-    if (newFilter.length === 0) {
-      // If newFilter is still undefined then there are no results to display
-      setFilterList([]);
-    } else {
-      // Make the new entry reference the current search term by recalling the item builders
-      setFilterList(newFilter.map(item => docToItem(item, item.field)));
-    }
-  }
-  const handleSearchMenu = (event) => {
-    // console.log('handleSearchMenu:\n  event: ', event);
-    switch (event.type) {
-    case 'focus': setFocused(true); return;
-    case 'blur': setFocused(false); return;
-    case 'change':
-      setSearchTerm(event.target.value.toLowerCase());
-      if (event.target.value.length < searchTermMinimumLength) {
-        setFilterList(fullList);
-      }
-      return;
-    default: console.log(`default: ${event.type}`);
-    }
-  };
-  // console.log('SearchBar pre-render check:\n  ready: ', ready, '\n  focused: ', focused, '\n  searchTerm: ', searchTerm, '\n  fullList: ', fullList, '\n  filterList: ', filterList);
-
-  return (ready && fullList ? (
-    <InputGroup>
-      <Col
-        onBlur={(e) => handleSearchMenu(e)}
-        onFocus={(e) => handleSearchMenu(e)}
+  return redirect ? (<Navigate to={`/search/${formTerm.term}`} />) : (
+    <Container fluid className="p-1 m-0 g-0">
+      <AutoForm
+        className="p-0 m-0 g-0 gap-0"
+        schema={bridge}
+        model={formTerm}
+        onSubmit={(e) => handleSearchMenu(e)}
       >
-        <Row>
-          <FormControl
-            type="search"
-            autoComplete="off"
-            placeholder="Search..."
-            onChange={(e) => handleSearchMenu(e)}
-            onKeyDown={(e) => console.log('Form keyDown: ', e)}
-            value={searchTerm}
-          />
-        </Row>
-        <Row
-          onSelect={(e) => console.log('Row onSelect: ', e)}
-          onClick={(e) => console.log(e)}
-        >
-          <Dropdown
-            show={focused}
-            onSelect={(key, e) => console.log('Item Selected: ', e)}
-            onClick={(e) => console.log(e)}
-          >
-            <Dropdown.Menu
-              style={{ maxHeight: '25vh', overflowY: 'scroll' }}
+        <Row className="grid g-0 p-0 m-0 align-items-center">
+          <Col xs>
+            <TextField
+              name="term"
+              type="search"
+              label={null}
+              placeholder="Search.."
+              className="h-auto w-auto mb-auto"
+              inputClassName="rounded-0 rounded-start"
+              value={formTerm.term}
+              onChange={(val) => setFormTerm({ term: val })}
+            />
+          </Col>
+          <Col xs={1} className="w-auto">
+            <Button
+              className="rounded-0 rounded-end"
+              href={`/search/'${formTerm.term}'`}
             >
-              {(filterList.length > 0) ? filterList.map((item, index) => (
-                <SearchMenuItem key={item._id} data={item} index={index} />
-              )) : (<Dropdown.ItemText>No Results</Dropdown.ItemText>)}
-            </Dropdown.Menu>
-          </Dropdown>
+              <Search />
+            </Button>
+          </Col>
         </Row>
-      </Col>
-      <InputGroup.Checkbox />
-      <Button value="submit"><Search /></Button>
-    </InputGroup>
-  ) : <LoadingSpinner />);
+      </AutoForm>
+    </Container>
+  );
 };
 
 export default SearchBar;

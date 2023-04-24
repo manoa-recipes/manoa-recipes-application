@@ -8,7 +8,6 @@ import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import LoadingSpinner from '../components/LoadingSpinner';
-import SearchBar from '../components/search/SearchBar';
 
 const SearchResults = () => {
   const { terms } = useParams();
@@ -27,11 +26,7 @@ const SearchResults = () => {
   }, [terms]);
   console.log(`SearchResults: /search/${terms}\n  ready: ${ready}`);
   return (ready ? (
-    <Container fluid>
-      <Card>
-        <Card.Header><SearchBar /></Card.Header>
-      </Card>
-    </Container>
+    <Container fluid className="bg-black flex-fill" />
   ) : <LoadingSpinner />);
 };
 

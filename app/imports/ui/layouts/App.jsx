@@ -15,14 +15,15 @@ import NavBar from '../components/NavBar';
 import SignIn from '../pages/SignIn';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
-import AddRecipe from '../pages/AddRecipe';
+import AddRecipe from '../pages/recipe/AddRecipe';
 import Vendors from '../pages/Vendors';
 import UserProfile from '../pages/Profile';
 import VendorProfile from '../pages/VendorProfile';
 import ListRecipe from '../pages/ListRecipe';
-import EditRecipe from '../pages/EditRecipe';
+import EditRecipe from '../pages/recipe/EditRecipe';
 import IndividualRecipe from '../components/IndividualRecipe';
 import EditProfile from '../pages/EditProfile';
+import SearchResults from '../pages/SearchResults';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
           <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
           <Route path="/view-recipe/:_id" element={<ProtectedRoute><IndividualRecipe /></ProtectedRoute>} />
           <Route path="/edit-recipe/:_id" element={<ProtectedRoute><EditRecipe /></ProtectedRoute>} />
+          <Route path="/search/:terms" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><AdminHome /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />

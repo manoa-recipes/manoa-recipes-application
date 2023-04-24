@@ -10,12 +10,12 @@ import { Card, Col, Container, Row } from 'react-bootstrap';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
 import { AutoField, AutoForm, ErrorsField, HiddenField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { useParams } from 'react-router';
-import { Recipes } from '../../api/recipes/Recipes';
-import LoadingSpinner from '../components/LoadingSpinner';
-import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
-import { updateRecipeMethod } from '../../startup/both/Methods';
-import { RecipeFormSchema } from '../forms/RecipeFormInfo';
-import NotAuthorized from './NotAuthorized';
+import { Recipes } from '../../../api/recipes/Recipes';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import { RecipesIngredients } from '../../../api/recipes/RecipesIngredients';
+import { updateRecipeMethod } from '../../../startup/both/Methods';
+import { RecipeFormSchema } from '../../forms/RecipeFormInfo';
+import NotAuthorized from '../NotAuthorized';
 
 /* Bridge for the form */
 const bridge = new SimpleSchema2Bridge(RecipeFormSchema);

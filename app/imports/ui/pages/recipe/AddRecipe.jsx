@@ -5,8 +5,8 @@ import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, HiddenField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
-import { addRecipeMethod } from '../../startup/both/Methods';
-import { RecipeFormSchema } from '../forms/RecipeFormInfo';
+import { addRecipeMethod } from '../../../startup/both/Methods';
+import { RecipeFormSchema } from '../../forms/RecipeFormInfo';
 
 const recipeBridge = new SimpleSchema2Bridge(RecipeFormSchema);
 
