@@ -7,6 +7,25 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 
+const VendorIngredientList = ({ vendorIngredient }) => (
+  <tr>
+    <td>{vendorIngredient.ingredient}</td>
+    <td>{vendorIngredient.inStock ? 'True' : 'False'}</td>
+    <td>{vendorIngredient.size}</td>
+    <td>{vendorIngredient.price}</td>
+  </tr>
+);
+
+VendorIngredientList.propTypes = {
+  vendorIngredient: PropTypes.shape({
+    ingredient: PropTypes.string,
+    inStock: PropTypes.bool,
+    size: PropTypes.string,
+    price: PropTypes.number,
+    _id: PropTypes.string,
+  }).isRequired,
+};
+
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const VendorProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -25,7 +44,7 @@ const VendorProfile = () => {
     const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
     const vendorProfile = Vendors.collection.find({ email: user }).fetch();
 
-    const address = vendorProfile[0].address;
+    const address = vendorProfile.address;
     const vendorStuff = VendorsIngredients.collection.find({ address: address }).fetch();
 
     return {
@@ -123,25 +142,6 @@ const VendorProfile = () => {
       </Row>
     </Container>
   ) : <LoadingSpinner />);
-};
-
-const VendorIngredientList = ({ vendorIngredient }) => (
-  <tr>
-    <td>{vendorIngredient.ingredient}</td>
-    <td>{vendorIngredient.inStock ? 'True' : 'False'}</td>
-    <td>{vendorIngredient.size}</td>
-    <td>{vendorIngredient.price}</td>
-  </tr>
-);
-
-VendorIngredientList.propTypes = {
-  vendorIngredient: PropTypes.shape({
-    ingredient: PropTypes.string,
-    inStock: PropTypes.bool,
-    size: PropTypes.string,
-    price: PropTypes.number,
-    _id: PropTypes.string,
-  }).isRequired,
 };
 
 export default VendorProfile;
