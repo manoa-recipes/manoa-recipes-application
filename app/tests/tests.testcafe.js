@@ -9,12 +9,14 @@ import { profilepage } from './profile.page';
 import { listrecipePage } from './listrecipe.page';
 // import { addrecipePage } from './addrecipe.page';
 import { adminPage } from './admin.page';
+import { vendorprofilePage } from './vendorprofile.page';
 
 /* global fixture:false, test:false */
 
 /** Credentials for one of the sample users defined in settings.development.json. */
 const credentials = { username: 'john@foo.com', password: 'changeme' };
 const credentials_admin = { username: 'admin@foo.com', password: 'changeme' };
+const credentials_vendor = { username: 'merchant@foo.com', password: 'changeme' };
 // const testaddrecipe = { name: 'test', image: 'testcafe.image', time: '30', servings: '1', quantity: '2', size: 'half', ingredient: 'Tomato', instructions: 'for test cafe' };
 fixture('meteor-application-template-react localhost test with default db')
   .page('http://localhost:3000');
@@ -58,7 +60,7 @@ test('Test that Vendor page shows up and the card is displayed', async (testCont
   await vendorspage.hasCard(testController);
 });
 
-test('Test that profile page shows up. Test "My-profile" and "user information" is displayed.', async (testController) => {
+test('Test that profile page shows up. Test "My-profile" and "User information" is displayed.', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoProfilePage(testController);
@@ -66,7 +68,15 @@ test('Test that profile page shows up. Test "My-profile" and "user information" 
   await profilepage.hasCard(testController);
 });
 
-test.only('Test that list recipe page shows up and the card is displayed', async (testController) => {
+test('Test that vendor profile page shows up. Test "My-profile" and "Vendor information" is displayed.', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials_vendor.username, credentials_vendor.password);
+  await navBar.gotoVendorprofilePage(testController);
+  await vendorprofilePage.isDisplayed(testController);
+  await vendorprofilePage.hasCard(testController);
+});
+
+test('Test that list recipe page shows up and the card is displayed', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoListRecipePage(testController);

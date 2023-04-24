@@ -59,7 +59,11 @@ class NavBar {
   }
 
   async gotoProfilePage(testController) {
-    await testController.click('#profile-nav');
+    await testController.click('#user-profile-nav');
+  }
+
+  async gotoVendorprofilePage(testController) {
+    await testController.click('#vendor-profile-nav');
   }
 
   async gotoAdminPage(testController) {
