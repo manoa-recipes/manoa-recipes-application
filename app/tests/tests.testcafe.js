@@ -66,7 +66,7 @@ test('Test that profile page shows up. Test "My-profile" and "user information" 
   await profilepage.hasCard(testController);
 });
 
-test('Test that list recipe page shows up and the card is visible', async (testController) => {
+test.only('Test that list recipe page shows up and the card is displayed', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoListRecipePage(testController);

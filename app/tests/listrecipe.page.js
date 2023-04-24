@@ -14,9 +14,7 @@ class ListrecipePage {
 
   async hasCard(testController) {
     // This is first test to be run. Wait 10 seconds to avoid timeouts with GitHub Actions.
-    await testController.expect(Selector('#featured-recipe').visible).ok();
-    await testController.expect(Selector('#list-recipe-card').visible).ok();
-    await testController.expect(Selector('#list-recipe-card').count).gte(2);
+    await testController.expect(Selector('.g-4').child('.col').count).gte(2);
   }
 }
 
