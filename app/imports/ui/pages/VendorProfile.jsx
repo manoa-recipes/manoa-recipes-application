@@ -10,7 +10,7 @@ import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const VendorProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, vendorData, vendorIngredients } = useTracker(() => {
+  const { ready, ready2, vendorData, vendorIngredients } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
@@ -35,7 +35,7 @@ const VendorProfile = () => {
       ready2: rdy2,
     };
   }, []);
-  return (ready ? (
+  return (ready, ready2 ? (
     <Container className="py-3" id="vendor-profile-page">
       <Row className="d-flex justify-content-center">
         <Col className="col-3 text-center border-gradient off-white-background rounded-2 py-4" id="my-profile">
