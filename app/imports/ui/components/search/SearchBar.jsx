@@ -13,7 +13,7 @@ const SearchBar = () => {
   const [redirect, setRedirect] = useState(false);
   const handleSearchMenu = (e) => setRedirect(e.term === formTerm.term);
 
-  return redirect ? (<Navigate to={`/search/${formTerm.term}`} />) : (
+  return redirect ? (<Navigate to={`/search/'${formTerm.term}'`} />) : (
     <Container fluid className="p-1 m-0 g-0">
       <AutoForm
         className="p-0 m-0 g-0 gap-0"

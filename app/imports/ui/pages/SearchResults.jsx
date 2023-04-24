@@ -10,7 +10,7 @@ import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const SearchResults = () => {
-  const { terms } = useParams();
+  const { _terms } = useParams();
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, ingredients, recipes, recipeIngredients } = useTracker(() => {
     const sub1 = Meteor.subscribe(Ingredients.userPublicationName);
@@ -23,8 +23,8 @@ const SearchResults = () => {
       recipes: Recipes.collection.find({}).fetch(),
       recipeIngredients: RecipesIngredients.collection.find({}).fetch(),
     };
-  }, [terms]);
-  console.log(`SearchResults: /search/${terms}\n  ready: ${ready}`);
+  }, [_terms]);
+  console.log(`SearchResults: /search/${_terms}\n  ready: ${ready}`);
   return (ready ? (
     <Container fluid className="bg-black flex-fill" />
   ) : <LoadingSpinner />);

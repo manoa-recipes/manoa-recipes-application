@@ -51,7 +51,7 @@ const App = () => {
           <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
           <Route path="/view-recipe/:_id" element={<ProtectedRoute><IndividualRecipe /></ProtectedRoute>} />
           <Route path="/edit-recipe/:_id" element={<ProtectedRoute><EditRecipe /></ProtectedRoute>} />
-          <Route path="/search/:terms" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
+          <Route path="/search/:_terms" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><AdminHome /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
