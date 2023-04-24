@@ -110,34 +110,36 @@ const VendorProfile = () => {
       </Row>
       <br />
       <Row className="d-flex justify-content-center">
-        <Container>
-          <Card id="vendor-information-card">
-            <Card.Body>
-              <Accordion>
-                <Accordion.Header id="vendor-profile-page">
-                  <h5>Products</h5>
-                </Accordion.Header>
-                <Accordion.Body>
-                  <Table striped bordered variant="light">
-                    <thead>
-                      <tr>
-                        <th>Ingredient</th>
-                        <th>In Stock</th>
-                        <th>Size</th>
-                        <th>Price</th>
-                      </tr>
-                    </thead>
+        <Col className="col-10 rounded-2">
+          <Container>
+            <Card id="vendor-information-card">
+              <Card.Body>
+                <Accordion>
+                  <Accordion.Header id="vendor-profile-page">
+                    <h5>Products</h5>
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <Table striped bordered variant="light">
+                      <thead>
+                        <tr>
+                          <th>Ingredient</th>
+                          <th>In Stock</th>
+                          <th>Size</th>
+                          <th>Price</th>
+                        </tr>
+                      </thead>
 
-                    <tbody>
-                      {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
-                    </tbody>
+                      <tbody>
+                        {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
+                      </tbody>
 
-                  </Table>
-                </Accordion.Body>
-              </Accordion>
-            </Card.Body>
-          </Card>
-        </Container>
+                    </Table>
+                  </Accordion.Body>
+                </Accordion>
+              </Card.Body>
+            </Card>
+          </Container>
+        </Col>
       </Row>
     </Container>
   ) : <LoadingSpinner />);
