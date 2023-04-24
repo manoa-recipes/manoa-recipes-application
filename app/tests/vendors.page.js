@@ -13,8 +13,7 @@ class VendorsPage {
   }
 
   async hasCard(testController) {
-    // This is first test to be run. Wait 10 seconds to avoid timeouts with GitHub Actions.
-    await testController.expect(Selector('#vendor-card').visible).ok();
+    await testController.expect(Selector('.g-4').child('.col').count).gte(2);
   }
 }
 

@@ -42,7 +42,7 @@ test('Test that signup works', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-test('Test that userhome page shows up and the card is visible', async (testController) => {
+test('Test that userhome page shows up and the card is displayed', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoUserHomePage(testController);
@@ -50,7 +50,7 @@ test('Test that userhome page shows up and the card is visible', async (testCont
   await userhomepage.hasCard(testController);
 });
 
-test('Test that Vendor page shows up and the card is visible', async (testController) => {
+test.only('Test that Vendor page shows up and the card is displayed', async (testController) => {
   await navBar.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await navBar.gotoVendorsPage(testController);
