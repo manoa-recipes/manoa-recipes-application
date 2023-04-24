@@ -62,6 +62,10 @@ class NavBar {
     await testController.click('#profile-nav');
   }
 
+  async gotoAdminPage(testController) {
+    await testController.click('#list-stuff-admin-nav');
+  }
+
   /** Pull down login menu, go to sign up page. */
   async gotoSignUpPage(testController) {
     await this.ensureLogout(testController);
