@@ -74,22 +74,37 @@ const VendorProfile = () => {
                     </div>
                     { vendorData[0].hours }
                   </ListGroup.Item>
-
-                  <ListGroup.Item
-                    as="li"
-                    className="d-flex justify-content-between align-items-start"
-                  >
-                    <div className="ms-2 me-auto">
-                      <div className="fw-bold">Products:</div>
-                    </div>
-
-                    Tomato
-                  </ListGroup.Item>
                 </ListGroup>
               </Card.Body>
             </Card>
           </Container>
         </Col>
+      </Row>
+      <br />
+      <Row className="d-flex justify-content-center">
+        <Container>
+          <Card id="vendor-information-card">
+            <Card.Header className="py-2 d-flex align-content-center">
+              <Card.Title>
+                Products
+              </Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <ListGroup as="ol" variant="flush">
+                <ListGroup.Item
+                  as="li"
+                  className="d-flex justify-content-between align-items-start"
+                >
+                  <div className="ms-2 me-auto">
+                    <div className="fw-bold">Products:</div>
+                  </div>
+
+                  Tomato
+                </ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
+          </Card>
+        </Container>
       </Row>
     </Container>
   ) : <LoadingSpinner />);

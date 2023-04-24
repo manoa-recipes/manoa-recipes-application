@@ -76,12 +76,9 @@
   ],
 
   "defaultVendors": [
-    { "name": "Walmart", "address": "POST 307, University of Hawaii", "hours": "Mondays - Sundays: 6am - 11pm", "image": "https://cdn.britannica.com/16/204716-050-8BB76BE8/Walmart-store-Mountain-View-California.jpg",
+    { "name": "Walmart", "address": "POST 307, University of Hawaii", "hours": "Mondays - Sundays: 6am - 11pm", "image": "https://cdn.britannica.com/16/204716-050-8BB76BE8/Walmart-store-Mountain-View-California.jpg", "email": "merchant@foo.com" },
 
-      "email": "merchant@foo.com" },
-
-
-    { "name": "Safeway", "address": "Basement of Hamilton Library, University of Hawaii", "hours": "Mondays - Sundays: 24 hours", "image": "https://static.foxbusiness.com/foxbusiness.com/content/uploads/2020/03/Safeway-Store-iStock.jpg", "email":  "vendor@foo.com" }
+    { "name": "Safeway", "address": "Basement of Hamilton Library, University of Hawaii", "hours": "Mondays - Sundays: 24 hours", "image": "https://static.foxbusiness.com/foxbusiness.com/content/uploads/2020/03/Safeway-Store-iStock.jpg", "email": "vendor@foo.com" }
   ],
 
   "defaultVendorsIngredients": [
