@@ -110,3 +110,18 @@ if (Meteor.users.find().count() === 0) {
     console.log('Error: Cannot initialize the database!  Please invoke meteor with a settings file.');
   }
 }
+/** Function to repopulate the Recipes databases when empty */
+if (Recipes.collection.length === 0) {
+  console.log('\nCreating default recipes.');
+  Meteor.settings.defaultRecipes.map(recipe => addRecipe(recipe));
+  console.log('\nCreating default recipesingredients.');
+  Meteor.settings.defaultRecipesIngredients.map(recipeIngredient => addRecipeIngredient(recipeIngredient));
+}
+
+/** Function to repopulate the Vendors databases when empty */
+if (Vendors.collection.length === 0) {
+  console.log('\nCreating default vendors.');
+  Meteor.settings.defaultVendors.map(vendor => addVendor(vendor));
+  console.log('\nCreating default vendorsingredients.');
+  Meteor.settings.defaultVendorsIngredients.map(vendorIngredient => addVendorIngredient(vendorIngredient));
+}

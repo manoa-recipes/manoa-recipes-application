@@ -105,7 +105,8 @@ Meteor.methods({
 const clearDatabases = 'All.remove';
 
 Meteor.methods({
-  'All.remove'() {
+  'All.remove'({ message }) {
+    console.log(message);
     Ingredients.collection.remove({});
     Recipes.collection.remove({});
     RecipesIngredients.collection.remove({});

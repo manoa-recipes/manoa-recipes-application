@@ -12,7 +12,7 @@ import { Recipes } from '../../api/recipes/Recipes';
 // This page/component displays ALL data related to a specific recipe
 const IndividualRecipe = () => {
   const { _id } = useParams();
-  console.log('IndividualRecipe:\n  _id: ', _id);
+  // console.log('IndividualRecipe:\n  _id: ', _id);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, recipe, recipeIngredients, editAccess } = useTracker(() => {
     const sub1 = Meteor.subscribe(Recipes.userPublicationName);
@@ -28,7 +28,7 @@ const IndividualRecipe = () => {
     const isOwner = ((Meteor.userId() !== null ? Meteor.user()?.username : 'tempUser') === (document ? document.owner : 'tempOwner'));
     // RecipesIngredients documents
     const ingredientItems = document ? RecipesIngredients.collection.find({ recipe: document.name }).fetch() : [];
-    console.log('useTracker collections:\n  Recipes: ', Recipes.collection.find({}).fetch(), '\n  Recipe: ', document, '\n  Ingredients: ', ingredientItems);
+    // console.log('useTracker collections:\n  Recipes: ', Recipes.collection.find({}).fetch(), '\n  Recipe: ', document, '\n  Ingredients: ', ingredientItems);
     return {
       recipe: document,
       recipeIngredients: ingredientItems,

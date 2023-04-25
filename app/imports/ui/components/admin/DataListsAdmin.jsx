@@ -3,62 +3,11 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Table, Card, Accordion } from 'react-bootstrap';
-import { Ingredients } from '../../../api/ingredients/Ingredients';
 import { Profiles } from '../../../api/profiles/Profiles';
 import { Vendors } from '../../../api/vendors/Vendors';
 import { Recipes } from '../../../api/recipes/Recipes';
 import LoadingSpinner from '../LoadingSpinner';
-
-// Components to display Ingredients documents
-const IngredientAdmin = ({ ingredient }) => (
-  <tr>
-    <td>{ingredient._id}</td>
-    <td>{ingredient.name}</td>
-  </tr>
-);
-IngredientAdmin.propTypes = {
-  ingredient: PropTypes.shape({
-    name: PropTypes.string,
-    _id: PropTypes.string,
-  }).isRequired,
-};
-const IngredientsListAdmin = () => {
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, ingredients } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Ingredients.userPublicationName);
-    // Determine if the subscription is ready
-    const rdy = subscription.ready();
-    // Get the Stuff documents
-    const ingredientItems = Ingredients.collection.find({}).fetch();
-    return {
-      ingredients: ingredientItems,
-      ready: rdy,
-    };
-  }, []);
-  return (ready ? (
-    <Card.Body>
-      <Accordion>
-        <Accordion.Header id="admin-ingredients"><h5>Ingredients</h5></Accordion.Header>
-        <Accordion.Body>
-          <Table striped bordered variant="light">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>Name (*)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ingredients.map((ingredient) => <IngredientAdmin key={ingredient._id} ingredient={ingredient} />)}
-            </tbody>
-          </Table>
-        </Accordion.Body>
-      </Accordion>
-    </Card.Body>
-  ) : <LoadingSpinner />);
-};
+import AdminIngredientsList from './lists/AdminIngredientsList';
 
 // Components to display Profiles documents
 const ProfileAdmin = ({ profile }) => (
@@ -237,7 +186,7 @@ const RecipesListAdmin = () => {
 /* Organize all admin data */
 const DataListsAdmin = () => (
   <Card bg="light">
-    <IngredientsListAdmin />
+    <AdminIngredientsList />
     <ProfilesListAdmin />
     <VendorsListAdmin />
     <RecipesListAdmin />

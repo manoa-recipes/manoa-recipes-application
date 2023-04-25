@@ -79,7 +79,7 @@ const RecipeIngredient = ({ recipeIngredient }) => {
         <Accordion.Body>
           <Card.Body>
             <Col>
-              {vendorIngredients.length > 0 ? vendorIngredients.map(vendorIngredient => <VendorIngredient vendorIngredient={vendorIngredient} />) : <Row className="text-center"><p>No Vendor data</p></Row>}
+              {vendorIngredients.length > 0 ? vendorIngredients.map(vendorIngredient => <VendorIngredient key={vendorIngredient._id} vendorIngredient={vendorIngredient} />) : <Row className="text-center"><p>No Vendor data</p></Row>}
             </Col>
           </Card.Body>
         </Accordion.Body>
