@@ -50,7 +50,8 @@
       "image": "https://lh3.googleusercontent.com/4eyzo2D9zdI8iyIRHGC_Ehe4rzW7j3DIxZWctid6rx65yfsnvr31mIt2BEQeVqQy2Zork9Ysy-QTO4i6oOL6uQ=w1280-h1280-c-rj-v1-e365",
       "instructions": "Wash the lettuce and tomato thoroughly. Assemble the chopped lettuce and tomato.  ",
       "time": "10 minutes",
-      "servings": 2
+      "servings": 2,
+      "dietaryRestrictions": "Vegan"
     },
     {
       "name": "Scratch Pasta Sauce",
@@ -58,7 +59,8 @@
       "image": "https://natashaskitchen.com/wp-content/uploads/2020/02/Marinara-Sauce-2.jpg",
       "instructions": "Requires a stove-top or hot-plate and a pot. Put pot on low-medium heat, add olive oil and diced onion, salt and pepper, and cook until onion is translucent. Add diced garlic and cook for ten more minutes. Mix tomato paste in and cook for five more minutes. Mix in three cups of water and cook five more minutes. Add and mix tomato sauce and chopped basil and reduce heat to low for 25 more minutes.  Note: Season salt and pepper to taste.",
       "time": "60 minutes",
-      "servings": 4
+      "servings": 4,
+      "dietaryRestrictions": "Vegetarian"
     }
   ],
 

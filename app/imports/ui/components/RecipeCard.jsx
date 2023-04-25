@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'react-bootstrap';
+import { Badge, Card } from 'react-bootstrap';
 import { Clock } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ const RecipeCard = ({ recipe }) => (
       <Card.Subtitle className="px-3">{recipe.owner}</Card.Subtitle>
       <Card.Body>
         <Card.Text><Clock /> {recipe.time}</Card.Text>
+        <Card.Text><Badge bg="info">{recipe.dietaryRestrictions}</Badge></Card.Text>
       </Card.Body>
     </Card>
   </Link>
@@ -28,6 +29,7 @@ RecipeCard.propTypes = {
     instructions: PropTypes.string,
     time: PropTypes.string,
     servings: PropTypes.number,
+    dietaryRestrictions: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };

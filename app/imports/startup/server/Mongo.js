@@ -70,10 +70,11 @@ const addRecipeIngredient = ({ recipe, ingredient, size, quantity }) => {
 };
 
 // Add document to the Recipes collection
-const addRecipe = ({ name, owner, image, instructions, time, servings }) => {
+const addRecipe = ({ name, owner, image, instructions, time, servings, dietaryRestrictions }) => {
   console.log(`addRecipe(${name}, ${owner}, ...)`);
-  if (verbose) { console.log(`... RecipesIngredients.collection.insert(\n... {\n...   name: ...,\n...   owner: ...,\n...    image: ${image},\n...    instructions: ${instructions},\n...   time: ${time},\n...   servings: ${servings},\n... })`); }
-  Recipes.collection.insert({ name: name, owner: owner, image: image, instructions: instructions, time: time, servings: servings });
+  // eslint-disable-next-line max-len
+  if (verbose) { console.log(`... RecipesIngredients.collection.insert(\n... {\n...   name: ...,\n...   owner: ...,\n...    image: ${image},\n...    instructions: ${instructions},\n...   time: ${time},\n...   servings: ${servings},\n... dietaryRestrictions: ${dietaryRestrictions} })`); }
+  Recipes.collection.insert({ name: name, owner: owner, image: image, instructions: instructions, time: time, servings: servings, dietaryRestrictions: dietaryRestrictions });
 };
 
 // Add document to the Vendors collection

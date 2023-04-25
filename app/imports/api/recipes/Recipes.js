@@ -16,6 +16,7 @@ class RecipesCollection {
       instructions: { type: String, optional: false },
       time: { type: String, optional: false },
       servings: { type: Number, optional: false },
+      dietaryRestrictions: { type: String, optional: false },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
