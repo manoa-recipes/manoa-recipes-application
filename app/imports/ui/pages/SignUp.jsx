@@ -27,7 +27,7 @@ const SignUp = ({ location }) => {
 
   const submit = (doc) => {
     const { email, password, role } = doc;
-    const userID = Accounts.createUser({ email, username: email, password }, (err) => {
+    const userID = Accounts.createUser({ email, username: email, password, role }, (err) => {
       if (err) {
         setError(err.reason);
         return;
