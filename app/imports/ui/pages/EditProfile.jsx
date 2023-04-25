@@ -1,7 +1,7 @@
 import React from 'react';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row, Form } from 'react-bootstrap';
-import { AutoForm, ErrorsField, HiddenField, NumField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -29,11 +29,16 @@ const EditProfile = () => {
       ready: rdy,
     };
   }, [_id]);
-  // console.log('EditStuff', doc, ready);
+  console.log('EditStuff', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
     const { vegan, glutenFree, allergies } = data;
-    Profiles.collection.update(_id, { $set: { vegan, glutenFree, allergies } }, (error) => (error ?
+    Profiles.collection.update(_id, { $set: { vegan, glutenFree } }, (error) => (error ?
+      swal('Error', error.message, 'error') :
+      swal('Success', 'Item updated successfully', 'success')));
+
+    // attempts to add allergy to list of allergies
+    Profiles.collection.update(_id, { $push: { allergies } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Item updated successfully', 'success')));
   };
@@ -42,24 +47,31 @@ const EditProfile = () => {
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col xs={5}>
-          <Col className="text-center"><h2>Edit Stuff</h2></Col>
+          <Col className="text-center"><h2>Edit Profile</h2></Col>
           <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
             <Card>
               <Card.Body>
-                <TextField name="name" />
-                <NumField name="quantity" decimal={null} />
-                <SelectField name="condition" />
-                <Form.Select>
-                  <option>
+                <TextField name="allergies" placeholder="Add new allergy..." />
+                Vegan
+                <Form.Select name="vegan">
+                  <option label="true">
                     { true }
                   </option>
-                  <option>
+                  <option label="false">
+                    { false }
+                  </option>
+                </Form.Select>
+                Gluten Free
+                <Form.Select name="glutenFree">
+                  <option label="true">
+                    { true }
+                  </option>
+                  <option label="false">
                     { false }
                   </option>
                 </Form.Select>
                 <SubmitField value="Submit" />
                 <ErrorsField />
-                <HiddenField name="owner" />
               </Card.Body>
             </Card>
           </AutoForm>
