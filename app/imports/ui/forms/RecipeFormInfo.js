@@ -18,8 +18,6 @@ const RecipeFormSchema = new SimpleSchema({
   'ingredients.$.ingredient': String,
   'ingredients.$.size': { type: String, defaultValue: 'whole' },
   'ingredients.$.quantity': { type: Number, defaultValue: 1 },
-}, {
-  clean: true,
-});
+}, { clean: true });
 
 export { RecipeFormSchema };

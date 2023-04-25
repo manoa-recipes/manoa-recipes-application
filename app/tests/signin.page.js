@@ -15,9 +15,9 @@ class SigninPage {
   /** Fills out and submits the form to signin, then checks to see that login was successful. */
   async signin(testController, username, password) {
     await this.isDisplayed(testController);
-    await testController.typeText('#signin-form-email', username);
-    await testController.typeText('#signin-form-password', password);
-    await testController.click('#signin-form-submit input.btn.btn-primary');
+    await testController.typeText('#card-signin-email', username);
+    await testController.typeText('#card-signin-password', password);
+    await testController.click('#signin-signout-form-submit input.btn.btn-primary');
     await navBar.isLoggedIn(testController, username);
   }
 }

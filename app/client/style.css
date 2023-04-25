@@ -10,48 +10,25 @@
   --matr-bg-light: #ABC4AA;
   --matr-bg-light-rgb: 171, 196, 170;
   --matr-text-light: #ffffff;
+  --matr-light-green: #ABC4AA;
   /* Dark Colors */
-  --matr-bg-dark: #204018;
-  --matr-bg-dark-rgb: 32, 64, 24;
+  --matr-dark-green: #204018;
+  --matr-dark-green-rgb: 32, 64, 24;
   --matr-text-dark: #675D50;
   --matr-text-dark-rgb: 103, 93, 80;
-  /* Highlight Colors */
-
-  /* Selection Colors */
 }
 
 /* Change bootstrap variable values.
  See https://getbootstrap.com/docs/5.2/customize/css-variables/
  */
 body {
-  /* Background Colors */
-  --bs-dark: var(--matr-bg-dark);
-  --bs-dark-rgb: var(--matr-bg-dark-rgb);
-  --bs-light: var(--matr-bg-light);
-  --bs-light-rgb: var(--matr-bg-light-rgb);
-  /* Text Colors */
-  --bs-body-color: var(--matr-text-dark);
-  --bs-body-color-rgb: var(--matr-text-dark-rgb);
-  /* Card Colors */
-  --bs-card-bg: var(--matr-bg-light);
-  --bs-card-border-color: var(--matr-bg-dark);
-  --bs-card-color: var(--matr-text-dark);
-  --bs-card-cap-color: var(--matr-text-light);
-  /* Button Colors */
-  --bs-btn-bg: var(--matr-bg-light);
-  --bs-btn-color: var(--matr-bg-dark);
-  --bs-btn-hover-bg: var(--matr-text-dark);
-  --bs-btn-hover-color: var(--matr-bg-light);
-  --bs-btn-active-bg: var(--matr-bg-light);
-  --bs-btn-active-color: var(--matr-text-light);
-  --bs-btn-disabled-color: #808080;
-  /* Other colors */
-  --bs-modal-color: var(--matr-bg-light);
-  --bs-nav-tabs-link-active-color: var(--matr-text-dark);
-
   background: fixed center url("https://wallpapers.com/images/hd/vegetables-healthy-food-desktop-1fdano01i4e1w365.jpg");
   background-size: cover;
   height: 75vh;
+
+  /* These work for variants but not the buttons */
+  --bs-primary: darkgreen;
+  --bs-primary-rgb: 32, 64, 24;
 }
 
 /* Set the alert background on the signin and signup pages. */
@@ -67,7 +44,7 @@ body {
   border-radius: 20px;
 }
 
-#card-signin-signup{
+#card-signin-email, #card-signup-email, #card-signin-password, #card-signup-password {
   background:#94AF9F;
 }
 
@@ -146,4 +123,24 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.btn-primary {
+  /* Normal Colors */
+  --bs-btn-bg: var(--matr-dark-green) !important;
+  --bs-btn-color: var(--matr-light-green) !important;
+  --bs-btn-border-color: var(--matr-light-green) !important;
+  /* Hover Colors */
+  --bs-btn-hover-bg: var(--matr-light-green) !important;
+  --bs-btn-hover-color: var(--matr-dark-green) !important;;
+  --bs-btn-hover-border-color: var(--matr-dark-green) !important;
+  /* Active Colors (Pressed) */
+  --bs-btn-active-bg: var(--matr-dark-green) !important;;
+  --bs-btn-active-color: white !important;
+  --bs-btn-active-border-color: white !important;
+}
+
+.btn-outline-primary {
+  background-color: white !important;
+  border-color: darkgreen !important;
 }
