@@ -23,7 +23,7 @@ import ListRecipe from '../pages/ListRecipe';
 import EditRecipe from '../pages/recipe/EditRecipe';
 import IndividualRecipe from '../components/IndividualRecipe';
 import EditProfile from '../pages/EditProfile';
-import ListVendorItems from '../pages/ListVendorItems';
+import VendorItems from '../pages/VendorItems';
 import SearchResults from '../pages/SearchResults';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
           <Route path="/view-recipe/:_id" element={<ProtectedRoute><IndividualRecipe /></ProtectedRoute>} />
           <Route path="/edit-recipe/:_id" element={<ProtectedRoute><EditRecipe /></ProtectedRoute>} />
-          <Route path="/vendor_items/:_id" element={<ProtectedRoute><ListVendorItems /></ProtectedRoute>} />
+          <Route path="/vendor_items" element={<ProtectedRoute><VendorItems /></ProtectedRoute>} />
           <Route path="/search/:_terms" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><AdminHome /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
