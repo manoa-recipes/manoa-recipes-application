@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
+import { Vendors } from '../../api/vendors/Vendors';
+import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 
 /** === I'm leaving all this here for reference ===
  *
@@ -91,4 +93,25 @@ Meteor.methods({
   },
 });
 
-export { addRecipeMethod, updateRecipeMethod };
+// Function to remove a document from the database
+const removeIngredient = 'Ingredients.remove';
+
+Meteor.methods({
+  'Ingredients.remove'({ _id }) {
+    Ingredients.collection.remove(_id);
+  },
+});
+
+const clearDatabases = 'All.remove';
+
+Meteor.methods({
+  'All.remove'() {
+    Ingredients.collection.remove({});
+    Recipes.collection.remove({});
+    RecipesIngredients.collection.remove({});
+    Vendors.collection.remove({});
+    VendorsIngredients.collection.remove({});
+  },
+});
+
+export { addRecipeMethod, updateRecipeMethod, removeIngredient, clearDatabases };
