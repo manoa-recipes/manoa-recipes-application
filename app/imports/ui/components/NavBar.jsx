@@ -64,7 +64,6 @@ const NavBar = () => {
             )}
           </Nav>
         </Navbar.Collapse>
-        <SearchBar />
       </Container>
     </Navbar>
   );
