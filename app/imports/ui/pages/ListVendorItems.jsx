@@ -7,22 +7,21 @@ import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import { Vendors } from '../../api/vendors/Vendors';
 import StuffItem from '../components/VendorItem';
 import LoadingSpinner from '../components/LoadingSpinner';
+import PropTypes from 'prop-types';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ListVendorItems = ({vendorIngredient }) => {
+const ListVendorItems = ({ vendorIngredient }) => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, stuffs } = useTracker(() => {
+  const { ready, vendor } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(VendorsIngredients.userPublicationName);
+    const subscription = Meteor.subscribe(Vendors.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();
     // Get the Stuff documents
-    const stuffItems = VendorsIngredients.collection.find({}).fetch();
     return {
       vendor: _.pluck(Vendors.collection.find({ address: vendorIngredient.address }).fetch(), 'name'),
-      stuffs: stuffItems,
       ready: rdy,
     };
   }, []);
@@ -38,18 +37,27 @@ const ListVendorItems = ({vendorIngredient }) => {
               <tr>
                 <th>Name</th>
                 <th>Quantity</th>
-                <th>Condition</th>
-                <th>Edit</th>
+                <th>Cost</th>
               </tr>
             </thead>
             <tbody>
-              {stuffs.map((stuff) => <StuffItem key={stuff._id} stuff={stuff} />)}
+              {vendor.map((stuff) => <StuffItem key={stuff._id} stuff={stuff} />)}
             </tbody>
           </Table>
         </Col>
       </Row>
     </Container>
   ) : <LoadingSpinner />);
+};
+ListVendorItems.propTypes = {
+  vendorIngredient: PropTypes.shape({
+    address: PropTypes.string,
+    ingredient: PropTypes.string,
+    inStock: PropTypes.bool,
+    size: PropTypes.string,
+    price: PropTypes.number,
+    _id: PropTypes.string,
+  }).isRequired,
 };
 
 export default ListVendorItems;
