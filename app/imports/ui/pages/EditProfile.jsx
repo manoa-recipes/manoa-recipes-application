@@ -29,7 +29,7 @@ const EditProfile = () => {
       ready: rdy,
     };
   }, [_id]);
-  console.log('EditStuff', doc, ready);
+  // console.log('EditStuff', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
     const { vegan, glutenFree, allergies } = data;
