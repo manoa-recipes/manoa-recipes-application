@@ -21,7 +21,7 @@ import UserProfile from '../pages/Profile';
 import VendorProfile from '../pages/VendorProfile';
 import ListRecipe from '../pages/ListRecipe';
 import EditRecipe from '../pages/recipe/EditRecipe';
-import IndividualRecipe from '../components/IndividualRecipe';
+import ViewRecipe from '../components/recipe/ViewRecipe';
 import EditProfile from '../pages/EditProfile';
 import SearchResults from '../pages/SearchResults';
 
@@ -49,7 +49,7 @@ const App = () => {
           <Route path="/list" element={<ProtectedRoute><ListRecipe /></ProtectedRoute>} />
           <Route path="/add-recipe" element={<ProtectedRoute><AddRecipe /></ProtectedRoute>} />
           <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
-          <Route path="/view-recipe/:_id" element={<ProtectedRoute><IndividualRecipe /></ProtectedRoute>} />
+          <Route path="/view-recipe/:_id" element={<ProtectedRoute><ViewRecipe /></ProtectedRoute>} />
           <Route path="/edit-recipe/:_id" element={<ProtectedRoute><EditRecipe /></ProtectedRoute>} />
           <Route path="/search/:_terms" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><AdminHome /></AdminProtectedRoute>} />

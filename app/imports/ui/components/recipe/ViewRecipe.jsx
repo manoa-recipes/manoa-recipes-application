@@ -2,17 +2,18 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Card, CardGroup, Row, Col, Container, Image, Button } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import { useParams } from 'react-router';
-import LoadingSpinner from './LoadingSpinner';
-import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
-import RecipeIngredient from './RecipeIngredient';
-import { Recipes } from '../../api/recipes/Recipes';
+import LoadingSpinner from '../LoadingSpinner';
+import { RecipesIngredients } from '../../../api/recipes/RecipesIngredients';
+import { Recipes } from '../../../api/recipes/Recipes';
+import RecipeCard from './RecipeCard';
+import RecipeInstructions from './RecipeInstructions';
+import RecipeIngredientList from './RecipeIngredientList';
 
 // This page/component displays ALL data related to a specific recipe
-const IndividualRecipe = () => {
+const ViewRecipe = () => {
   const { _id } = useParams();
-  // console.log('IndividualRecipe:\n  _id: ', _id);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, recipe, recipeIngredients, editAccess } = useTracker(() => {
     const sub1 = Meteor.subscribe(Recipes.userPublicationName);
@@ -37,34 +38,25 @@ const IndividualRecipe = () => {
     };
   }, [_id]);
   return (ready ? (
-    <Container className="py-3">
-      <Card className="p-0">
-        <Card.Header>
-          <Card.Title>{recipe.name}</Card.Title>
-          <Card.Subtitle>Submitted by: {recipe.owner}</Card.Subtitle>
-          <Image src={recipe.image} fluid style={{ height: '40vh' }} />
-        </Card.Header>
-        <Card.Body>
-          <Col>
-            <Row>
-              <Card.Subtitle>Time: {recipe.time}, Serves: {recipe.servings}</Card.Subtitle>
-            </Row>
-            <Row>
-              <Col><Card.Text>{recipe.instructions}</Card.Text></Col>
-              <Col>
-                <CardGroup>
-                  <Col>
-                    {recipeIngredients.map(recipeIngredient => <RecipeIngredient key={recipeIngredient._id} recipeIngredient={recipeIngredient} />)}
-                  </Col>
-                </CardGroup>
-              </Col>
-            </Row>
+    <Container className="p-2">
+      <Col className="p-0">
+        {editAccess ? (<Button className="rounded-0 rounded-top" href={`/edit-recipe/${recipe._id}`}>Edit</Button>) : ''}
+        <Row className="grid bg-primary">
+          <Col xs={3} className="bg-black w-auto m-auto">
+            <RecipeCard recipe={recipe} />
           </Col>
-          {editAccess ? (<Button href={`/edit-recipe/${recipe._id}`}>Edit</Button>) : ''}
-        </Card.Body>
-      </Card>
+          <Col
+            xs={3}
+            className="bg-dark w-auto m-auto h-auto"
+            style={{ maxHeight: '50vh', overflowY: 'auto' }}
+          >
+            <Row><RecipeIngredientList recipeIngredients={recipeIngredients} /></Row>
+            <Row><RecipeInstructions instructions={recipe.instructions} /></Row>
+          </Col>
+        </Row>
+      </Col>
     </Container>
   ) : <LoadingSpinner />);
 };
 
-export default IndividualRecipe;
+export default ViewRecipe;

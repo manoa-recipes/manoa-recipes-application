@@ -79,7 +79,6 @@ function createUser(email, role) {
   const userID = Accounts.createUser({ username: email, email, password: 'changeme' });
   if (role === 'admin') { promoteUser(userID, role); }
   if (role === 'vendor') { promoteUser(userID, role); }
-
   // adding user role
   if (role === 'user') { promoteUser(userID, role); }
 }
@@ -103,26 +102,18 @@ const addProfile = ({ email, role, vegan, glutenFree, allergies }) => {
 
 // Add document to the RecipesIngredients collection
 const addRecipeIngredient = ({ recipe, ingredient, size, quantity }) => {
-  console.log(`addRecipeIngredient({ ${recipe}, ${ingredient}, ...})`);
   addIngredient(ingredient);
   RecipesIngredients.collection.insert({ recipe: recipe, ingredient: ingredient, size: size, quantity: quantity });
 };
 
 // Add document to the Recipes collection
-const addRecipe = ({ name, owner, image, instructions, time, servings }) => {
-  console.log(`addRecipe(${name}, ${owner}, ...)`);
-  Recipes.collection.insert({ name: name, owner: owner, image: image, instructions: instructions, time: time, servings: servings });
-};
+const addRecipe = ({ name, owner, image, instructions, time, servings }) => Recipes.collection.insert({ name: name, owner: owner, image: image, instructions: instructions, time: time, servings: servings });
 
 // Add document to the Vendors collection
-const addVendor = ({ name, address, hours, image, email }) => {
-  console.log(`addVendor(${name}, address, ${hours}, ${image}), ${email}`);
-  Vendors.collection.insert({ name, address, hours, image, email });
-};
+const addVendor = ({ name, address, hours, image, email }) => Vendors.collection.insert({ name, address, hours, image, email });
 
 // Add document to the VendorsIngredients collection
 const addVendorIngredient = ({ email, address, ingredient, inStock, size, price }) => {
-  console.log(`addVendorIngredient( email, address, ${ingredient}, ...)`);
   addIngredient(ingredient);
   VendorsIngredients.collection.insert({ email, address, ingredient, inStock, size, price });
 };
@@ -181,12 +172,8 @@ const resetCollection = (collectionName) => {
     if (collection.collection.find({}).count() > 0) { collection.collection.remove({}); }
     // Refill the collection with its default data
     defaultData.map((document, index) => {
-      if (collectionName === RecipesIngredients.name) {
-        addDoc(Ingredients, { name: document.ingredient });
-      }
-      if (collectionName === VendorsIngredients.name) {
-        addDoc(Ingredients, { name: document.ingredient });
-      }
+      if (collectionName === RecipesIngredients.name) { addDoc(Ingredients, { name: document.ingredient }); }
+      if (collectionName === VendorsIngredients.name) { addDoc(Ingredients, { name: document.ingredient }); }
       addDoc(collection, document);
       return index + 1;
     });
@@ -221,9 +208,9 @@ Meteor.methods({
 /** Method to UPDATE a recipe in the database (Modifies 3 collections) */
 const updateRecipeMethod = 'Recipes.update';
 Meteor.methods({
-  'Recipes.update'({ _id, name, owner, image, instructions, time, servings, ingredients }) {
+  'Recipes.update'({ _id, name, owner, image, instructions, time, servings, vegan, glutenFree, ingredients }) {
     // First update the relevant Recipe document ...update({ uniqueField }, { all fields... })
-    Recipes.collection.update(_id, { $set: { name, owner, image, instructions, time, servings } });
+    Recipes.collection.update(_id, { $set: { name, owner, image, instructions, time, servings, vegan, glutenFree } });
     // Remove all previous relational documents for this recipe before repopulating them from the new list
     RecipesIngredients.collection.remove({ recipe: name });
     // At least one ingredient must exist in the array, update/insert the Ingredients collection

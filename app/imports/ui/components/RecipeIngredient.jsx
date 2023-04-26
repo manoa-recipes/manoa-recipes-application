@@ -43,7 +43,7 @@ VendorIngredient.propTypes = {
 // A component to display an ingredient in a recipe, and distinguish when allergic
 const RecipeIngredient = ({ recipeIngredient }) => {
   // Get the email of the current user
-  const email = Meteor.user().email;
+  const email = Meteor.user()?.email;
   // Subscribe to the database before rendering
   const { ready, allergic, vendorIngredients } = useTracker(() => {
     const sub = Meteor.subscribe(Profiles.userPublicationName);
