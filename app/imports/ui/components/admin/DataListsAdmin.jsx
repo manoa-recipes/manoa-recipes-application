@@ -8,6 +8,7 @@ import { Vendors } from '../../../api/vendors/Vendors';
 import { Recipes } from '../../../api/recipes/Recipes';
 import LoadingSpinner from '../LoadingSpinner';
 import AdminIngredientsList from './lists/AdminIngredientsList';
+import { Ingredients } from '../../../api/ingredients/Ingredients';
 
 // Components to display Profiles documents
 const ProfileAdmin = ({ profile }) => (
@@ -142,18 +143,11 @@ RecipeAdmin.propTypes = {
   }).isRequired,
 };
 const RecipesListAdmin = () => {
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, recipes } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Recipes.userPublicationName);
-    // Determine if the subscription is ready
     const rdy = subscription.ready();
-    // Get the Stuff documents
-    const recipesItems = Recipes.collection.find({}).fetch();
     return {
-      recipes: recipesItems,
+      recipes: Recipes.collection.find({}).fetch(),
       ready: rdy,
     };
   }, []);
@@ -186,7 +180,7 @@ const RecipesListAdmin = () => {
 /* Organize all admin data */
 const DataListsAdmin = () => (
   <Card bg="light">
-    <AdminIngredientsList />
+    <AdminIngredientsList collectionName={Ingredients.name} />
     <ProfilesListAdmin />
     <VendorsListAdmin />
     <RecipesListAdmin />

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import { Card, Col, Container, Row } from 'react-bootstrap';
@@ -8,16 +9,21 @@ import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
 import { addRecipeMethod } from '../../../startup/both/Methods';
 import { RecipeFormSchema } from '../../forms/RecipeFormInfo';
 
+// Defined in '../../forms/RecipeFormInfo.js'
 const recipeBridge = new SimpleSchema2Bridge(RecipeFormSchema);
 
 /* Renders the AddRecipe page for adding a document. */
 const AddRecipe = () => {
-  const owner = Meteor.user().username;
+  const owner = Meteor.user()?.username;
+  // The recipe name
+  const [name, setName] = useState('');
   // console.log('Logged in user: ', owner);
 
   // On submit, insert the data.
   const submit = (data) => {
-    const { name, image, instructions, time, servings, ingredients } = data;
+    const { image, instructions, time, servings, ingredients } = data;
+    // Extend the form data of the join docs at the moment of submit
+    ingredients.map(ingredient => _.extend({}, ingredient, { recipe: name }));
     Meteor.call(addRecipeMethod, { name, owner, image, instructions, time, servings, ingredients }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
@@ -35,7 +41,16 @@ const AddRecipe = () => {
           <Card.Header><Card.Title><h2>Add Recipe</h2></Card.Title></Card.Header>
           <Card.Header>
             <Col>
-              <Row><TextField name="name" placeholder="Type a recipe Name..." /></Row>
+              <Row
+                onChange={(e) => setName(e.target.value)}
+              >
+                <TextField
+                  name="name"
+                  placeholder="Type a recipe Name..."
+                  value={name}
+                  defaultValue={name}
+                />
+              </Row>
               <Row><TextField name="image" placeholder="..." /></Row>
               <Row>
                 <Col><NumField name="time" decimal={null} /></Col>
@@ -46,7 +61,7 @@ const AddRecipe = () => {
           <Card.Body>
             <ListField name="ingredients" className="bg-light text-dark align-items-center" formNoValidate>
               <ListItemField name="$">
-                <HiddenField name="recipe" defaultValue="recipe name" />
+                <HiddenField name="recipe" value={name} />
                 <Row className="align-items-center">
                   <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
                   <Col xs={3} md={2}><NumField name="quantity" decimal={false} /></Col>
