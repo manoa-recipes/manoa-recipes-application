@@ -53,7 +53,7 @@ const AddRecipe = () => {
               </Row>
               <Row><TextField name="image" placeholder="..." /></Row>
               <Row>
-                <Col><NumField name="time" decimal={null} /></Col>
+                <Col><TextField name="time" placeholder="..." /></Col>
                 <Col><NumField name="servings" decimal={null} /></Col>
               </Row>
             </Col>

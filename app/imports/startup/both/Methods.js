@@ -116,109 +116,105 @@ const addRecipe = ({ name, owner, image, instructions, time, servings }) => {
 
 // Add document to the Vendors collection
 const addVendor = ({ name, address, hours, image, email }) => {
-  console.log(`addVendor(${name}, ${address}, ${hours}, ${image}), ${email}`);
+  console.log(`addVendor(${name}, address, ${hours}, ${image}), ${email}`);
   Vendors.collection.insert({ name, address, hours, image, email });
 };
 
 // Add document to the VendorsIngredients collection
 const addVendorIngredient = ({ email, address, ingredient, inStock, size, price }) => {
-  console.log(`addVendorIngredient(${email}, ${address}, ${ingredient}, ...)`);
+  console.log(`addVendorIngredient( email, address, ${ingredient}, ...)`);
   addIngredient(ingredient);
   VendorsIngredients.collection.insert({ email, address, ingredient, inStock, size, price });
 };
-
-// Function to reset a collection
-const resetCollection = (collection) => {
-  console.log(`\nResetting ${collection.name}...\n  Count Pre-Clear: ${collection.collection.find({}).count()}`);
-  collection.collection.remove({});
-  console.log(`  Count Post-Clear: ${collection.collection.find({}).count()}`);
-  switch (collection.name) {
-  case Profiles.name: Meteor.settings.defaultProfiles.map(data => addProfile(data)); break;
-  case Recipes.name: Meteor.settings.defaultRecipes.map(data => addRecipe(data)); break;
-  case RecipesIngredients.name: Meteor.settings.defaultRecipesIngredients.map(data => addRecipeIngredient(data)); break;
-  case Vendors.name: Meteor.settings.defaultVendors.map(data => addVendor(data)); break;
-  case VendorsIngredients.name: Meteor.settings.defaultVendorsIngredients.map(data => addVendorIngredient(data)); break;
-  default: console.log(`  ${collection.name} not recognized!`);
-  }
-  console.log(`  Count Post-Add: ${collection.collection.find({}).count()}`);
-};
-// Function to select the correct collection
-const getCollection = (collectionName) => {
-  switch (collectionName) {
-  case Recipes.name: return Recipes;
-  case Ingredients.name: return Ingredients;
-  case RecipesIngredients.name: return RecipesIngredients;
-  case Vendors.name: return Vendors;
-  case VendorsIngredients.name: return VendorsIngredients;
-  default: return undefined;
-  }
-};
-
-/** Function to ADD a document to a collection. addDoc({ collection: Stuffs, document: { stuffField: stuffKey... } }) */
-const addDoc = ({ collection, document }) => {
-  console.log('addDoc:\n  Collection: ', collection.name, '\n  Document: ', document);
+/** _Server Func_ example params: (Stuffs, stuffsDoc) */
+const addDoc = (collection, document) => {
   if (collection !== undefined) {
-  // Collection.collection.insert({ ...fields: keys... });...
-  // Collection.collection.update({ ...ifNew... }, { ...ifExists... }, { ...options... });...
+    // Collection.collection.insert({ ...fields: keys... });...
+    // Collection.collection.update({ ...ifNew... }, { ...ifExists... }, { ...options... });...
     collection.collection.update(document, { $set: document }, { upsert: true });
-  } else { console.log(`  Collection "${collection}" not defined!`); }
-  console.log('addDoc: closing');
+  } else { console.log(`  Collection "${collection}" not recognized!`); }
 };
-/** Function to UPDATE a document in a collection. updateDoc({ _id: String, collection: Stuffs, document: { stuffField: stuffKey... } }) */
-const updateDoc = ({ collection, document }) => {
+/** _Server Func_ example params: (Stuffs, stuffsDoc) */
+const updateDoc = (collection, document) => {
   console.log('updateDoc:\n  _id: ', document._id, '\n  Collection: ', collection.name);
   // Dont try to access a field of an undefined object (ERRORS)
   if (collection !== undefined) {
     collection.collection.update({ _id: document._id }, { $set: document });
-  } else { console.log(`Collection "${collection}" not defined!`); }
+  } else { console.log(`Collection "${collection}" not recognized!`); }
 };
-
-const removeDoc = ({ _id, collection }) => {
-  console.log('removeDoc:\n  _id: ', _id, '\n  Collection: ', collection);
-  // Dont try to access a field of an undefined object (ERRORS)
+/** _Server Func_ example params: (stuffsDoc._id, Stuffs) */
+const removeDoc = (_id, collection) => {
   if (collection !== undefined) {
     collection.collection.remove(_id);
-  } else { console.log(`Collection "${collection.name}" not recognized!`); }
-  console.log('removeDoc: Exiting');
+  } else { console.log(`Collection "${collection}" not recognized!`); }
+};
+/** _Server Func_ example param: (Stuffs.name) */
+const getCollection = (collectionName) => {
+  switch (collectionName) {
+  case Recipes.name: return Recipes;
+  case Profiles.name: return Profiles;
+  case Ingredients.name: return Ingredients;
+  case RecipesIngredients.name: return RecipesIngredients;
+  case Vendors.name: return Vendors;
+  case VendorsIngredients.name: return VendorsIngredients;
+  default: console.log('Collection not supported: ', collectionName); return undefined;
+  }
+};
+/** _Server Func_ example param: (Stuffs.name) */
+const getDefaultData = (collectionName) => {
+  switch (collectionName) {
+  case Recipes.name: return Meteor.settings.defaultRecipes;
+  case Profiles.name: return Meteor.settings.defaultProfiles;
+  case RecipesIngredients.name: return Meteor.settings.defaultRecipesIngredients;
+  case Vendors.name: return Meteor.settings.defaultVendors;
+  case VendorsIngredients.name: return Meteor.settings.defaultVendorsIngredients;
+  default: console.log('Collection not supported: ', collectionName); return undefined;
+  }
+};
+/** _Server Func_ example param: (Stuffs.name) */
+const resetCollection = (collectionName) => {
+  console.log(`\nResetting ${collectionName}...`);
+  const collection = getCollection(collectionName);
+  const defaultData = getDefaultData(collectionName);
+  if (collection && defaultData) {
+    // Remove documents if there are any
+    if (collection.collection.find({}).count() > 0) { collection.collection.remove({}); }
+    // Refill the collection with its default data
+    defaultData.map((document, index) => {
+      if (collectionName === RecipesIngredients.name) {
+        addDoc(Ingredients, { name: document.ingredient });
+      }
+      if (collectionName === VendorsIngredients.name) {
+        addDoc(Ingredients, { name: document.ingredient });
+      }
+      addDoc(collection, document);
+      return index + 1;
+    });
+  } else { console.log(`Reset failed. collection: ${collection}, defaultData: ${defaultData} Exiting...`); }
 };
 
-/** Method to ADD a single document to its collection WORKS */
+/** =============CLIENT METHODS: Modifying Single Collections==================== */
+/* These first three functions are best for anything that edits documents one at a time */
+/* example params: { collectionName: Stuffs.name, document: stuffsDoc } */
 const addDocMethod = 'Doc.add';
-Meteor.methods({ 'Doc.add'({ collection, data }) { addDoc({ collection, data }); } });
-
-/** -NOT TESTED- Method to UPDATE a single document, by '_id', in its 'collection' */
+Meteor.methods({ 'Doc.add'({ collectionName, document }) { addDoc(getCollection(collectionName), document); } });
+/* example params: { collectionName: Stuffs.name, document: stuffsDoc } */
 const updateDocMethod = 'Doc.update';
-Meteor.methods({ 'Doc.update'({ collection, document }) { updateDoc({ collection, document }); } });
-
-/** _id: String, collectionName: Collection.name (ie. Recipes.name) */
+Meteor.methods({ 'Doc.update'({ collectionName, document }) { updateDoc(getCollection(collectionName), document); } });
+/* example params: { _id: stuffsDoc._id, collectionName: Stuffs.name } */
 const removeDocMethod = 'Doc.remove';
-Meteor.methods({ 'Doc.remove'({ _id, collectionName }) { removeDoc({ _id, collection: getCollection(collectionName) }); } });
+Meteor.methods({ 'Doc.remove'({ _id, collectionName }) { removeDoc(_id, getCollection(collectionName)); } });
 
-/** Method to ADD a new recipe to the database (Modifies 3 collections) WORKS */
+/** =============CLIENT METHODS: Modifying Multiple Collections================= */
+/* Method to ADD a new recipe to the database (Modifies 3 collections) WORKS */
 const addRecipeMethod = 'Recipes.add';
 Meteor.methods({
   'Recipes.add'({ name, owner, image, instructions, time, servings, ingredients }) {
-    // These params are passed from an autoform.  I could have packed the data there. ({ data, ingredients })
-    // NOTE: ingredients is an array of RecipesIngredients documents
-    // This method expects a new recipe.  Exit if one is found (Not sure this is needed)
+    // NOTE: ingredients is an array of RecipesIngredients documents from the Autoform
     if (Recipes.collection.find({ name }).count() !== 0) { console.log('addRecipeMethod\n  Recipe found!  Exiting.'); return; }
-    // First add the data to the Recipes collection (Validation happens inside
-    console.log('RecipeDoc');
-    // You can set the collection and change it later
-    let collection = Recipes;
-    // You can pack the data
-    const document = { name, owner, image, instructions, time, servings };
-    // You can call addDoc easily by renaming to match the function signature above
-    addDoc({ collection, document });
-    // Map through the ingredient names and insert into Ingredients (1 at minimum)
-    console.log('IngredientsDocs');
-    collection = Ingredients;
-    // You can map and call addDoc by naming the collection and passing the document...notice how it is a field: key combo
-    _.pluck(ingredients, 'ingredient').map(ingredient => addDoc({ collection, document: { name: ingredient } }));
-    // Insert into the RecipesIngredients collection
-    console.log('RecipesIngredientsDocs');
-    // You can also pass the collection itself, but remember to pass it as a field: key
-    ingredients.map(ingredient => addDoc({ collection: RecipesIngredients, document: ingredient }));
+    addDoc(Recipes, { name, owner, image, instructions, time, servings });
+    _.pluck(ingredients, 'ingredient').map(ingredient => addDoc(Ingredients, { name: ingredient }));
+    ingredients.map(document => addDoc(RecipesIngredients, document));
   },
 });
 
@@ -249,47 +245,6 @@ Meteor.methods({
   },
 });
 
-const emptyCollection = 'Collection.empty';
-Meteor.methods({ 'Collection.empty'({ collection }) {
-  if (collection !== undefined) {
-    // Do NOT try to access any field of an undefined object (BAD ERRORS)
-    if (collection.collection !== undefined) {
-      collection.collection.remove({});
-    } else { console.log(`Collection "${collection}" not recognized!`); }
-  }
-} });
-
-const fillDefaultData = 'Collection.fillDefault';
-Meteor.methods({ 'Collection.fillDefault'({ collection }) {
-  if (collection !== undefined) {
-    // Do NOT try to access any field of an undefined object (BAD ERRORS)
-    if (collection.name !== undefined) {
-      switch (collection.name) {
-      case Profiles.name: Meteor.settings.defaultProfiles.map(data => addDocMethod(Profiles, data)); break;
-      case Recipes.name: Meteor.settings.defaultRecipes.map(data => addDocMethod(Recipes, data)); break;
-      case RecipesIngredients.name: Meteor.settings.defaultRecipesIngredients.map(data => addDocMethod(RecipesIngredients, data)); break;
-      case Vendors.name: Meteor.settings.defaultVendors.map(data => addDocMethod(Vendors, data)); break;
-      case VendorsIngredients.name: Meteor.settings.defaultVendorsIngredients.map(data => addDocMethod(VendorsIngredients, data)); break;
-      default: console.log(`  WARNING! "${collection.name}" not recognized!`);
-      }
-    } else { console.log(`Warning! "${collection}" not recognized!`); }
-  }
-} });
-
-// Function to remove a document from the database (NOT Working)
-const clearDatabases = 'All.remove';
-
-Meteor.methods({
-  'All.remove'({ message }) {
-    console.log(message);
-    Ingredients.collection.remove({});
-    Recipes.collection.remove({});
-    RecipesIngredients.collection.remove({});
-    Vendors.collection.remove({});
-    VendorsIngredients.collection.remove({});
-  },
-});
-
-export { createUser, promoteUser, addProfile, addRecipeIngredient, addRecipe, addVendorIngredient, addVendor,resetCollection,
-  addRecipeMethod, updateRecipeMethod, removeRecipeMethod, addDocMethod, removeDocMethod, updateDocMethod, clearDatabases, emptyCollection, fillDefaultData,
+export { createUser, promoteUser, addProfile, addRecipeIngredient, addRecipe, addVendorIngredient, addVendor, resetCollection,
+  addRecipeMethod, updateRecipeMethod, removeRecipeMethod, addDocMethod, removeDocMethod, updateDocMethod,
 };

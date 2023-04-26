@@ -40,11 +40,11 @@ if (onFirstRun || (ingredientsAreEmpty && inDevelopment)) {
       Meteor.settings.defaultVendorsIngredients.map(vendorIngredient => addVendorIngredient(vendorIngredient));
       console.log('\nCollections initialized with default data from "settings.development.json".');
     } else {
-      resetCollection(Profiles);
-      resetCollection(Recipes);
-      resetCollection(RecipesIngredients);
-      resetCollection(Vendors);
-      resetCollection(VendorsIngredients);
+      resetCollection(Profiles.name);
+      resetCollection(Recipes.name);
+      resetCollection(RecipesIngredients.name);
+      resetCollection(Vendors.name);
+      resetCollection(VendorsIngredients.name);
     }
   } else {
     console.log('Error: Cannot initialize the database!  Please invoke meteor with a settings file.');
