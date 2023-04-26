@@ -11,9 +11,16 @@ import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 /* eslint-disable no-console */
 
 /** For Debugging */
-const verbose = false;
-
-if (verbose) { console.log('\nMongo.js running...\nverbose is enabled for debugging.\n  To turn it off change "verbose" variable to "false" in Mongo.js'); }
+const verbose = true;
+/* App is being actively developed. */
+const inDevelopment = true;
+/* Whether the settings file has the expected data */
+const defaultDataExists = (Meteor.settings.defaultProfiles && Meteor.settings.defaultRecipes && Meteor.settings.defaultVendors && Meteor.settings.defaultRecipesIngredients && Meteor.settings.defaultVendorsIngredients) !== undefined;
+/* True when there are no Meteor users */
+const onFirstRun = Meteor.users.find().count() === 0;
+/* Flag to reinitialize the data */
+const ingredientsAreEmpty = Ingredients.collection.find({}).count() === 0;
+if (verbose) { console.log('Mongo.js running...\n  verbose:', verbose, '\n  default data exists: ', defaultDataExists, '\n  First run: ', onFirstRun, '\n  ingredients empty: ', ingredientsAreEmpty); }
 
 // Add user to their Meteor role.
 function promoteUser(userID, role) {
@@ -43,7 +50,11 @@ const addIngredient = (ingredient) => {
 // Add document to the Profiles collection
 const addProfile = ({ email, role, vegan, glutenFree, allergies }) => {
   console.log(`addProfile(${email}, ${role}, ...)`);
-  createUser(email, role);
+  // Probably a better way to frame this expression
+  if (Meteor.users.find({ username: email }).count() === 0) {
+    // Only create a user if there is no existing user for the email
+    createUser(email, role);
+  } else { console.log('... User already exists for', email); }
   if (verbose) {
     console.log(`... Profiles.collection.insert(\n... { email: ...,\n...   vegan: ${vegan},\n...   glutenFree: ${glutenFree}`);
     if (allergies.length > 0) {
@@ -91,37 +102,48 @@ const addVendorIngredient = ({ email, address, ingredient, inStock, size, price 
   VendorsIngredients.collection.insert({ email, address, ingredient, inStock, size, price });
 };
 
-/** Function to populate the collections with default data when installed for the first time. */
-if (Meteor.users.find().count() === 0) {
-  console.log('No users found.  Initializing database.');
-  if (Meteor.settings.defaultProfiles && Meteor.settings.defaultRecipes && Meteor.settings.defaultVendors) {
-    console.log('\nCreating default profiles.');
-    Meteor.settings.defaultProfiles.map(profile => addProfile(profile));
-    console.log('\nCreating default recipes.');
-    Meteor.settings.defaultRecipes.map(recipe => addRecipe(recipe));
-    console.log('\nCreating default recipesingredients.');
-    Meteor.settings.defaultRecipesIngredients.map(recipeIngredient => addRecipeIngredient(recipeIngredient));
-    console.log('\nCreating default vendors.');
-    Meteor.settings.defaultVendors.map(vendor => addVendor(vendor));
-    console.log('\nCreating default vendorsingredients.');
-    Meteor.settings.defaultVendorsIngredients.map(vendorIngredient => addVendorIngredient(vendorIngredient));
-    console.log('\nCollections initialized with default data from "settings.development.json".');
+// Function to reset a collection
+const resetCollectionServer = (collection) => {
+  console.log(`\nResetting ${collection.name}...\n  Count Pre-Clear: ${collection.collection.find({}).count()}`);
+  collection.collection.remove({});
+  console.log(`  Count Post-Clear: ${collection.collection.find({}).count()}`);
+  switch (collection.name) {
+  case Profiles.name: Meteor.settings.defaultProfiles.map(data => addProfile(data)); break;
+  case Recipes.name: Meteor.settings.defaultRecipes.map(data => addRecipe(data)); break;
+  case RecipesIngredients.name: Meteor.settings.defaultRecipesIngredients.map(data => addRecipeIngredient(data)); break;
+  case Vendors.name: Meteor.settings.defaultVendors.map(data => addVendor(data)); break;
+  case VendorsIngredients.name: Meteor.settings.defaultVendorsIngredients.map(data => addVendorIngredient(data)); break;
+  default: console.log(`  ${collection.name} not recognized!`);
+  }
+  console.log(`  Count Post-Add: ${collection.collection.find({}).count()}`);
+};
+
+// Warn through the console if ingredients are empty (many of the app's functionality is based on it)
+if (ingredientsAreEmpty && !inDevelopment) { console.log('Warning! Ingredients collection is empty!'); }
+/** Expression to populate the collections with default data. */
+if (onFirstRun || (ingredientsAreEmpty && inDevelopment)) {
+  if (onFirstRun) { console.log('Initializing database.'); } else { console.log('Reinitializing database.'); }
+  if (defaultDataExists) {
+    if (onFirstRun) {
+      console.log('\nCreating default profiles.');
+      Meteor.settings.defaultProfiles.map(profile => addProfile(profile));
+      console.log('\nCreating default recipes.');
+      Meteor.settings.defaultRecipes.map(recipe => addRecipe(recipe));
+      console.log('\nCreating default recipesingredients.');
+      Meteor.settings.defaultRecipesIngredients.map(recipeIngredient => addRecipeIngredient(recipeIngredient));
+      console.log('\nCreating default vendors.');
+      Meteor.settings.defaultVendors.map(vendor => addVendor(vendor));
+      console.log('\nCreating default vendorsingredients.');
+      Meteor.settings.defaultVendorsIngredients.map(vendorIngredient => addVendorIngredient(vendorIngredient));
+      console.log('\nCollections initialized with default data from "settings.development.json".');
+    } else {
+      resetCollectionServer(Profiles);
+      resetCollectionServer(Recipes);
+      resetCollectionServer(RecipesIngredients);
+      resetCollectionServer(Vendors);
+      resetCollectionServer(VendorsIngredients);
+    }
   } else {
     console.log('Error: Cannot initialize the database!  Please invoke meteor with a settings file.');
   }
-}
-/** Function to repopulate the Recipes databases when empty */
-if (Recipes.collection.length === 0) {
-  console.log('\nCreating default recipes.');
-  Meteor.settings.defaultRecipes.map(recipe => addRecipe(recipe));
-  console.log('\nCreating default recipesingredients.');
-  Meteor.settings.defaultRecipesIngredients.map(recipeIngredient => addRecipeIngredient(recipeIngredient));
-}
-
-/** Function to repopulate the Vendors databases when empty */
-if (Vendors.collection.length === 0) {
-  console.log('\nCreating default vendors.');
-  Meteor.settings.defaultVendors.map(vendor => addVendor(vendor));
-  console.log('\nCreating default vendorsingredients.');
-  Meteor.settings.defaultVendorsIngredients.map(vendorIngredient => addVendorIngredient(vendorIngredient));
 }

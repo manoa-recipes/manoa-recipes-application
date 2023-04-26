@@ -7,14 +7,19 @@ import { Profiles } from '../../../api/profiles/Profiles';
 import LoadingSpinner from '../LoadingSpinner';
 
 // Components to display Profiles documents
-const AdminProfileItem = ({ profile }) => (
-  <tr>
-    <td className="text-start">{profile._id}</td>
-    <td>{profile.email}</td>
-    <td>{(profile.vegan) ? 'True' : 'False'}</td>
-    <td>{(profile.glutenFree) ? 'True' : 'False'}</td>
-  </tr>
-);
+const AdminProfileItem = ({ profile }) => {
+  const remProfile = ({ _id }) => {
+
+  };
+  return (
+    <tr>
+      <td className="text-start">{profile._id}</td>
+      <td>{profile.email}</td>
+      <td>{(profile.vegan) ? 'True' : 'False'}</td>
+      <td>{(profile.glutenFree) ? 'True' : 'False'}</td>
+    </tr>
+  );
+};
 AdminProfileItem.propTypes = {
   profile: PropTypes.shape({
     email: PropTypes.string,
@@ -62,6 +67,5 @@ const AdminProfilesList = () => {
     </Card.Body>
   ) : <LoadingSpinner />);
 };
-
 
 export default AdminProfilesList;

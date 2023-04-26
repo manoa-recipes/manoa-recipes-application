@@ -5,34 +5,22 @@ import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { Table, Card, Accordion, Button } from 'react-bootstrap';
 import { Ingredients } from '../../../../api/ingredients/Ingredients';
-import { Profiles } from '../../../../api/profiles/Profiles';
-import { Vendors } from '../../../../api/vendors/Vendors';
-import { Recipes } from '../../../../api/recipes/Recipes';
 import LoadingSpinner from '../../LoadingSpinner';
-import { removeIngredient } from '../../../../startup/both/Methods';
+import { removeDocMethod } from '../../../../startup/both/Methods';
 
 // Components to display Ingredients documents
 const AdminIngredientItem = ({ ingredient }) => {
-  const remIngredient = (event) => {
+  const remDoc = (event) => {
     console.log('Removing Ingredient: ', event, '\n  Type: ', event.target.type);
-    let _id;
-    switch (event.target.type) {
-    case 'svg': _id = event.target.parentElement.value; break;
-    case 'button': _id = event.target.value; break;
-    case 'path': _id = event.target.parentElement.parentElement.value; break;
-    default: console.log('Warning: Unknown event Target!');
-    }
-    console.log(_id);
-    if (_id !== undefined) {
-      Meteor.call(removeIngredient, { _id }, (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Ingredient removed successfully', 'success');
-        }
-      });
-    } else { console.log('Warning: _id not found.  Cancelling remove.'); }
+    Meteor.call(removeDocMethod, { _id: ingredient._id, Ingredients }, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Ingredient removed successfully', 'success');
+      }
+    });
   };
+  /** There HAS to be a better way to pass the _id.  This works for now. */
   return (
     <tr>
       <td>{ingredient._id}</td>
@@ -40,7 +28,15 @@ const AdminIngredientItem = ({ ingredient }) => {
       <td>
         <Button
           value={ingredient._id}
-          onClick={(e) => remIngredient(e)}
+          onClick={(e) => remDoc(e)}
+        >
+          -
+        </Button>
+      </td>
+      <td>
+        <Button
+          value={ingredient._id}
+          onClick={(e) => remDoc(e)}
         >
           -
         </Button>
@@ -80,6 +76,7 @@ const AdminIngredientsList = () => {
               <tr>
                 <th>_id</th>
                 <th>Name (*)</th>
+                <th>Edit</th>
                 <th>Remove</th>
               </tr>
             </thead>
