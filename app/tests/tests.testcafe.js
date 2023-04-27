@@ -90,7 +90,7 @@ test('Test that admin page shows up and works', async (testController) => {
   await navBar.gotoAdminPage(testController);
   await adminPage.isDisplayed(testController);
   await adminPage.admin_ingredients(testController);
-  await adminPage.admin_profiles(testController);
+  await adminPage.admin_profiles_data(testController);
   await adminPage.admin_vendors_collection(testController);
   await adminPage.admin_recipes_collection(testController);
   await adminPage.admin_recipesIngredients_collection(testController);

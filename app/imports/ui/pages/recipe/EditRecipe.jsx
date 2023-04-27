@@ -80,7 +80,7 @@ const EditRecipe = () => {
     });
   };
   // console.log('EditRecipe rendering:\n  Ready: ', ready, '\n  Recipe: ', recipe, '\n  Model: ', model);
-  // Redirect the user to the IndividualRecipe page for the edited document after submit
+  // Redirect the user to the ViewRecipe page for the edited document after submit
   if (redirect) {
     return (<Navigate to={`/view-recipe/${_id}`} />);
   }

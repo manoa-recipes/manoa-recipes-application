@@ -2,10 +2,9 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { _ } from 'meteor/underscore';
-import LoadingSpinner from '../components/LoadingSpinner';
-import RecipeCard from '../components/RecipeCard';
-import { Recipes } from '../../api/recipes/Recipes';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import RecipeCard from '../../components/recipe/RecipeCard';
+import { Recipes } from '../../../api/recipes/Recipes';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const UserHome = () => {
@@ -26,14 +25,14 @@ const UserHome = () => {
   }, []);
 
   return (ready ? (
-    <Container className="py-3" id="userhome-page">
-      <Row className="justify-content-center" id="recipe-card">
+    <Container className="py-3" id="list-recipe-page">
+      <Row className="justify-content-center">
         <Col>
           <Col className="text-center">
-            <h2>Featured Recipe</h2>
+            <h2>All Recipes</h2>
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4">
-            <Col><RecipeCard recipe={_.sample(recipes)} /></Col>
+            {recipes.map((recipe) => (<Col key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}
           </Row>
         </Col>
       </Row>

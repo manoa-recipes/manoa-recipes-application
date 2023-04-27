@@ -1,4 +1,4 @@
-name: ci-manoa-recipe
+name: manoa-recipe
 
 on:
   push:

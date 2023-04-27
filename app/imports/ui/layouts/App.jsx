@@ -6,8 +6,8 @@ import { Roles } from 'meteor/alanning:roles';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import UserHome from '../pages/UserHome';
-import AdminHome from '../pages/AdminHome';
+import UserHome from '../pages/homes/UserHome';
+import AdminHome from '../pages/homes/AdminHome';
 import NotFound from '../pages/NotFound';
 import SignUp from '../pages/SignUp';
 import SignOut from '../pages/SignOut';
@@ -19,9 +19,9 @@ import AddRecipe from '../pages/recipe/AddRecipe';
 import Vendors from '../pages/Vendors';
 import UserProfile from '../pages/Profile';
 import VendorProfile from '../pages/VendorProfile';
-import ListRecipe from '../pages/ListRecipe';
+import ListRecipe from '../pages/recipe/ListRecipe';
 import EditRecipe from '../pages/recipe/EditRecipe';
-import IndividualRecipe from '../components/IndividualRecipe';
+import ViewRecipe from '../pages/recipe/ViewRecipe';
 import EditProfile from '../pages/EditProfile';
 import SearchResults from '../pages/SearchResults';
 
@@ -49,9 +49,9 @@ const App = () => {
           <Route path="/list" element={<ProtectedRoute><ListRecipe /></ProtectedRoute>} />
           <Route path="/add-recipe" element={<ProtectedRoute><AddRecipe /></ProtectedRoute>} />
           <Route path="/vendor" element={<ProtectedRoute><Vendors /></ProtectedRoute>} />
-          <Route path="/view-recipe/:_id" element={<ProtectedRoute><IndividualRecipe /></ProtectedRoute>} />
+          <Route path="/view-recipe/:_id" element={<ProtectedRoute><ViewRecipe /></ProtectedRoute>} />
           <Route path="/edit-recipe/:_id" element={<ProtectedRoute><EditRecipe /></ProtectedRoute>} />
-          <Route path="/search" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
+          <Route path="/search/:_terms" element={<ProtectedRoute><SearchResults /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><AdminHome /></AdminProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />

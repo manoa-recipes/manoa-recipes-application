@@ -11,7 +11,7 @@ class IngredientsCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       name: { type: String, index: true, unique: true },
-    });
+    }, { clean: true });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions
