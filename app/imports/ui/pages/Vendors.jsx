@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
-import VendorCard from '../components/VendorCard';
+import VendorCard from '../components/vendor/VendorCard';
 import { Vendors } from '../../api/vendors/Vendors';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */

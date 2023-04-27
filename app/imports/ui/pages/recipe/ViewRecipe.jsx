@@ -4,12 +4,12 @@ import { Roles } from 'meteor/alanning:roles';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 import { useParams } from 'react-router';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import { RecipesIngredients } from '../../../api/recipes/RecipesIngredients';
 import { Recipes } from '../../../api/recipes/Recipes';
-import RecipeCard from './RecipeCard';
-import RecipeInstructions from './RecipeInstructions';
-import RecipeIngredientList from './RecipeIngredientList';
+import RecipeCard from '../../components/recipe/RecipeCard';
+import RecipeInstructions from '../../components/recipe/RecipeInstructions';
+import RecipeIngredientList from '../../components/recipe/RecipeIngredientList';
 
 // This page/component displays ALL data related to a specific recipe
 const ViewRecipe = () => {

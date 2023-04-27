@@ -2,10 +2,10 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Container, Tab, Tabs, Button } from 'react-bootstrap';
 import swal from 'sweetalert';
-import DataListsAdmin from '../components/admin/DataListsAdmin';
-import RelationListsAdmin from '../components/admin/RelationListsAdmin';
-import Profile from './Profile';
-import { clearDatabases } from '../../startup/both/Methods';
+import DataListsAdmin from '../../components/admin/DataListsAdmin';
+import RelationListsAdmin from '../../components/admin/RelationListsAdmin';
+import Profile from '../Profile';
+import { clearDatabases } from '../../../startup/both/Methods';
 
 /* This component is merely to organize all admin data */
 const AdminHome = () => {

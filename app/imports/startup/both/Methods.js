@@ -134,11 +134,7 @@ const updateDoc = (collection, document) => {
   } else { console.log(`Collection "${collection}" not recognized!`); }
 };
 /** _Server Func_ example params: (stuffsDoc._id, Stuffs) */
-const removeDoc = (_id, collection) => {
-  if (collection !== undefined) {
-    collection.collection.remove(_id);
-  } else { console.log(`Collection "${collection}" not recognized!`); }
-};
+const removeDoc = (_id, collection) => { if (collection !== undefined) { collection.collection.remove(_id); } else { console.log(`Collection "${collection}" not recognized!`); } };
 /** _Server Func_ example param: (Stuffs.name) */
 const getCollection = (collectionName) => {
   switch (collectionName) {
@@ -164,7 +160,6 @@ const getDefaultData = (collectionName) => {
 };
 /** _Server Func_ example param: (Stuffs.name) */
 const resetCollection = (collectionName) => {
-  console.log(`\nResetting ${collectionName}...`);
   const collection = getCollection(collectionName);
   const defaultData = getDefaultData(collectionName);
   if (collection && defaultData) {
