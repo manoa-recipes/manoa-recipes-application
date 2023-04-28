@@ -29,7 +29,7 @@ const getCollection = (collectionName) => {
   default: return undefined;
   }
 };
-
+// Function to render a collection as a list.  ex. param: collectionName={ Recipes.name }
 const AdminDataList = ({ collectionName }) => {
   const collection = getCollection(collectionName);
   const schema = collection?.schema._schema;

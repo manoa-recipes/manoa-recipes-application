@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Accordion, Card, Col, Row } from 'react-bootstrap';
+import { Accordion, Row } from 'react-bootstrap';
 import { Profiles } from '../../../api/profiles/Profiles';
 import LoadingSpinner from '../LoadingSpinner';
 import { VendorsIngredients } from '../../../api/vendors/VendorsIngredients';

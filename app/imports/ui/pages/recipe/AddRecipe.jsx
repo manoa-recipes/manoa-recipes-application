@@ -23,6 +23,7 @@ const AddRecipe = () => {
   const submit = (data) => {
     const { image, instructions, time, servings, ingredients } = data;
     // Extend the form data of the join docs at the moment of submit
+    // because: recipe field of the RecipesIngredients is a HiddenField on the form
     ingredients.map(ingredient => _.extend({}, ingredient, { recipe: name }));
     Meteor.call(addRecipeMethod, { name, owner, image, instructions, time, servings, ingredients }, (error) => {
       if (error) {

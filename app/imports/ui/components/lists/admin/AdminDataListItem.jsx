@@ -27,7 +27,7 @@ const getCollection = (collectionName) => {
   }
 };
 
-// Components to display Ingredients documents
+// Components to display any document
 const AdminDataListItem = ({ document, collectionName }) => {
   const [show, setShow] = useState(false);
   const collection = getCollection(collectionName);
@@ -35,7 +35,7 @@ const AdminDataListItem = ({ document, collectionName }) => {
   const editOpen = () => setShow(true);
   const editClose = () => setShow(false);
   const editSubmit = (data) => {
-    // Attach the _id of the current item to the temporary data document from the form
+    // Attach the _id of the current item to the temporary data document from the form (so the server function knows which one to alter)
     Meteor.call(updateDocMethod, { collectionName, document: _.extend({}, data, { _id: document._id }) }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');

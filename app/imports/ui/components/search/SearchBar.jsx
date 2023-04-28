@@ -7,7 +7,7 @@ import { Search } from 'react-bootstrap-icons';
 import { Navigate } from 'react-router-dom';
 // Let's try it again with uniforms instead
 const bridge = new SimpleSchema2Bridge(new SimpleSchema({ term: { type: String, optional: true, defaultValue: '' } }));
-
+/** DO NOT USE THIS IN THE NAVBAR!!! */
 const SearchBar = () => {
   const [formTerm, setFormTerm] = useState({ term: '' });
   const [redirect, setRedirect] = useState(false);

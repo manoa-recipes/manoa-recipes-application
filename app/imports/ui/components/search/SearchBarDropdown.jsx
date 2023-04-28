@@ -11,7 +11,7 @@ import LoadingSpinner from '../LoadingSpinner';
 
 // Minimum length for the search term to call the function to filter the list
 const searchTermMinimumLength = 2;
-
+/** Unfortunately this Dropdown.Item just wont redirect */
 const SearchMenuItem = ({ data, index }) => (
   <Dropdown.Item
     href={(data.field === 'recipe') ? `/view-recipe/${data._id}` : `/search/'${data.name}'`}

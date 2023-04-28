@@ -11,7 +11,7 @@ class RecipesCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       name: { type: String, index: true, unique: true },
-      owner: String,
+      owner: { type: String, defaultValue: 'Default' },
       image: { type: String, optional: true },
       instructions: { type: String, optional: false },
       time: { type: String, optional: false },

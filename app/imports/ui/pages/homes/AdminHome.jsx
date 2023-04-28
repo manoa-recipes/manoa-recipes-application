@@ -2,8 +2,8 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Container, Tab, Tabs, Button } from 'react-bootstrap';
 import swal from 'sweetalert';
-import DataListsAdmin from '../../components/admin/DataListsAdmin';
-import RelationListsAdmin from '../../components/admin/RelationListsAdmin';
+import DataListsAdmin from '../../components/lists/admin/DataListsAdmin';
+import JoinListsAdmin from '../../components/lists/admin/JoinListsAdmin';
 import Profile from '../Profile';
 import { clearDatabases } from '../../../startup/both/Methods';
 
@@ -29,7 +29,7 @@ const AdminHome = () => {
           <DataListsAdmin />
         </Tab>
         <Tab eventKey="joinDb" title="Join Collections">
-          <RelationListsAdmin id="admin-join-collections" />
+          <JoinListsAdmin id="admin-join-collections" />
         </Tab>
       </Tabs>
     </Container>
