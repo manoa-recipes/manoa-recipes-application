@@ -5,22 +5,22 @@ import swal from 'sweetalert';
 import DataListsAdmin from '../../components/lists/admin/DataListsAdmin';
 import JoinListsAdmin from '../../components/lists/admin/JoinListsAdmin';
 import Profile from '../Profile';
-import { clearDatabases } from '../../../startup/both/Methods';
+import { resetAllCollections } from '../../../startup/both/Methods';
 
 /* This component is merely to organize all admin data */
 const AdminHome = () => {
-  const handleClearDataButton = (event) => {
-    Meteor.call(clearDatabases, { event }, (error) => {
+  const handleClearDataButton = () => {
+    Meteor.call(resetAllCollections, {}, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
-        swal('Success', 'Recipe updated successfully', 'success');
+        swal('Success', 'Collections reset successfully', 'success');
       }
     });
   };
   return (
     <Container className="p-2 text-center" id="admin-page">
-      <Button onClick={(e) => handleClearDataButton(e)}>Clear Data (Except Profiles)</Button>
+      <Button onClick={handleClearDataButton}>Reset all data to default</Button>
       <Tabs>
         <Tab eventKey="admin-profile" title="Profile">
           <Profile />

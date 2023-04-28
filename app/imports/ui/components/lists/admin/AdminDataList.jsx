@@ -4,11 +4,10 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
-import { Table, Card, Accordion, Button, Row, Col, Modal } from 'react-bootstrap';
+import { Table, Card, Accordion, Button, Row, Col } from 'react-bootstrap';
 import { Star } from 'react-bootstrap-icons';
 import { AutoFields, AutoForm, SubmitField } from 'uniforms-bootstrap5';
 import LoadingSpinner from '../../LoadingSpinner';
-import { updateDocMethod, removeDocMethod } from '../../../../startup/both/Methods';
 import { Ingredients } from '../../../../api/ingredients/Ingredients';
 import { Recipes } from '../../../../api/recipes/Recipes';
 import { RecipesIngredients } from '../../../../api/recipes/RecipesIngredients';
@@ -16,6 +15,7 @@ import { Vendors } from '../../../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../../../api/vendors/VendorsIngredients';
 import AdminDataListItem from './AdminDataListItem';
 import { Profiles } from '../../../../api/profiles/Profiles';
+import { resetCollectionMethod, refillCollectionMethod } from '../../../../startup/both/Methods';
 
 // Function to select the correct collection
 const getCollection = (collectionName) => {
@@ -29,7 +29,7 @@ const getCollection = (collectionName) => {
   default: return undefined;
   }
 };
-// Function to render a collection as a list.  ex. param: collectionName={ Recipes.name }
+// Function to render a collection as a list.  ex. param: <AdminDataList collectionName={ Recipes.name }
 const AdminDataList = ({ collectionName }) => {
   const collection = getCollection(collectionName);
   const schema = collection?.schema._schema;
@@ -43,6 +43,24 @@ const AdminDataList = ({ collectionName }) => {
       ready: rdy,
     };
   }, []);
+  const handleReset = () => {
+    Meteor.call(resetCollectionMethod, { collectionName }, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', `${collectionName} cleared!`, 'success');
+      }
+    });
+  };
+  const handleRefill = () => {
+    Meteor.call(refillCollectionMethod, { collectionName }, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', `${collectionName} Refilled!`, 'success');
+      }
+    });
+  };
   return (ready ? (
     <Card.Body>
       <Accordion defaultActiveKey={0}>
@@ -53,8 +71,8 @@ const AdminDataList = ({ collectionName }) => {
           <Accordion.Body>
             <Col>
               <Row>
-                <Col><Button>Clear Data</Button></Col>
-                <Col><Button>Fill Data</Button></Col>
+                <Col><Button onClick={handleReset}>Reset Data</Button></Col>
+                <Col><Button onClick={handleRefill}>Fill Data</Button></Col>
               </Row>
               <Row>
                 <Table striped bordered responsive size="sm" className="align-items-center">
