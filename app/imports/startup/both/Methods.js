@@ -89,6 +89,8 @@ Meteor.methods({
 const resetAllMethod = 'All.reset';
 Meteor.methods({ 'All.reset'() { clearAllCollections(); loadDefaultData(); } });
 
+
+
 export {
   collectionNames,
   addRecipeMethod,
