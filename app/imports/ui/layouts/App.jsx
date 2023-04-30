@@ -23,6 +23,7 @@ import ListRecipe from '../pages/recipe/ListRecipe';
 import EditRecipe from '../pages/recipe/EditRecipe';
 import ViewRecipe from '../pages/recipe/ViewRecipe';
 import EditProfile from '../pages/EditProfile';
+import AddProfile from '../pages/AddProfile';
 import SearchResults from '../pages/SearchResults';
 import ListRecipeByIngredient from '../pages/recipe/ListRecipeByIngredient';
 
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/signout" element={<SignOut />} />
           <Route path="/home" element={<ProtectedRoute><UserHome /></ProtectedRoute>} />
           <Route path="/edit_user_profile/:_id" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
+          <Route path="/add_user_profile" element={<ProtectedRoute><AddProfile /></ProtectedRoute>} />
           <Route path="/user_profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
           <Route path="/vendor_profile" element={<ProtectedRoute><VendorProfile /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListRecipe /></ProtectedRoute>} />
