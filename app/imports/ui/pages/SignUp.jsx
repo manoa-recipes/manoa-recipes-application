@@ -60,6 +60,7 @@ const SignUp = ({ location }) => {
     });
 
     console.log('making roles');
+    console.log(Meteor.users.find());
     if (role === 'vendor') { assignRoles(userID, role); }
 
     // adding user role
