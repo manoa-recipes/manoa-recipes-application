@@ -8,27 +8,17 @@ import { Profiles } from '../../api/profiles/Profiles';
 import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import {
-  createUser,
-  promoteUser,
-  addProfile,
-  addRecipeIngredient,
-  addRecipe,
-  addVendorIngredient,
-  addVendor,
   addDoc,
   updateDoc,
   removeDoc,
 } from './DocumentFunctions';
 import {
   getCollection,
-  getDefaultData,
   clearCollection,
   refillCollection,
   resetCollection,
   loadDefaultData,
   clearAllCollections,
-  refillAllCollections,
-  resetAllCollections,
 } from './CollectionFunctions';
 
 const collectionNames = [Profiles.name, Ingredients.name, Recipes.name, Vendors.name, RecipesIngredients.name, VendorsIngredients.name];

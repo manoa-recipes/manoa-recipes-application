@@ -14,10 +14,10 @@ class RecipesCollection {
       owner: { type: String, defaultValue: 'Default' },
       image: { type: String, optional: true },
       instructions: { type: String, optional: false },
-      time: { type: String, optional: false },
-      servings: { type: Number, optional: false },
-      vegan: { type: Boolean, optional: true, defaultValue: false },
-      glutenFree: { type: Boolean, optional: true, defaultValue: false },
+      time: { type: String, defaultValue: '10 minutes' },
+      servings: { type: Number, defaultValue: 1 },
+      vegan: { type: Boolean, defaultValue: false },
+      glutenFree: { type: Boolean, defaultValue: false },
       source: { type: String, defaultValue: '' },
     });
     // Ensure collection documents obey schema.

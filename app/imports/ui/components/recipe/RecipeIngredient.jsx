@@ -3,14 +3,14 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Accordion, Row } from 'react-bootstrap';
+import { Accordion, Card } from 'react-bootstrap';
 import { Profiles } from '../../../api/profiles/Profiles';
 import LoadingSpinner from '../LoadingSpinner';
 import { VendorsIngredients } from '../../../api/vendors/VendorsIngredients';
 import RecipeVendorIngredient from './RecipeVendorIngredient';
 
 // A component to display an ingredient in a recipe, and distinguish when allergic
-const RecipeIngredient = ({ recipeIngredient, index }) => {
+const RecipeIngredient = ({ recipeIngredient }) => {
   // Get the email of the current user
   const email = Meteor.user().email;
   // Subscribe to the database before rendering
@@ -30,22 +30,27 @@ const RecipeIngredient = ({ recipeIngredient, index }) => {
       ready: rdy,
     };
   }, []);
+  if (!ready) { return (<LoadingSpinner />); }
   // Select an appropriate variant for the allergy warning
   const variant = allergic ? 'danger' : 'light';
+  const textColor = allergic ? 'text-white' : 'text-dark';
+  const numPrices = vendorIngredients.length;
   // Display the component for the ingredient
-  return ready ? (
-    <Accordion.Item
-      className="p-0 g-0 m-0 bg-info"
-      eventKey={index}
-    >
-      <Accordion.Header>{recipeIngredient.quantity} {recipeIngredient.size} {recipeIngredient.ingredient}</Accordion.Header>
+  const text = (recipeIngredient.quantity > 1) ? (
+    `${recipeIngredient.quantity} ${recipeIngredient.size} ${recipeIngredient.ingredient}`
+  ) : (
+    `${recipeIngredient.size} ${recipeIngredient.ingredient}`
+  );
+  return (numPrices > 0) ? (
+    <Accordion>
+      <Accordion.Header>{text}</Accordion.Header>
       <Accordion.Body>
-        {vendorIngredients.length > 0 ? vendorIngredients.map(vendorIngredient => (
-          <RecipeVendorIngredient recipeVendorIngredient={vendorIngredient} />
-        )) : <Row className="text-center">No Vendor data</Row>}
+        {vendorIngredients.map(document => (
+          <RecipeVendorIngredient document={document} />
+        ))}
       </Accordion.Body>
-    </Accordion.Item>
-  ) : <LoadingSpinner />;
+    </Accordion>
+  ) : (<Card.Text className="p-2 m-auto">{text}</Card.Text>);
 };
 
 // Require a document to be passed to this component.
@@ -56,6 +61,5 @@ RecipeIngredient.propTypes = {
     quantity: PropTypes.number,
     _id: PropTypes.string,
   }).isRequired,
-  index: PropTypes.number.isRequired,
 };
 export default RecipeIngredient;

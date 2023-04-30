@@ -3,7 +3,7 @@ import { _ } from 'meteor/underscore';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, HiddenField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, BoolField, ErrorsField, HiddenField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
 import { addRecipeMethod } from '../../../startup/both/Methods';
@@ -56,9 +56,12 @@ const AddRecipe = () => {
                     />
                   </Row>
                   <Row><TextField name="image" placeholder="..." className="mb-auto" /></Row>
+                  <Row><TextField name="source" placeholder="..." className="mb-auto" /></Row>
                   <Row>
                     <Col><TextField name="time" placeholder="..." className="mb-auto" /></Col>
                     <Col><NumField name="servings" decimal={null} className="mb-auto" /></Col>
+                    <Col><BoolField name="vegan" decimal={null} className="mb-auto" /></Col>
+                    <Col><BoolField name="glutenFree" decimal={null} className="mb-auto" /></Col>
                   </Row>
                 </Col>
                 <LongTextField name="instructions" />

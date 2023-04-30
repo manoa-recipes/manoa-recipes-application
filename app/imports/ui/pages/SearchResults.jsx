@@ -6,7 +6,7 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { AutoForm, BoolField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, TextField } from 'uniforms-bootstrap5';
 import { Link } from 'react-router-dom';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { Recipes } from '../../api/recipes/Recipes';
@@ -109,7 +109,7 @@ const SearchResults = () => {
   };
   /** ===CHANGE OR STYLE ME PLEASE=== */
   return ((ready && results !== undefined) ? (
-    <Container fluid className="flex-fill" style={{ maxHeight: '100vh', overflowY: 'auto' }}>
+    <Container fluid className="flex-fill">
       <Col className="p-2">
         <Row>
           <AutoForm
@@ -134,7 +134,7 @@ const SearchResults = () => {
         </Row>
         <Row>
           <Card>
-            <Col className="p-1">
+            <Col className="p-1" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
               {(results?.length > 0) ? (_.filter(results, function (element) { return element.field === 'ingredient'; }).map(result => <Result key={result?._id} document={result} />)) : (<div>No results</div>)}
             </Col>
           </Card>

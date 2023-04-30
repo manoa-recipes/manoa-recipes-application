@@ -63,14 +63,12 @@ const refillCollection = (collection) => getDefaultData(collection.name).map(doc
 /** _Server Func_ example param: (Stuffs) */
 const resetCollection = (collection) => { clearCollection(collection); refillCollection(collection); };
 const clearAllCollections = () => collections.map(collection => clearCollection(collection));
-const refillAllCollections = () => collections.map(collection => refillCollection(collection));
-const resetAllCollections = () => collections.map(collection => resetCollection(collection));
 
 const loadDefaultData = () => {
   const defaultDataExists = (Meteor.settings.defaultProfiles && Meteor.settings.defaultRecipes && Meteor.settings.defaultVendors && Meteor.settings.defaultRecipesIngredients && Meteor.settings.defaultVendorsIngredients) !== undefined;
   if (defaultDataExists) {
     console.log('\nLoading additional data from:\n  app/public/settings.development.json');
-    refillAllCollections();
+    collections.map(collection => refillCollection(collection));
     console.log('Collections initialized.');
   } else { console.log('\nWarning!\n  Please start Meteor with a settings file at:\n  app/public/settings.development.json\n'); }
   if (Meteor.settings.loadAssetsFile) {
@@ -96,6 +94,4 @@ export {
   resetCollection,
   loadDefaultData,
   clearAllCollections,
-  refillAllCollections,
-  resetAllCollections,
 };

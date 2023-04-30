@@ -2,14 +2,13 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Row, Col, Container, Button } from 'react-bootstrap';
+import { Row, Col, Container, Button, Card } from 'react-bootstrap';
 import { useParams } from 'react-router';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { RecipesIngredients } from '../../../api/recipes/RecipesIngredients';
 import { Recipes } from '../../../api/recipes/Recipes';
 import RecipeCard from '../../components/recipe/RecipeCard';
-import RecipeInstructions from '../../components/recipe/RecipeInstructions';
-import RecipeIngredientList from '../../components/recipe/RecipeIngredientList';
+import RecipeIngredient from '../../components/recipe/RecipeIngredient';
 
 // This page/component displays ALL data related to a specific recipe
 const ViewRecipe = () => {
@@ -38,23 +37,34 @@ const ViewRecipe = () => {
     };
   }, [_id]);
   return (ready ? (
-    <Container className="p-2">
-      <Col className="p-0">
-        {editAccess ? (<Button className="rounded-0 rounded-top" href={`/edit-recipe/${recipe._id}`}>Edit</Button>) : ''}
-        <Row className="grid bg-primary">
-          <Col xs={3} className="bg-black w-auto m-auto">
-            <RecipeCard recipe={recipe} />
-          </Col>
-          <Col
-            xs={3}
-            className="bg-dark w-auto m-auto h-auto"
-            style={{ maxHeight: '50vh', overflowY: 'auto' }}
+    <Container>
+      <Row className="grid m-auto g-0 justify-content-center" style={{ maxWidth: '57rem', minWidth: '18rem' }}>
+        {editAccess ? (
+          <Button
+            className="rounded-0 rounded-top"
+            href={`/edit-recipe/${recipe._id}`}
           >
-            <Row><RecipeIngredientList recipeIngredients={recipeIngredients} /></Row>
-            <Row><RecipeInstructions instructions={recipe.instructions} /></Row>
-          </Col>
-        </Row>
-      </Col>
+            Edit
+          </Button>
+        ) : ''}
+        <Container className="w-auto m-0 h-auto">
+          <RecipeCard recipe={recipe} />
+        </Container>
+        <Col xs={6} className="m-auto" style={{ width: '18rem' }}>
+          <Card>
+            <Card.Header>Ingredients:</Card.Header>
+            {recipeIngredients.map(recipeIngredient => (
+              <RecipeIngredient key={recipeIngredient._id} recipeIngredient={recipeIngredient} />
+            ))}
+          </Card>
+        </Col>
+        <Col xs={6} className="m-auto" style={{ width: '18rem' }}>
+          <Card>
+            <Card.Header>Instructions:</Card.Header>
+            <Card.Text className="m-0 p-2">{recipe.instructions}</Card.Text>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   ) : <LoadingSpinner />);
 };
