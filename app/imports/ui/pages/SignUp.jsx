@@ -30,21 +30,22 @@ const SignUp = ({ location }) => {
     const userID = Accounts.createUser({ email, username: email, password, role }, (err) => {
       if (err) {
         setError(err.reason);
-        return;
+      } else {
+        if (role === 'vendor' || role === 'user') {
+          Roles.createRole(role, { unlessExists: true });
+          Roles.addUsersToRoles(userID, role);
+        }
+        setRedirectToRef(true);
       }
-      if (role === 'vendor' || role === 'user') {
-        Roles.createRole(role, { unlessExists: true });
-        Roles.addUsersToRoles(userID, role);
-      }
-      setRedirectToRef(true);
     });
   };
 
-  const { from } = location?.state || { from: { pathname: '/home' } };
+  /* Display the signup form. Redirect to landing page after successful registration and login. */
+  const { from } = location?.state || { from: { pathname: '/' } };
+  // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
   }
-
   return (
     <Container fluid id="signup-page" className="">
       <Row md={3}>
