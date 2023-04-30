@@ -36,21 +36,32 @@ const ViewRecipe = () => {
       ready: rdy,
     };
   }, [_id]);
+  const scroller = { maxHeight: '50vh', overflowY: 'auto' };
+  // Its about 30 characters per line
   return (ready ? (
     <Container>
-      <Row className="grid m-auto g-0 justify-content-center" style={{ maxWidth: '57rem', minWidth: '18rem' }}>
-        {editAccess ? (
-          <Button
-            className="rounded-0 rounded-top"
-            href={`/edit-recipe/${recipe._id}`}
-          >
-            Edit
-          </Button>
-        ) : ''}
-        <Container className="w-auto m-0 h-auto">
+      <Row xs={1} sm={1} md={1} lg={3} className="grid m-auto g-0 justify-content-center">
+        <Col
+          xs={{ order: '1' }}
+          className="text-center bg-primary w-auto m-auto"
+        >
+          {editAccess ? (
+            <Button
+              className="rounded-0 rounded-top"
+              href={`/edit-recipe/${recipe._id}`}
+            >
+              Edit
+            </Button>
+          ) : ''}
           <RecipeCard recipe={recipe} />
-        </Container>
-        <Col xs={6} className="m-auto" style={{ width: '18rem' }}>
+        </Col>
+        <Col
+          xs={{ order: '2' }}
+          md={{ order: '3' }}
+          lg={{ order: '2' }}
+          className="bg-dark"
+          style={{ width: '18rem' }}
+        >
           <Card>
             <Card.Header>Ingredients:</Card.Header>
             {recipeIngredients.map(recipeIngredient => (
@@ -58,10 +69,16 @@ const ViewRecipe = () => {
             ))}
           </Card>
         </Col>
-        <Col xs={6} className="m-auto" style={{ width: '18rem' }}>
+        <Col
+          xs={{ order: '3' }}
+          md={{ order: '2' }}
+          lg={{ order: '3' }}
+          className="m-auto h-auto bg-primary"
+          style={{ width: '18rem' }}
+        >
           <Card>
-            <Card.Header>Instructions:</Card.Header>
-            <Card.Text className="m-0 p-2">{recipe.instructions}</Card.Text>
+            <Card.Header>Instructions: {recipe.instructions.length}</Card.Header>
+            <Card.Text className="m-0 p-2" style={scroller}>{recipe.instructions}</Card.Text>
           </Card>
         </Col>
       </Row>

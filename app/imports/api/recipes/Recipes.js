@@ -10,7 +10,7 @@ class RecipesCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      name: { type: String, index: true, unique: true },
+      name: { type: String, optional: false },
       owner: { type: String, defaultValue: 'Default' },
       image: { type: String, optional: true },
       instructions: { type: String, optional: false },

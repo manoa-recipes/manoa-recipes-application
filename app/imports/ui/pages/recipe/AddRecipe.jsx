@@ -60,8 +60,8 @@ const AddRecipe = () => {
                   <Row>
                     <Col><TextField name="time" placeholder="..." className="mb-auto" /></Col>
                     <Col><NumField name="servings" decimal={null} className="mb-auto" /></Col>
-                    <Col><BoolField name="vegan" decimal={null} className="mb-auto" /></Col>
-                    <Col><BoolField name="glutenFree" decimal={null} className="mb-auto" /></Col>
+                    <Col><BoolField name="vegan" className="mb-auto" /></Col>
+                    <Col><BoolField name="glutenFree" className="mb-auto" /></Col>
                   </Row>
                 </Col>
                 <LongTextField name="instructions" />

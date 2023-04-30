@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
-import { AutoField, AutoForm, ErrorsField, HiddenField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoField, AutoForm, BoolField, ErrorsField, HiddenField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { useParams } from 'react-router';
 import { Recipes } from '../../../api/recipes/Recipes';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -81,58 +81,55 @@ const EditRecipe = () => {
   };
   // console.log('EditRecipe rendering:\n  Ready: ', ready, '\n  Recipe: ', recipe, '\n  Model: ', model);
   // Redirect the user to the ViewRecipe page for the edited document after submit
-  if (redirect) {
-    return (<Navigate to={`/view-recipe/${_id}`} />);
-  }
-  /* If ready and editAccess, render the page
-  *  Else If ready and NOT editAccess, show NotAuthorized page
-  *  Else NOT ready, show the loading spinner */
-  if (ready) {
-    return editAccess ? (
-      <Container className="p-2 text-end">
-        <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)} validate="onChange">
-          <Card className="text-center">
-            <Card.Header><Card.Title><h2>Edit {recipe.name}</h2></Card.Title></Card.Header>
-            <Card.Header>
-              <Col>
-                <Row><AutoField name="name" /></Row>
-                <Row><TextField name="image" /></Row>
-                <Row>
-                  <Col><TextField name="time" /></Col>
-                  <Col><NumField name="servings" key="servings" decimal={null} /></Col>
-                </Row>
-              </Col>
-            </Card.Header>
-            <Card.Body>
-              <ListField name="ingredients" className="bg-light text-dark align-items-center" formNoValidate>
-                <ListItemField name="$">
-                  <HiddenField name="recipe" value={recipe.name} />
-                  <Row className="align-items-center">
-                    <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
-                    <Col xs={3} md={2}><NumField name="quantity" decimal={false} /></Col>
-                    <Col xs={3} lg={2}><TextField name="size" /></Col>
-                    <Col xs={5} md={6} lg={7}><TextField name="ingredient" placeholder="Type an ingredient..." /></Col>
+  if (redirect) { return (<Navigate to={`/view-recipe/${_id}`} />); }
+  if (!ready) { return (<LoadingSpinner />); }
+  return editAccess ? (
+    <Container className="p-2 text-end">
+      <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)} validate="onChange">
+        <Card className="text-center">
+          <Card.Header><Card.Title><h2>Edit {recipe.name}</h2></Card.Title></Card.Header>
+          <Row xs={12}>
+            <Col xs={12} md={6}>
+              <Card.Body>
+                <Col>
+                  <Row><TextField name="name" className="mb-auto" /></Row>
+                  <Row><TextField name="image" placeholder="..." className="mb-auto" /></Row>
+                  <Row><TextField name="source" placeholder="..." className="mb-auto" /></Row>
+                  <Row>
+                    <Col><TextField name="time" placeholder="..." className="mb-auto" /></Col>
+                    <Col><NumField name="servings" decimal={null} className="mb-auto" /></Col>
+                    <Col><BoolField name="vegan" className="mb-auto" /></Col>
+                    <Col><BoolField name="glutenFree" className="mb-auto" /></Col>
                   </Row>
-                </ListItemField>
-              </ListField>
-              <ListAddField name="ingredients.$" addIcon={<PlusCircle className="text-dark" />} />
-            </Card.Body>
-            <Card.Body>
-              <Col>
-                <LongTextField name="instructions" />
-              </Col>
-            </Card.Body>
-            <Card.Body className="text-end">
-              <HiddenField name="owner" value={recipe.owner} />
-              <SubmitField value="Submit" />
-              <ErrorsField />
-            </Card.Body>
-          </Card>
-        </AutoForm>
-      </Container>
-    ) : <NotAuthorized />;
-  }
-  return <LoadingSpinner />;
+                </Col>
+                <LongTextField name="instructions" wrapClassName="h-auto" />
+              </Card.Body>
+            </Col>
+            <Col xs={12} md={6} className="justify-content-center text-center">
+              <Card.Body>
+                <ListField name="ingredients" className="align-items-center" addIcon={<PlusCircle className="text-dark" />} removeIcon={null}>
+                  <ListItemField name="$">
+                    <HiddenField name="recipe" value={recipe.name} />
+                    <Row xs={12} className="align-items-center g-0">
+                      <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
+                      <Col xs={2}><NumField name="quantity" decimal={false} className="mb-auto" /></Col>
+                      <Col xs={3}><TextField name="size" className="mb-auto" /></Col>
+                      <Col><TextField name="ingredient" placeholder="Type an ingredient..." className="mb-auto" /></Col>
+                    </Row>
+                  </ListItemField>
+                </ListField>
+              </Card.Body>
+            </Col>
+          </Row>
+          <Card.Body className="text-end">
+            <HiddenField name="owner" value={recipe.owner} />
+            <SubmitField value="Submit" />
+            <ErrorsField />
+          </Card.Body>
+        </Card>
+      </AutoForm>
+    </Container>
+  ) : <NotAuthorized />;
 };
 
 export default EditRecipe;
