@@ -6,6 +6,7 @@ import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'uniforms-bootstrap5';
+import { Roles } from 'meteor/alanning:roles';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -24,10 +25,16 @@ const SignUp = ({ location }) => {
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
+  const assignRoles = (newUser, role) => {
+    console.log('creating role');
+    Roles.createRole(role, { unlessExists: true });
+    Roles.addUsersToRoles(newUser._id, role);
+  };
+
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
     const { email, password, role } = doc;
-    Accounts.createUser({ email, username: email, password, role }, (err) => {
+    const newUser = Accounts.createUser({ email, username: email, password, role }, (err) => {
       if (err) {
         setError(err.reason);
       } else {
@@ -35,6 +42,7 @@ const SignUp = ({ location }) => {
         setRedirectToRef(true);
       }
     });
+    assignRoles(newUser, role);
   };
 
   /* Display the signup form. Redirect to landing page after successful registration and login. */
