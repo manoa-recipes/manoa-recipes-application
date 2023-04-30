@@ -93,6 +93,5 @@ const AdminDataList = ({ collectionName, numElementsPerPage }) => {
 };
 AdminDataList.propTypes = {
   collectionName: PropTypes.string.isRequired,
-  numElementsPerPage: PropTypes.number.isRequired,
 };
 export default AdminDataList;

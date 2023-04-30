@@ -2,7 +2,7 @@ import SimpleSchema from 'simpl-schema';
 
 const RecipeFormSchema = new SimpleSchema({
   // Recipes schema
-  name: { type: String, index: true, unique: true },
+  name: String,
   owner: { type: String, defaultValue: 'Default' },
   image: { type: String, optional: true },
   instructions: { type: String, optional: false },

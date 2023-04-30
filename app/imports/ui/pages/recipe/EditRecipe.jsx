@@ -53,7 +53,6 @@ const EditRecipe = () => {
     /* Output to console for tracing bugs */
     // console.log('useTracker documents:', '\n  recipe: ', document, '\n  ingredients: ', ingredientItems);
     // console.log('useTracker:\n  user: ', user, '\n  Admin: ', isAdmin, '\n  Owner: ', isOwner, '\n  Edit Access: ', isAdmin || isOwner);
-
     return {
       recipe: document,
       startIngredients: ingredientItems,

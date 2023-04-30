@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
-import { _ } from 'meteor/underscore';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Accordion, Card } from 'react-bootstrap';
 import { Profiles } from '../../../api/profiles/Profiles';
@@ -11,46 +10,42 @@ import RecipeVendorIngredient from './RecipeVendorIngredient';
 
 // A component to display an ingredient in a recipe, and distinguish when allergic
 const RecipeIngredient = ({ recipeIngredient }) => {
-  // Get the email of the current user
-  const email = Meteor.user().email;
+  const { size, ingredient } = recipeIngredient;
+  const quantity = (size > 1) ? `${recipeIngredient.quantity}` : 'A';
+  const text = `${quantity} ${size} ${ingredient}`;
   // Subscribe to the database before rendering
-  const { ready, allergic, vendorIngredients } = useTracker(() => {
+  const { ready, user, vendorIngredients } = useTracker(() => {
+    // Get the email of the current user
     const sub = Meteor.subscribe(Profiles.userPublicationName);
     const sub2 = Meteor.subscribe(VendorsIngredients.userPublicationName);
     const rdy = sub.ready() && sub2.ready();
-
-    // Pluck the allergies field from the logged in user's Profile document, which is an array of strings
-    const allergies = _.pluck(Profiles.collection.find({ email: email }).fetch(), 'allergies');
     // Retrieve all vendor documents relating to this ingredient
-    const vendorIngredientItems = VendorsIngredients.collection.find({ ingredient: recipeIngredient.ingredient }).fetch();
+    const vendorIngredientItems = VendorsIngredients.collection.find({ ingredient }).fetch();
     return {
       // (bool) allergies array includes() the current ingredient
-      allergic: allergies.includes(recipeIngredient.ingredient),
+      user: Profiles.collection.findOne({ email: Meteor.user()?.username }),
       vendorIngredients: vendorIngredientItems,
       ready: rdy,
     };
   }, []);
   if (!ready) { return (<LoadingSpinner />); }
   // Select an appropriate variant for the allergy warning
-  const variant = allergic ? 'danger' : 'light';
-  const textColor = allergic ? 'text-white' : 'text-dark';
-  const numPrices = vendorIngredients.length;
+  const className = user.allergies.includes(ingredient) ? 'bg-danger text-white' : 'bg-light text-dark';
   // Display the component for the ingredient
-  const text = (recipeIngredient.quantity > 1) ? (
-    `${recipeIngredient.quantity} ${recipeIngredient.size} ${recipeIngredient.ingredient}`
+  return (vendorIngredients.length > 0) ? (
+    <Card.Body className={className}>
+      <Accordion>
+        <Accordion.Header>{text}</Accordion.Header>
+        <Accordion.Body>
+          {vendorIngredients.map(document => (
+            <RecipeVendorIngredient key={document._id} document={document} />
+          ))}
+        </Accordion.Body>
+      </Accordion>
+    </Card.Body>
   ) : (
-    `${recipeIngredient.size} ${recipeIngredient.ingredient}`
+    <Card.Body className={className}><Card.Text>{text}</Card.Text></Card.Body>
   );
-  return (numPrices > 0) ? (
-    <Accordion>
-      <Accordion.Header>{text}</Accordion.Header>
-      <Accordion.Body>
-        {vendorIngredients.map(document => (
-          <RecipeVendorIngredient document={document} />
-        ))}
-      </Accordion.Body>
-    </Accordion>
-  ) : (<Card.Text className="p-2 m-auto">{text}</Card.Text>);
 };
 
 // Require a document to be passed to this component.

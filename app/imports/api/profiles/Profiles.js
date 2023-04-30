@@ -16,6 +16,7 @@ class ProfilesCollection {
       allergies: {
         type: Array,
         minCount: 0,
+        optional: true,
       },
       'allergies.$': String,
     });
