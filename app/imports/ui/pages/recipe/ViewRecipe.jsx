@@ -43,7 +43,7 @@ const ViewRecipe = () => {
       <Row xs={1} sm={1} md={1} lg={3} className="grid m-auto g-0 justify-content-center">
         <Col
           xs={{ order: '1' }}
-          className="text-center bg-primary w-auto m-auto"
+          className="text-center w-auto m-auto"
         >
           {editAccess ? (
             <Button
@@ -59,7 +59,7 @@ const ViewRecipe = () => {
           xs={{ order: '2' }}
           md={{ order: '3' }}
           lg={{ order: '2' }}
-          className="bg-dark"
+          className="mt-lg-5"
           style={{ width: '18rem' }}
         >
           <Card>
@@ -73,7 +73,7 @@ const ViewRecipe = () => {
           xs={{ order: '3' }}
           md={{ order: '2' }}
           lg={{ order: '3' }}
-          className="m-auto h-auto bg-primary"
+          className="m-auto h-auto mt-lg-5"
           style={{ width: '18rem' }}
         >
           <Card>
