@@ -460,6 +460,7 @@
     { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "white sugar", "size": "tablespoon", "quantity": 1 },
     { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "dried basil", "size": "tablespoon", "quantity": 1 },
     { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "dried parsley", "size": "tablespoon", "quantity": 1 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "salt", "size": "teaspoon", "quantity": 1 },
     { "recipe": "Super-Delicious Zuppa Toscana", "ingredient": "red pepper flakes", "size": "1 pound", "quantity": 1 },
     { "recipe": "Super-Delicious Zuppa Toscana", "ingredient": "bulk mild Italian sausage", "size": "1/4 teaspoon", "quantity": 1 },
     { "recipe": "Super-Delicious Zuppa Toscana", "ingredient": "crushed red pepper flakes", "size": "1 pound", "quantity": 1 },
@@ -924,7 +925,7 @@
     {"recipe": "Indian Style Basmati Rice", "ingredient": "water", "size": "2 ½ cups", "quantity": 1},
     {"recipe": "Indian Style Basmati Rice", "ingredient": "salt", "size": "1 teaspoon", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "ghee (clarified butter)", "size": "2 tablespoons", "quantity": 1},
-    {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "onion, finely chopped", "size": "", "quantity": 1},
+    {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "onion, finely chopped", "size": "1", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "cloves garlic, minced", "size": "4", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "ground cumin", "size": "1 tablespoon", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "salt, or more to taste (Optional)", "size": "1 teaspoon", "quantity": 1},
@@ -939,7 +940,6 @@
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "vegetable oil", "size": "1 tablespoon", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "skinless, boneless chicken breast halves, cut into bite-size pieces", "size": "4", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "curry powder", "size": "1/2 teaspoon", "quantity": 1},
-
     { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "salt", "size": "teaspoon", "quantity": 1 }
   ],
 
