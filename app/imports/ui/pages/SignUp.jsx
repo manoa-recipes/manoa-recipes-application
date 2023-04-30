@@ -6,7 +6,6 @@ import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'uniforms-bootstrap5';
-import { Roles } from 'meteor/alanning:roles';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -19,29 +18,27 @@ const SignUp = ({ location }) => {
     email: String,
     password: String,
     role: {
-      type: String, allowedValues: ['vendor', 'user'],
+      type: String, allowedValues: ['user', 'vendor'],
       defaultValue: 'user',
     },
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
+  /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
     const { email, password, role } = doc;
-    const userID = Accounts.createUser({ email, username: email, password, role }, (err) => {
+    Accounts.createUser({ email, username: email, password, role }, (err) => {
       if (err) {
         setError(err.reason);
       } else {
-        if (role === 'vendor' || role === 'user') {
-          Roles.createRole(role, { unlessExists: true });
-          Roles.addUsersToRoles(userID, role);
-        }
+        setError('');
         setRedirectToRef(true);
       }
     });
   };
 
   /* Display the signup form. Redirect to landing page after successful registration and login. */
-  const { from } = location?.state || { from: { pathname: '/' } };
+  const { from } = location?.state || { from: { pathname: '/home' } };
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
@@ -83,16 +80,15 @@ const SignUp = ({ location }) => {
   );
 };
 
+/* Ensure that the React Router location object is available in case we need to redirect. */
 SignUp.propTypes = {
   location: PropTypes.shape({
-    state: PropTypes.shape({
-      pathname: PropTypes.string,
-    }),
+    state: PropTypes.string,
   }),
 };
 
 SignUp.defaultProps = {
-  location: { state: {} },
+  location: { state: '' },
 };
 
 export default SignUp;
