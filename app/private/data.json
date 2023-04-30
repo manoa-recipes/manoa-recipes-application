@@ -924,7 +924,7 @@
     {"recipe": "Indian Style Basmati Rice", "ingredient": "water", "size": "2 ½ cups", "quantity": 1},
     {"recipe": "Indian Style Basmati Rice", "ingredient": "salt", "size": "1 teaspoon", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "ghee (clarified butter)", "size": "2 tablespoons", "quantity": 1},
-    {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "onion, finely chopped", "size": "", "quantity": 1},
+    {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "onion, finely chopped", "size": "1", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "cloves garlic, minced", "size": "4", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "ground cumin", "size": "1 tablespoon", "quantity": 1},
     {"recipe": "Curry Stand Chicken Tikka Masala Sauce", "ingredient": "salt, or more to taste (Optional)", "size": "1 teaspoon", "quantity": 1},
