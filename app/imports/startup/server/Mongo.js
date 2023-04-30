@@ -17,6 +17,12 @@ if (verbose) { console.log('\nMongo.js running...\nverbose is enabled for debugg
 
 // Add user to their Meteor role.
 function promoteUser(userID, role) {
+
+
+  console.log('promoting user');
+  console.log(userID);
+
+  
   if (verbose) { console.log(`... promoteUser(${userID}, ${role})`); }
   Roles.createRole(role, { unlessExists: true });
   Roles.addUsersToRoles(userID, role);

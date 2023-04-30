@@ -26,19 +26,31 @@ const SignUp = ({ location }) => {
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
-  const assignRoles = (options, newUser, role) => {
-    console.log(newUser._id);
+  const assignRoles = (userId, role) => {
+    console.log(userId);
     console.log('creating role');
     Roles.createRole(role, { unlessExists: true });
     console.log('Roles.createRole worked');
-    Roles.addUsersToRoles(newUser._id, role);
+    Roles.addUsersToRoles(userId, role);
     console.log('Roles.addUsersToRoles worked');
   };
+
+  // Add user to the Meteor accounts.
+  /* function createUser(email, role) {
+    console.log(`  createUser(${email}, ${role})`);
+    const userID = Accounts.createUser({ username: email, email, password: 'changeme' });
+    if (role === 'admin') { promoteUser(userID, role); }
+    if (role === 'vendor') { promoteUser(userID, role); }
+
+    // adding user role
+    if (role === 'user') { promoteUser(userID, role); }
+  } */
 
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
     const { email, password, role } = doc;
-    Accounts.createUser({ email, username: email, password }, (err) => {
+
+    const userID = Accounts.createUser({ username: email, email, password: password }, (err) => {
       if (err) {
         setError(err.reason);
       } else {
@@ -46,11 +58,20 @@ const SignUp = ({ location }) => {
         setRedirectToRef(true);
       }
     });
-    Accounts.onCreateUser(function (options, user) {
+
+    console.log('making roles');
+    if (role === 'vendor') { assignRoles(userID, role); }
+
+    // adding user role
+    if (role === 'user') { assignRoles(userID, role); }
+
+    // console.log(Meteor.user);
+    // console.log(role);
+    // assignRoles(Meteor.userId, role);
+    /* Accounts.onCreateUser((options, user) => {
       console.log('on create user');
-      assignRoles(options, user, role);
-      return user;
-    });
+      assignRoles(userId, role);
+    }); */
     // console.log(Meteor.userId());
     // assignRoles(newUser, role);
   };
