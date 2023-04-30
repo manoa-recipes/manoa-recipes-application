@@ -29,7 +29,6 @@ const UserProfile = () => {
       ready: rdy,
     };
   }, []);
-  console.log(profileData);
   return (ready ? (
     <Container className="py-3" id="profile-page">
       <Row className="d-flex justify-content-center">

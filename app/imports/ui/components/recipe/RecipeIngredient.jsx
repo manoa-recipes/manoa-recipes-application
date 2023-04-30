@@ -11,7 +11,7 @@ import RecipeVendorIngredient from './RecipeVendorIngredient';
 // A component to display an ingredient in a recipe, and distinguish when allergic
 const RecipeIngredient = ({ recipeIngredient }) => {
   const { size, ingredient } = recipeIngredient;
-  const quantity = (size > 1) ? `${recipeIngredient.quantity}` : 'A';
+  const quantity = (size > 1) ? `${recipeIngredient.quantity}` : '';
   const text = `${quantity} ${size} ${ingredient}`;
   // Subscribe to the database before rendering
   const { ready, user, vendorIngredients } = useTracker(() => {

@@ -41,16 +41,18 @@ const AddRecipe = () => {
     } else { setValid(true); }
   };
   const submit = (data) => {
-    const { image, instructions, time, servings, ingredients } = data;
-    // Extend the form data of the join docs at the moment of submit
-    ingredients.map(ingredient => _.extend({}, ingredient, { recipe: name }));
-    Meteor.call(addRecipeMethod, { name, owner, image, instructions, time, servings, ingredients }, (error) => {
-      if (error) {
-        swal('Error', error.message, 'error');
-      } else {
-        swal('Success', 'Recipe added successfully', 'success');
-      }
-    });
+    if (valid) {
+      const { image, instructions, time, servings, ingredients } = data;
+      // Extend the form data of the join docs at the moment of submit
+      ingredients.map(ingredient => _.extend({}, ingredient, { recipe: name }));
+      Meteor.call(addRecipeMethod, { name, owner, image, instructions, time, servings, ingredients }, (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Recipe added successfully!', 'success');
+        }
+      });
+    } else { swal('Error', 'Recipe name Taken!', 'error'); }
   };
   return ready ? (
     <Container className="p-2 text-end">

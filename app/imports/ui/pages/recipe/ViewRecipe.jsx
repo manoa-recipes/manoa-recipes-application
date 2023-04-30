@@ -7,7 +7,7 @@ import { useParams } from 'react-router';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { RecipesIngredients } from '../../../api/recipes/RecipesIngredients';
 import { Recipes } from '../../../api/recipes/Recipes';
-import RecipeCard from '../../components/recipe/RecipeCard';
+import RecipeInfo from '../../components/recipe/RecipeInfo';
 import RecipeIngredient from '../../components/recipe/RecipeIngredient';
 
 // This page/component displays ALL data related to a specific recipe
@@ -53,7 +53,7 @@ const ViewRecipe = () => {
               Edit
             </Button>
           ) : ''}
-          <RecipeCard recipe={recipe} />
+          <RecipeInfo recipe={recipe} />
         </Col>
         <Col
           xs={{ order: '2' }}
@@ -64,9 +64,11 @@ const ViewRecipe = () => {
         >
           <Card>
             <Card.Header>Ingredients:</Card.Header>
-            {recipeIngredients.map(recipeIngredient => (
-              <RecipeIngredient key={recipeIngredient._id} recipeIngredient={recipeIngredient} />
-            ))}
+            <Col style={scroller}>
+              {recipeIngredients.map(recipeIngredient => (
+                <RecipeIngredient key={recipeIngredient._id} recipeIngredient={recipeIngredient} />
+              ))}
+            </Col>
           </Card>
         </Col>
         <Col
