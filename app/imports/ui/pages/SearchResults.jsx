@@ -16,8 +16,6 @@ import RecipeCard from '../components/recipe/RecipeCard';
 
 const bridge = new SimpleSchema2Bridge(new SimpleSchema({
   name: { type: String, defaultValue: '' },
-  vegan: { type: Boolean, defaultValue: false },
-  glutenFree: { type: Boolean, defaultValue: false },
 }));
 // Minimum length for the search term to call the function to filter the list
 const searchTermMinimumLength = 2;
@@ -120,10 +118,6 @@ const SearchResults = () => {
             model={formTerm}
           >
             <Row className="grid align-items-center">
-              <Col xs={2}>
-                <BoolField name="vegan" value={formTerm?.vegan} className="mb-auto" onChange={(val) => handleFormChange(val, 'vegan')} />
-                <BoolField name="glutenFree" value={formTerm?.glutenFree} className="mb-auto" onChange={(val) => handleFormChange(val, 'glutenFree')} />
-              </Col>
               <Col>
                 <TextField
                   name="name"
@@ -148,7 +142,7 @@ const SearchResults = () => {
         <Row>
           <Col>
             <Col className="text-center">
-              <h2>All Recipes</h2>
+              <h2>Recipes</h2>
             </Col>
             <Row xs={1} md={2} lg={3} className="g-4">
               {_.filter(results, function (element) { return element.field === 'recipe'; }).map((recipe) => (<Col key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}

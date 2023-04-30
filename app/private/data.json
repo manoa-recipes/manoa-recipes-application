@@ -1,30 +1,52 @@
 {
-  "profiles": [
+  "ingredients": [],
+  "recipes": [
     {
-      "firstName": "Peter",
-      "lastName": "Leong",
-      "bio": "I am a professor of Educational Technology",
-      "title": "Professor",
-      "interests": [
-        "Online Learning"
-      ],
-      "projects":[
-        "UH Online",
-        "RadGrad"
-      ],
-      "picture": "http://www2.hawaii.edu/~peterleo/Electronic_Portfolio/Cool-guy.jpg",
-      "email": "peterleo@hawaii.edu"
+      "name": "Best Simple Tossed Green Salad",
+      "owner": "jane@foo.com",
+      "image": "https://lh3.googleusercontent.com/4eyzo2D9zdI8iyIRHGC_Ehe4rzW7j3DIxZWctid6rx65yfsnvr31mIt2BEQeVqQy2Zork9Ysy-QTO4i6oOL6uQ=w1280-h1280-c-rj-v1-e365",
+      "instructions": "Dressing\n¼ cup dijon mustard\n¼ cup honey\n¼ cup apple cider vinegar\n1 teaspoon salt\n¼ teaspoon black pepper\n¼ cup extra virgin olive oil.\n\nCombine dressing ingredients in a jar, cover and shake vigorously to combine. \n\nIn a large bowl combine mixed greens, sunflower seeds, bacon - or bacon bits, thinly sliced red onions, peeled and thinly sliced cucumbers. Just before serving add dressing to taste and toss to combine. Serve immediately after tossing with dressing.\n\nTip: Feel free to add your favorite veggies like tomatoes, corn, or broccoli. \nTip: Turn this into a hearty main dish by adding your favorite protein like grilled chicken, steak, or shrimp.",
+      "time": "20 minutes",
+      "servings": 4,
+      "source": "https://www.lecremedelacrumb.com/best-simple-tossed-green-salad/"
+    },
+    {
+      "name": "Spaghetti Sauce with Fresh Tomatoes",
+      "owner": "john@foo.com",
+      "image": "https://natashaskitchen.com/wp-content/uploads/2020/02/Marinara-Sauce-2.jpg",
+      "instructions": "By: Susan Bryan Willingham\n\nPeel the Tomatoes\nBlanch the fresh tomatoes to remove the skin. Feel free to remove the seeds, but it's not necessary because you can strain the sauce later or leave the seeds in the sauce altogether.\n\nChop the tomatoes into smaller pieces.\n\nCook the Onion and Garlic\nAdd onion and garlic powder to a skillet with olive oil. Cook until translucent, about 5 minutes.\n\nBoil the Sauce\nAdd the remaining ingredients and bring to a boil. Reduce the heat and simmer until the sauce thickens, about 1-2 hours. Serve immediately, or let cool and freeze.\n\nIf the sauce is too chunky for your liking (or if you want to use it as pizza sauce), run it through a blender or food processor until it reaches your desired consistency.\n\nHow to Thicken Tomato Sauce\nThe easiest way to thicken tomato sauce is by simply simmering the sauce for longer. The longer you allow it to simmer, the more liquid will evaporate.\n\nIf you don't have the time (or patience) to let the sauce simmer longer, you can add a cornstarch slurry (one part cornstarch and one part water). Gradually whisk in the slurry until the sauce reaches your desired consistency.\n\nHow to Use Homemade Spaghetti Sauce\nYou can use this homemade tomato sauce in your favorite spaghetti dish, lasagna, pizza, or any other recipe that calls for spaghetti sauce. The sky's the limit!\n\nHow to Store Tomato Sauce From Fresh Tomatoes\nStore homemade tomato sauce in a Mason jar or other airtight container for three to five days.\n\nYou can also can your homemade tomato sauce to make it shelf-stable. To do this, you will need to add citric acid or lemon juice to the sauce to make sure the acidity levels are safe. Then, sterilize your jars by boiling them for about 10 minutes. Fill the jars with sauce. Then, process the jars in a stockpot with boiling water for at least 10 minutes.\n\nStore canned tomato sauce in a cool, dark place for up to 12 months. Once opened, store in the refrigerator and use within a few days.",
+      "time": "1 hrs 20 mins",
+      "servings": 8,
+      "source": "https://www.allrecipes.com/recipe/254517/spaghetti-sauce-with-fresh-tomatoes/"
     }
   ],
-  "projects": [
-    {
-      "name": "UH Online",
-      "homepage": "https://www.uhonline.hawaii.edu/",
-      "description": "Online learning opportunities at the University of Hawaii.",
-      "interests": [
-        "Online Learning"
-      ],
-      "picture": "http://www.hawaii.edu/wp/wp-content/uploads/2015/12/system-seal.jpg"
-    }
-  ]
+
+  "recipesIngredients": [
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "loosely packed mixed greens", "size": "cups", "quantity": 5 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "shelled sunflower seeds", "size": "tablespoon", "quantity": 2 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "crumbled bacon", "size": "¼ cup", "quantity": 1 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "red onion", "size": "¼", "quantity": 2 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "cucumber", "size": "whole", "quantity": 1 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "dijon mustard", "size": "¼ cup", "quantity": 1 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "honey", "size": "¼ cup", "quantity": 1 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "apple cider vinegar", "size": "¼ cup", "quantity": 1 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "salt", "size": "teaspoon", "quantity": 1 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "black pepper", "size": "¼ teaspoon", "quantity": 1 },
+    { "recipe": "Best Simple Tossed Green Salad", "ingredient": "extra virgin olive oil", "size": "¼ cup", "quantity": 1 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "olive oil", "size": "1/4 cup", "quantity": 1 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "onion, chopped", "size": "whole", "quantity": 1 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "garlic powder", "size": "1/2 teaspoon", "quantity": 1 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "fresh tomatoes", "size": "pounds", "quantity": 4 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "white sugar", "size": "tablespoon", "quantity": 1 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "dried basil", "size": "tablespoon", "quantity": 1 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "dried parsley", "size": "tablespoon", "quantity": 1 },
+    { "recipe": "Spaghetti Sauce with Fresh Tomatoes", "ingredient": "salt", "size": "teaspoon", "quantity": 1 }
+  ],
+
+  "profiles": [],
+
+  "vendors": [],
+
+  "vendorsIngredients": []
+
 }

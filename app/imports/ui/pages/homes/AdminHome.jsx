@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Tab, Tabs, Button } from 'react-bootstrap';
+import { Container, Tab, Tabs, Button, Col, InputGroup, Card } from 'react-bootstrap';
+import SimpleSchema from 'simpl-schema';
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { AutoField, AutoFields, AutoForm } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
+import AdminDataList from '../../components/lists/admin/AdminDataList';
 import DataListsAdmin from '../../components/lists/admin/DataListsAdmin';
 import JoinListsAdmin from '../../components/lists/admin/JoinListsAdmin';
 import Profile from '../Profile';
-import { resetAllCollections } from '../../../startup/both/Methods';
+import { collectionNames, resetAllMethod } from '../../../startup/both/Methods';
+
+const bridge = new SimpleSchema2Bridge(new SimpleSchema({
+  itemsInList: {
+    type: Number,
+    allowedValues: [10, 20, 50],
+    defaultValue: 10,
+  },
+}));
 
 /* This component is merely to organize all admin data */
 const AdminHome = () => {
+  // Index of the active pagination item
+  const [numElements, setNumElements] = useState(10);
+  // The meteor method takes no parameters, so the object holding parameters is empty
   const handleClearDataButton = () => {
-    Meteor.call(resetAllCollections, {}, (error) => {
+    Meteor.call(resetAllMethod, {}, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -20,16 +35,27 @@ const AdminHome = () => {
   };
   return (
     <Container className="p-2 text-center" id="admin-page">
-      <Button onClick={handleClearDataButton}>Reset all data to default</Button>
       <Tabs>
-        <Tab eventKey="admin-profile" title="Profile">
-          <Profile />
-        </Tab>
-        <Tab eventKey="dataDb" title="Data Collections">
-          <DataListsAdmin />
-        </Tab>
-        <Tab eventKey="joinDb" title="Join Collections">
-          <JoinListsAdmin id="admin-join-collections" />
+        <Tab eventKey="admin-profile" title="Profile"><Profile /></Tab>
+        <Tab eventKey="dataDb" title="Server Data">
+          <Card>
+            <Col>
+              <AutoForm schema={bridge}>
+                <InputGroup className="align-items-center">
+                  <Button onClick={handleClearDataButton} className="me-2">Reset all data to default</Button>
+                  <InputGroup.Text>Items in List: </InputGroup.Text>
+                  <AutoField name="itemsInList" label={null} className="mb-auto" inputClassName="rounded-0 rounded-end" />
+                </InputGroup>
+              </AutoForm>
+              <Tabs>
+                {collectionNames.map(collectionName => (
+                  <Tab style={{ maxHeight: '40vh', overflowY: 'auto' }} title={collectionName.replace('Collection', '')} eventKey={collectionName}>
+                    <AdminDataList collectionName={collectionName} numElementsPerPage={numElements} />
+                  </Tab>
+                ))}
+              </Tabs>
+            </Col>
+          </Card>
         </Tab>
       </Tabs>
     </Container>

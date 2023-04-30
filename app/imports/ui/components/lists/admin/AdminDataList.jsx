@@ -30,7 +30,7 @@ const getCollection = (collectionName) => {
   }
 };
 // Function to render a collection as a list.  ex. param: <AdminDataList collectionName={ Recipes.name }
-const AdminDataList = ({ collectionName }) => {
+const AdminDataList = ({ collectionName, numElementsPerPage }) => {
   const collection = getCollection(collectionName);
   const schema = collection?.schema._schema;
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -43,6 +43,9 @@ const AdminDataList = ({ collectionName }) => {
       ready: rdy,
     };
   }, []);
+  const handleAdd = () => {
+
+  };
   const handleReset = () => {
     Meteor.call(resetCollectionMethod, { collectionName }, (error) => {
       if (error) {

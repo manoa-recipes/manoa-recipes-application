@@ -18,6 +18,7 @@ class RecipesCollection {
       servings: { type: Number, optional: false },
       vegan: { type: Boolean, optional: true, defaultValue: false },
       glutenFree: { type: Boolean, optional: true, defaultValue: false },
+      source: { type: String, defaultValue: '' },
     });
     // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
