@@ -22,7 +22,7 @@ function promoteUser(userID, role) {
   console.log('promoting user');
   console.log(userID);
 
-  
+
   if (verbose) { console.log(`... promoteUser(${userID}, ${role})`); }
   Roles.createRole(role, { unlessExists: true });
   Roles.addUsersToRoles(userID, role);
