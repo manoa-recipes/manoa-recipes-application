@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
@@ -26,15 +27,18 @@ const SignUp = ({ location }) => {
   const bridge = new SimpleSchema2Bridge(schema);
 
   const assignRoles = (newUser, role) => {
+    console.log(newUser);
     console.log('creating role');
     Roles.createRole(role, { unlessExists: true });
-    Roles.addUsersToRoles(newUser._id, role);
+    console.log('Roles.createRole worked');
+    Roles.addUsersToRoles(newUser, role);
+    console.log('Roles.addUsersToRoles worked');
   };
 
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
     const { email, password, role } = doc;
-    const newUser = Accounts.createUser({ email, username: email, password, role }, (err) => {
+    Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         setError(err.reason);
       } else {
@@ -42,7 +46,8 @@ const SignUp = ({ location }) => {
         setRedirectToRef(true);
       }
     });
-    assignRoles(newUser, role);
+    console.log(Meteor.userId());
+    assignRoles(Meteor.userId(), role);
   };
 
   /* Display the signup form. Redirect to landing page after successful registration and login. */
