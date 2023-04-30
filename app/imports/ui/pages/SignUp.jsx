@@ -26,12 +26,12 @@ const SignUp = ({ location }) => {
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
-  const assignRoles = (newUser, role) => {
-    console.log(newUser);
+  const assignRoles = (options, newUser, role) => {
+    console.log(newUser._id);
     console.log('creating role');
     Roles.createRole(role, { unlessExists: true });
     console.log('Roles.createRole worked');
-    Roles.addUsersToRoles(newUser, role);
+    Roles.addUsersToRoles(newUser._id, role);
     console.log('Roles.addUsersToRoles worked');
   };
 
@@ -46,8 +46,13 @@ const SignUp = ({ location }) => {
         setRedirectToRef(true);
       }
     });
-    console.log(Meteor.userId());
-    assignRoles(Meteor.userId(), role);
+    Accounts.onCreateUser(function (options, user) {
+      console.log('on create user');
+      assignRoles(options, user, role);
+      return user;
+    });
+    // console.log(Meteor.userId());
+    // assignRoles(newUser, role);
   };
 
   /* Display the signup form. Redirect to landing page after successful registration and login. */
