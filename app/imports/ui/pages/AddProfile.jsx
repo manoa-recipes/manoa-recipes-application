@@ -7,8 +7,10 @@ import SimpleSchema from 'simpl-schema';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { useTracker } from 'meteor/react-meteor-data';
+import { Navigate } from 'react-router-dom';
 import { Profiles } from '../../api/profiles/Profiles';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { Roles } from 'meteor/alanning:roles';
 
 /* Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = (allAllergies) => new SimpleSchema({
@@ -22,6 +24,10 @@ const makeSchema = (allAllergies) => new SimpleSchema({
 /* Renders the Home Page: what appears after the user logs in. */
 const AddProfile = () => {
 
+  const [redirectToReferer, setRedirectToRef] = useState(false);
+
+  console.log(`this.userId = ${Meteor.userId}`);
+
   /* On submit, insert the data. */
   const submit = (data) => {
     Meteor.call(data, (error) => {
@@ -29,6 +35,7 @@ const AddProfile = () => {
         swal('Error', error.message, 'error');
       } else {
         swal('Success', 'Profile updated successfully', 'success');
+        setRedirectToRef(true);
       }
     });
   };
@@ -48,6 +55,14 @@ const AddProfile = () => {
   // Now create the model with all the user information.
   const profile = Profiles.collection.findOne({ email });
   const model = _.extend({}, profile, { allAllergies });
+
+  /* Display the signup form. Redirect to add user profile page after successful registration and login. */
+  // const { from } = location?.state || { from: { pathname: '/home' } };
+  // if correct authentication, redirect to from: page instead of signup screen
+  if (redirectToReferer) {
+    return <Navigate to="/home" />;
+  }
+
   return ready ? (
     <Container className="justify-content-center">
       <Col>

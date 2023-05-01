@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
+import { Roles } from 'meteor/alanning:roles';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { Recipes } from '../../api/recipes/Recipes';
@@ -90,6 +91,44 @@ Meteor.methods({
 const resetAllMethod = 'All.reset';
 Meteor.methods({ 'All.reset'() { clearAllCollections(); loadDefaultData(); } });
 
+
+// adding user to role
+const addUserToRole = 'profile.addUserToRole';
+Meteor.methods({
+  'profile.addUserToRole'({ userId, role }) {
+    console.log(`userId = ${userId}`);
+    console.log(`role = ${role}`);
+
+    Roles.createRole(role, { unlessExists: true });
+    console.log('Roles.createRole worked');
+    Roles.addUsersToRoles(userId, role);
+    console.log('Roles.addUsersToRoles worked');
+  },
+});
+
+const makeUserProfile = 'profile.makeUserProfile';
+Meteor.methods({
+  'profile.makeUserProfile'({ email, vegan, glutenFree, allergies }) {
+    console.log('making new user profile');
+
+    Profiles.collection.insert({ email, vegan, glutenFree, allergies });
+  },
+});
+
+const makeVendorProfile = 'profile.makeVendorProfile';
+Meteor.methods({
+  'profile.makeVendorProfile'({ name, address, hours, image, email }) {
+    console.log('making new vendor profile');
+    console.log(`name = ${name}`);
+    console.log(`address = ${address}`);
+    console.log(`hours = ${hours}`);
+    console.log(`image = ${image}`);
+    console.log(`email = ${email}`);
+
+    Vendors.collection.insert({ name, address, hours, image, email });
+  },
+});
+
 export {
   collectionNames,
   addRecipeMethod,
@@ -102,4 +141,7 @@ export {
   resetCollectionMethod,
   refillCollectionMethod,
   resetAllMethod,
+  addUserToRole,
+  makeUserProfile,
+  makeVendorProfile,
 };
