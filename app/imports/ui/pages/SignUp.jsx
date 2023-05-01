@@ -10,6 +10,7 @@ import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'unif
 import { Roles } from 'meteor/alanning:roles';
 import { useParams } from 'react-router';
 import { Profiles } from '../../api/profiles/Profiles';
+import { addUserToRole } from '../../startup/both/Methods';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -28,26 +29,6 @@ const SignUp = ({ location }) => {
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
-  /*const assignRoles = (userId, role) => {
-    console.log(userId);
-    console.log('creating role');
-    Roles.createRole(role, { unlessExists: true });
-    console.log('Roles.createRole worked');
-    Roles.addUsersToRoles(userId, role);
-    console.log('Roles.addUsersToRoles worked');
-  };*/
-
-  // Add user to the Meteor accounts.
-  /* function createUser(email, role) {
-    console.log(`  createUser(${email}, ${role})`);
-    const userID = Accounts.createUser({ username: email, email, password: 'changeme' });
-    if (role === 'admin') { promoteUser(userID, role); }
-    if (role === 'vendor') { promoteUser(userID, role); }
-
-    // adding user role
-    if (role === 'user') { promoteUser(userID, role); }
-  } */
-
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
     const { email, password, role } = doc;
@@ -62,7 +43,7 @@ const SignUp = ({ location }) => {
         const userId = Meteor.user()._id;
         console.log(`id after submitting = ${userId}`);
 
-        Meteor.call('addUserToRole', userId, role);
+        Meteor.call(addUserToRole, { userId, role });
 
         /*if (role === 'user') {
           console.log(`this.userId = ${this.userId}`);
@@ -72,21 +53,6 @@ const SignUp = ({ location }) => {
         setRedirectToRef(true);
       }
     });
-
-    // if (role === 'vendor') { assignRoles(_id, role); }
-
-    // adding user role
-    // if (role === 'user') { assignRoles(_id, role); }
-
-    // console.log(Meteor.user);
-    // console.log(role);
-    // assignRoles(Meteor.userId, role);
-    /* Accounts.onCreateUser((options, user) => {
-      console.log('on create user');
-      assignRoles(userId, role);
-    }); */
-    // console.log(Meteor.userId());
-    // assignRoles(newUser, role);
   };
 
   /* Display the signup form. Redirect to add user profile page after successful registration and login. */

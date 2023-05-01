@@ -92,19 +92,16 @@ const resetAllMethod = 'All.reset';
 Meteor.methods({ 'All.reset'() { clearAllCollections(); loadDefaultData(); } });
 
 // adding user to role
-const addUserToRole = 'tasks.addUserToRole';
+const addUserToRole = 'profile.addUserToRole';
 Meteor.methods({
-  'tasks.addUserToRole'({ userId, role }) {
-
-    if (!this.userId) {
-      throw new Meteor.Error('Not authorized.');
-    }
+  'profile.addUserToRole'({ userId, role }) {
+    console.log(`userId = ${userId}`);
+    console.log(`role = ${role}`);
 
     Roles.createRole(role, { unlessExists: true });
     console.log('Roles.createRole worked');
     Roles.addUsersToRoles(userId, role);
     console.log('Roles.addUsersToRoles worked');
-
   },
 });
 
@@ -120,5 +117,5 @@ export {
   resetCollectionMethod,
   refillCollectionMethod,
   resetAllMethod,
-  addUserToRole
+  addUserToRole,
 };
