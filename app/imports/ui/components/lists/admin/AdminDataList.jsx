@@ -10,11 +10,16 @@ import AdminDataListItem from './AdminDataListItem';
 import { resetCollectionMethod, refillCollectionMethod } from '../../../../startup/both/Methods';
 import { getCollection } from '../../../../startup/both/CollectionHelpers';
 
-// Function to render a collection as a list.  ex. param: <AdminDataList collectionName={ Recipes.name }
-const AdminDataList = ({ collectionName, numElementsPerPage }) => {
+/** Show the list with PAGINATION, if the list is long, using numElements.
+  * ****NOT DONE**** */
+// Function to render a collection as a list.  ex. param: <AdminDataList collectionName={ Recipes.name, numElements }
+const AdminDataList = ({ collectionName, numElements }) => {
+  // The collection based on the name given
   const collection = getCollection(collectionName);
+  // Schema of the collection
   const schema = collection?.schema._schema;
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+  /** USE TRACKER */
+  // Extract the documents from the collection
   const { ready, documents } = useTracker(() => {
     const subscription = Meteor.subscribe(collection?.userPublicationName);
     // Data is ready
@@ -42,6 +47,7 @@ const AdminDataList = ({ collectionName, numElementsPerPage }) => {
       }
     });
   };
+  if (!ready) { return (<LoadingSpinner />); }
   return (ready ? (
     <Card.Body>
       <Col>
@@ -55,13 +61,21 @@ const AdminDataList = ({ collectionName, numElementsPerPage }) => {
               <tr>
                 <th>_id (Edit)</th>
                 {collection?.schema._schemaKeys.map((field, index) => (
-                  <th key={index}>{schema[field].label} {(schema[field].index) ? (<Star />) : ''}</th>
+                  <th key={index}>
+                    {schema[field].label} {(schema[field].index) ? (<Star />) : ''}
+                  </th>
                 ))}
                 <th>Remove</th>
               </tr>
             </thead>
             <tbody>
-              {documents.map(document => <AdminDataListItem key={document._id} document={document} collectionName={collectionName} />)}
+              {documents.map(document => (
+                <AdminDataListItem
+                  key={document._id}
+                  document={document}
+                  collectionName={collectionName}
+                />
+              ))}
             </tbody>
           </Table>
         </Row>
@@ -71,6 +85,6 @@ const AdminDataList = ({ collectionName, numElementsPerPage }) => {
 };
 AdminDataList.propTypes = {
   collectionName: PropTypes.string.isRequired,
-  numElementsPerPage: PropTypes.number.isRequired,
+  numElements: PropTypes.number.isRequired,
 };
 export default AdminDataList;

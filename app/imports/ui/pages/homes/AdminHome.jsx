@@ -63,7 +63,10 @@ const AdminHome = () => {
                     title={collectionName.replace('Collection', '')}
                     eventKey={collectionName}
                   >
-                    <AdminDataList collectionName={collectionName} numElementsPerPage={numElements} />
+                    <AdminDataList
+                      collectionName={collectionName}
+                      numElements={numElements}
+                    />
                   </Tab>
                 ))}
               </Tabs>
