@@ -83,7 +83,7 @@ const EditRecipe = () => {
   if (redirect) { return (<Navigate to={`/view-recipe/${_id}`} />); }
   if (!ready) { return (<LoadingSpinner />); }
   return editAccess ? (
-    <Container className="p-2 text-end">
+    <Container className="p-2 text-end" id="edit-recipe-page">
       <AutoForm model={model} schema={bridge} onSubmit={data => submit(data)} validate="onChange">
         <Card className="text-center">
           <Card.Header><Card.Title><h2>Edit {recipe.name}</h2></Card.Title></Card.Header>
