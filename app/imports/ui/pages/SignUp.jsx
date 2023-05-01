@@ -8,6 +8,8 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'uniforms-bootstrap5';
 import { Roles } from 'meteor/alanning:roles';
+import { useParams } from 'react-router';
+import { Profiles } from '../../api/profiles/Profiles';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -50,21 +52,26 @@ const SignUp = ({ location }) => {
   const submit = (doc) => {
     const { email, password, role } = doc;
 
-    const userID = Accounts.createUser({ username: email, email, password: password }, (err) => {
+    Accounts.createUser({ username: email, email, password: password }, (err) => {
       if (err) {
         setError(err.reason);
       } else {
         setError('');
+        console.log(role);
+        console.log('before Profiles.insert');
+        if (role === 'vendor') {
+          console.log('Profiles.insert making profile');
+          Profiles.insert({ email: email, vegan: false, glutenFree: false, allergies: [] });
+        }
         setRedirectToRef(true);
       }
     });
 
     console.log('making roles');
-    console.log(Meteor.users.find());
-    if (role === 'vendor') { assignRoles(userID, role); }
+    // if (role === 'vendor') { assignRoles(_id, role); }
 
     // adding user role
-    if (role === 'user') { assignRoles(userID, role); }
+    // if (role === 'user') { assignRoles(_id, role); }
 
     // console.log(Meteor.user);
     // console.log(role);
@@ -77,7 +84,7 @@ const SignUp = ({ location }) => {
     // assignRoles(newUser, role);
   };
 
-  /* Display the signup form. Redirect to home page after successful registration and login. */
+  /* Display the signup form. Redirect to add user profile page after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/home' } };
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
