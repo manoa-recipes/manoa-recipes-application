@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
+import { Link } from 'react-router-dom';
 
 const VendorIngredientList = ({ vendorIngredient }) => (
   <tr>
@@ -69,6 +70,7 @@ const VendorProfile = () => {
               <Card.Header className="py-2 d-flex align-content-center">
                 <Card.Title>
                   Vendor Information
+                  <Link to={`/edit_vendor_profile/${vendorData._id}`}>Edit</Link>
                 </Card.Title>
               </Card.Header>
               <Card.Body>
