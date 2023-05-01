@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
+import { Roles } from 'meteor/alanning:roles';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { Recipes } from '../../api/recipes/Recipes';
@@ -90,7 +91,22 @@ Meteor.methods({
 const resetAllMethod = 'All.reset';
 Meteor.methods({ 'All.reset'() { clearAllCollections(); loadDefaultData(); } });
 
+// adding user to role
+const addUserToRole = 'tasks.addUserToRole';
+Meteor.methods({
+  'tasks.addUserToRole'({ userId, role }) {
 
+    if (!this.userId) {
+      throw new Meteor.Error('Not authorized.');
+    }
+
+    Roles.createRole(role, { unlessExists: true });
+    console.log('Roles.createRole worked');
+    Roles.addUsersToRoles(userId, role);
+    console.log('Roles.addUsersToRoles worked');
+
+  },
+});
 
 export {
   collectionNames,
@@ -104,4 +120,5 @@ export {
   resetCollectionMethod,
   refillCollectionMethod,
   resetAllMethod,
+  addUserToRole
 };

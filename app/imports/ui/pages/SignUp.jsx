@@ -28,14 +28,14 @@ const SignUp = ({ location }) => {
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
-  const assignRoles = (userId, role) => {
+  /*const assignRoles = (userId, role) => {
     console.log(userId);
     console.log('creating role');
     Roles.createRole(role, { unlessExists: true });
     console.log('Roles.createRole worked');
     Roles.addUsersToRoles(userId, role);
     console.log('Roles.addUsersToRoles worked');
-  };
+  };*/
 
   // Add user to the Meteor accounts.
   /* function createUser(email, role) {
@@ -59,16 +59,20 @@ const SignUp = ({ location }) => {
         setError('');
         console.log(role);
         console.log('before Profiles.insert');
-        if (role === 'user') {
+        const userId = Meteor.user()._id;
+        console.log(`id after submitting = ${userId}`);
+
+        Meteor.call('addUserToRole', userId, role);
+
+        /*if (role === 'user') {
           console.log(`this.userId = ${this.userId}`);
           console.log('Profiles.collection.insert making profile');
           Profiles.collection.insert({ email: email, vegan: false, glutenFree: false, allergies: [] });
-        }
+        }*/
         setRedirectToRef(true);
       }
     });
 
-    console.log('making roles');
     // if (role === 'vendor') { assignRoles(_id, role); }
 
     // adding user role
