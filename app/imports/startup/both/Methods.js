@@ -105,6 +105,29 @@ Meteor.methods({
   },
 });
 
+const makeUserProfile = 'profile.makeUserProfile';
+Meteor.methods({
+  'profile.makeUserProfile'({ email, vegan, glutenFree, allergies }) {
+    console.log('making new user profile');
+
+    Profiles.collection.insert({ email, vegan, glutenFree, allergies });
+  },
+});
+
+const makeVendorProfile = 'profile.makeVendorProfile';
+Meteor.methods({
+  'profile.makeVendorProfile'({ name, address, hours, image, email }) {
+    console.log('making new vendor profile');
+    console.log(`name = ${name}`);
+    console.log(`address = ${address}`);
+    console.log(`hours = ${hours}`);
+    console.log(`image = ${image}`);
+    console.log(`email = ${email}`);
+
+    Vendors.collection.insert({ name, address, hours, image, email });
+  },
+});
+
 export {
   collectionNames,
   addRecipeMethod,
@@ -118,4 +141,6 @@ export {
   refillCollectionMethod,
   resetAllMethod,
   addUserToRole,
+  makeUserProfile,
+  makeVendorProfile,
 };

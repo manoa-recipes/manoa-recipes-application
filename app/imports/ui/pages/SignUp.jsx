@@ -10,7 +10,7 @@ import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'unif
 import { Roles } from 'meteor/alanning:roles';
 import { useParams } from 'react-router';
 import { Profiles } from '../../api/profiles/Profiles';
-import { addUserToRole } from '../../startup/both/Methods';
+import { addUserToRole, makeUserProfile, makeVendorProfile } from '../../startup/both/Methods';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -45,11 +45,21 @@ const SignUp = ({ location }) => {
 
         Meteor.call(addUserToRole, { userId, role });
 
-        /*if (role === 'user') {
-          console.log(`this.userId = ${this.userId}`);
-          console.log('Profiles.collection.insert making profile');
-          Profiles.collection.insert({ email: email, vegan: false, glutenFree: false, allergies: [] });
-        }*/
+        const vegan = false;
+        const glutenFree = false;
+        const allergies = [];
+        if (role === 'user') {
+          Meteor.call(makeUserProfile, { email, vegan, glutenFree, allergies });
+        }
+
+        const name = email;
+        const address = 'none';
+        const hours = 'none';
+        const image = 'https://www.winsornewton.com/na/wp-content/uploads/sites/50/2019/09/50903849-WN-ARTISTS-OIL-COLOUR-SWATCH-WINSOR-EMERALD-960x960.jpg';
+        if (role === 'vendor') {
+          Meteor.call(makeVendorProfile, { name, address, hours, image, email });
+        }
+
         setRedirectToRef(true);
       }
     });
