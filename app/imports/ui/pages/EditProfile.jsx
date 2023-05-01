@@ -56,19 +56,19 @@ const EditProfile = () => {
                 <TextField name="allergies" placeholder="Add new allergy..." defaultValue="" />
                 Vegan
                 <Form.Select name="vegan">
-                  <option label="true">
+                  <option label="true" value>
                     { true }
                   </option>
-                  <option label="false">
+                  <option label="false" value>
                     { false }
                   </option>
                 </Form.Select>
                 Gluten Free
                 <Form.Select name="glutenFree">
-                  <option label="true">
+                  <option label="true" value>
                     { true }
                   </option>
-                  <option label="false">
+                  <option label="false" value>
                     { false }
                   </option>
                 </Form.Select>

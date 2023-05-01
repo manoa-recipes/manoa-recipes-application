@@ -56,7 +56,7 @@ const UserProfile = () => {
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Allergies:</div>
                     </div>
-                    { (!Array.isArray(profileData.allergies) || !profileData.allergies.length) ? 'None' : profileData.allergies }
+                    { (!Array.isArray(profileData.allergies) || !profileData.allergies.length) ? 'None' : profileData.allergies.join(', ')}
                   </ListGroup.Item>
                   <ListGroup.Item
                     as="li"
