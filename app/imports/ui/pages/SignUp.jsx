@@ -7,9 +7,6 @@ import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'uniforms-bootstrap5';
-import { Roles } from 'meteor/alanning:roles';
-import { useParams } from 'react-router';
-import { Profiles } from '../../api/profiles/Profiles';
 import { addUserToRole, makeUserProfile, makeVendorProfile } from '../../startup/both/Methods';
 
 /**
@@ -38,10 +35,10 @@ const SignUp = ({ location }) => {
         setError(err.reason);
       } else {
         setError('');
-        console.log(role);
-        console.log('before Profiles.insert');
+        // console.log(role);
+        // console.log('before Profiles.insert');
         const userId = Meteor.user()._id;
-        console.log(`id after submitting = ${userId}`);
+        // console.log(`id after submitting = ${userId}`);
 
         Meteor.call(addUserToRole, { userId, role });
 

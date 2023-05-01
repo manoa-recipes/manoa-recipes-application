@@ -91,7 +91,6 @@ Meteor.methods({
 const resetAllMethod = 'All.reset';
 Meteor.methods({ 'All.reset'() { clearAllCollections(); loadDefaultData(); } });
 
-
 // adding user to role
 const addUserToRole = 'profile.addUserToRole';
 Meteor.methods({
@@ -109,7 +108,7 @@ Meteor.methods({
 const makeUserProfile = 'profile.makeUserProfile';
 Meteor.methods({
   'profile.makeUserProfile'({ email, vegan, glutenFree, allergies }) {
-    console.log('making new user profile');
+    // console.log('making new user profile');
 
     Profiles.collection.insert({ email, vegan, glutenFree, allergies });
   },
@@ -118,12 +117,12 @@ Meteor.methods({
 const makeVendorProfile = 'profile.makeVendorProfile';
 Meteor.methods({
   'profile.makeVendorProfile'({ name, address, hours, image, email }) {
-    console.log('making new vendor profile');
+    /* console.log('making new vendor profile');
     console.log(`name = ${name}`);
     console.log(`address = ${address}`);
     console.log(`hours = ${hours}`);
     console.log(`image = ${image}`);
-    console.log(`email = ${email}`);
+    console.log(`email = ${email}`); */
 
     Vendors.collection.insert({ name, address, hours, image, email });
   },
