@@ -55,7 +55,7 @@ const AddRecipe = () => {
     } else { swal('Error', 'Recipe name Taken!', 'error'); }
   };
   return ready ? (
-    <Container className="p-2 text-end">
+    <Container className="p-2 text-end" id="add-recipe-page">
       <AutoForm schema={recipeBridge} onSubmit={data => submit(data)}>
         <Card className="text-center">
           <Card.Header><Card.Title><h2>Add Recipe</h2></Card.Title></Card.Header>
@@ -69,22 +69,23 @@ const AddRecipe = () => {
                     <TextField
                       name="name"
                       placeholder="Type a recipe Name..."
+                      id="name"
                       value={name}
                       defaultValue={name}
                       className="mb-auto"
                       autoComplete={null}
                     />
                   </Row>
-                  <Row><TextField name="image" placeholder="..." className="mb-auto" /></Row>
-                  <Row><TextField name="source" placeholder="..." className="mb-auto" /></Row>
+                  <Row><TextField name="image" id="image" placeholder="..." className="mb-auto" /></Row>
+                  <Row><TextField name="source" id="source" placeholder="..." className="mb-auto" /></Row>
                   <Row>
-                    <Col><TextField name="time" placeholder="..." className="mb-auto" /></Col>
-                    <Col><NumField name="servings" decimal={null} className="mb-auto" /></Col>
+                    <Col><TextField name="time" id="time" placeholder="..." className="mb-auto" /></Col>
+                    <Col><NumField name="servings" id="servings" decimal={null} className="mb-auto" /></Col>
                     <Col><BoolField name="vegan" className="mb-auto" /></Col>
                     <Col><BoolField name="glutenFree" className="mb-auto" /></Col>
                   </Row>
                 </Col>
-                <LongTextField name="instructions" />
+                <LongTextField name="instructions" id="instructions" />
               </Card.Body>
             </Col>
             <Col xs={12} md={6} className="justify-content-center text-center">
@@ -94,9 +95,9 @@ const AddRecipe = () => {
                     <HiddenField name="recipe" value={name} />
                     <Row xs={12} className="align-items-center g-0">
                       <Col xs={1}><ListDelField name="" removeIcon={<DashCircle color="text-dark" />} /></Col>
-                      <Col xs={2}><NumField name="quantity" decimal={false} className="mb-auto" /></Col>
-                      <Col xs={3}><TextField name="size" className="mb-auto" /></Col>
-                      <Col><TextField name="ingredient" placeholder="Type an ingredient..." className="mb-auto" /></Col>
+                      <Col xs={2}><NumField name="quantity" id="quantity" decimal={false} className="mb-auto" /></Col>
+                      <Col xs={3}><TextField name="size" id="size" className="mb-auto" /></Col>
+                      <Col><TextField name="ingredient" id="ingredient" placeholder="Type an ingredient..." className="mb-auto" /></Col>
                     </Row>
                   </ListItemField>
                 </ListField>
@@ -105,7 +106,7 @@ const AddRecipe = () => {
           </Row>
           <Card.Body className="text-end">
             <HiddenField name="owner" value={owner} />
-            <SubmitField value="Submit" />
+            <SubmitField value="Submit" id="add-recipe-sub" />
             <ErrorsField />
           </Card.Body>
         </Card>
