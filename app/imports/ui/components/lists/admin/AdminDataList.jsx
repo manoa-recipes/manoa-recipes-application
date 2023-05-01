@@ -6,27 +6,10 @@ import swal from 'sweetalert';
 import { Table, Card, Button, Row, Col } from 'react-bootstrap';
 import { Star } from 'react-bootstrap-icons';
 import LoadingSpinner from '../../LoadingSpinner';
-import { Ingredients } from '../../../../api/ingredients/Ingredients';
-import { Recipes } from '../../../../api/recipes/Recipes';
-import { RecipesIngredients } from '../../../../api/recipes/RecipesIngredients';
-import { Vendors } from '../../../../api/vendors/Vendors';
-import { VendorsIngredients } from '../../../../api/vendors/VendorsIngredients';
 import AdminDataListItem from './AdminDataListItem';
-import { Profiles } from '../../../../api/profiles/Profiles';
 import { resetCollectionMethod, refillCollectionMethod } from '../../../../startup/both/Methods';
+import { getCollection } from '../../../../startup/both/CollectionHelpers';
 
-// Function to select the correct collection
-const getCollection = (collectionName) => {
-  switch (collectionName) {
-  case Recipes.name: return Recipes;
-  case Ingredients.name: return Ingredients;
-  case RecipesIngredients.name: return RecipesIngredients;
-  case Vendors.name: return Vendors;
-  case VendorsIngredients.name: return VendorsIngredients;
-  case Profiles.name: return Profiles;
-  default: return undefined;
-  }
-};
 // Function to render a collection as a list.  ex. param: <AdminDataList collectionName={ Recipes.name }
 const AdminDataList = ({ collectionName, numElementsPerPage }) => {
   const collection = getCollection(collectionName);

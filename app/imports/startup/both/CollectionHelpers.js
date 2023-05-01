@@ -9,7 +9,7 @@ import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import {
   addDoc,
-} from './DocumentFunctions';
+} from './DocumentHelpers';
 
 /** All of the collections */
 const collections = [Ingredients, RecipesIngredients, VendorsIngredients, Profiles, Recipes, Vendors];

@@ -11,7 +11,7 @@ import {
   addDoc,
   updateDoc,
   removeDoc,
-} from './DocumentFunctions';
+} from './DocumentHelpers';
 import {
   getCollection,
   clearCollection,
@@ -19,7 +19,7 @@ import {
   resetCollection,
   loadDefaultData,
   clearAllCollections,
-} from './CollectionFunctions';
+} from './CollectionHelpers';
 
 const collectionNames = [Profiles.name, Ingredients.name, Recipes.name, Vendors.name, RecipesIngredients.name, VendorsIngredients.name];
 
