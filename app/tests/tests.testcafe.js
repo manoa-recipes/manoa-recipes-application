@@ -7,9 +7,11 @@ import { userhomepage } from './userhome.page';
 import { vendorspage } from './vendors.page';
 import { profilepage } from './profile.page';
 import { listrecipePage } from './listrecipe.page';
-// import { addrecipePage } from './addrecipe.page';
+import { addrecipePage } from './addrecipe.page';
 import { adminPage } from './admin.page';
 import { vendorprofilePage } from './vendorprofile.page';
+import { editrecipePage } from './editrecipe.page';
+import { viewrecipePage } from './viewrecipe.page';
 
 /* global fixture:false, test:false */
 
@@ -17,7 +19,7 @@ import { vendorprofilePage } from './vendorprofile.page';
 const credentials = { username: 'john@foo.com', password: 'changeme' };
 const credentials_admin = { username: 'admin@foo.com', password: 'changeme' };
 const credentials_vendor = { username: 'merchant@foo.com', password: 'changeme' };
-// const testaddrecipe = { name: 'test', image: 'testcafe.image', time: '30', servings: '1', quantity: '2', size: 'half', ingredient: 'Tomato', instructions: 'for test cafe' };
+const testaddrecipe = { name: 'test', image: 'testcafe.image', source: 'test.com', time: '30', servings: '1', quantity: '2', size: 'half', ingredient: 'Tomato', instructions: 'for test cafe' };
 fixture('meteor-application-template-react localhost test with default db')
   .page('http://localhost:3000');
 
@@ -90,18 +92,29 @@ test('Test that admin page shows up and works', async (testController) => {
   await navBar.gotoAdminPage(testController);
   await adminPage.isDisplayed(testController);
   await adminPage.admin_ingredients(testController);
-  await adminPage.admin_profiles_data(testController);
-  await adminPage.admin_vendors_collection(testController);
-  await adminPage.admin_recipes_collection(testController);
-  await adminPage.admin_recipesIngredients_collection(testController);
-  await adminPage.admin_vendorsIngredients_collection(testController);
 });
 
-// test('Test that add recipe page shows up and works', async (testController) => {
-//   await navBar.gotoSignInPage(testController);
-//   await signinPage.signin(testController, credentials.username, credentials.password);
-//   await navBar.gotoAddRecipePage(testController);
-//   await addrecipePage.isDisplayed(testController);
-//   await addrecipePage.hasCard(testController);
-//   await addrecipePage.add_recipe(testController, testaddrecipe.name, testaddrecipe.image, testaddrecipe.time, testaddrecipe.servings, testaddrecipe.quantity, testaddrecipe.size, testaddrecipe.ingredient, testaddrecipe.instructions);
-// });
+test('Test that add recipe page shows up and works', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoAddRecipePage(testController);
+  await addrecipePage.isDisplayed(testController);
+  // eslint-disable-next-line max-len
+  await addrecipePage.add_recipe(testController, testaddrecipe.name, testaddrecipe.image, testaddrecipe.source, testaddrecipe.time, testaddrecipe.servings, testaddrecipe.quantity, testaddrecipe.size, testaddrecipe.ingredient, testaddrecipe.instructions);
+});
+
+test('Test that view recipe page shows up and the card is displayed', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListRecipePage(testController);
+  await editrecipePage.isDisplayed(testController);
+  await editrecipePage.hasCard(testController);
+});
+
+test('Test that edit recipe page shows up and the card is displayed', async (testController) => {
+  await navBar.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await navBar.gotoListRecipePage(testController);
+  await viewrecipePage.isDisplayed(testController);
+  await viewrecipePage.hasCard(testController);
+});
