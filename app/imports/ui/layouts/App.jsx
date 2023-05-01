@@ -47,7 +47,7 @@ const App = () => {
           <Route path="/signout" element={<SignOut />} />
           <Route path="/home" element={<ProtectedRoute><UserHome /></ProtectedRoute>} />
           <Route path="/edit_user_profile/:_id" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
-          <Route path="/edit_vendor_profile/:_id" element={<ProtectedRoute><EditVendorProfile /></ProtectedRoute>} />
+          <Route path="/edit_vendor_profile/:_email" element={<ProtectedRoute><EditVendorProfile /></ProtectedRoute>} />
           <Route path="/add_user_profile" element={<ProtectedRoute><AddProfile /></ProtectedRoute>} />
           <Route path="/user_profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
           <Route path="/vendor_profile" element={<ProtectedRoute><VendorProfile /></ProtectedRoute>} />

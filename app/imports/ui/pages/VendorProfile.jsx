@@ -3,10 +3,10 @@ import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Card, ListGroup, Image, Accordion, Table } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
-import { Link } from 'react-router-dom';
 
 const VendorIngredientList = ({ vendorIngredient }) => (
   <tr>
@@ -44,7 +44,6 @@ const VendorProfile = () => {
     // Get the vendor profile document
     const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
     const vendorProfile = Vendors.collection.find({ email: user }).fetch();
-
     const vendorStuff = VendorsIngredients.collection.find({ email: user }).fetch();
 
     return {
@@ -70,7 +69,6 @@ const VendorProfile = () => {
               <Card.Header className="py-2 d-flex align-content-center">
                 <Card.Title>
                   Vendor Information
-                  <Link to={`/edit_vendor_profile/${vendorData._id}`}>Edit</Link>
                 </Card.Title>
               </Card.Header>
               <Card.Body>
@@ -103,6 +101,16 @@ const VendorProfile = () => {
                       <div className="fw-bold">Hours:</div>
                     </div>
                     { vendorData[0].hours }
+                  </ListGroup.Item>
+
+                  <ListGroup.Item
+                    as="li"
+                    className="d-flex justify-content-between align-items-start"
+                  >
+                    <div className="ms-2 me-auto">
+                      <div className="fw"><Link to={`/edit_vendor_profile/${vendorData._id}`}>Edit Information</Link>
+                      </div>
+                    </div>
                   </ListGroup.Item>
                 </ListGroup>
               </Card.Body>
