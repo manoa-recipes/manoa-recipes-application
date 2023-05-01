@@ -11,16 +11,13 @@ class AdminPage {
     // This is first test to be run. Wait 10 seconds to avoid timeouts with GitHub Actions.
     await testController.wait(10000).expect(this.pageSelector.exists).ok();
   }
-/* Sorry! Changed the page since then
+
   async admin_ingredients(testController) {
-    await testController.click(Selector('button').withText('Data Collections'));
-    await testController.click('#admin-ingredients');
-    await testController.expect(Selector('table').withText('id').exists).ok();
-    await testController.expect(Selector('table').withText('Name (*)').exists).ok();
-    await testController.expect(Selector('table tbody tr').count).gte(5);
+    await testController.click(Selector('button').withText('Server Data'));
+    await testController.wait(10000).expect(this.pageSelector.exists).ok();
   }
 
-  async admin_profiles_data(testController) {
+/*  async admin_profiles_data(testController) {
     await testController.click('#admin-profiles');
     await testController.expect(Selector('table').withText('id').exists).ok();
     await testController.expect(Selector('table').withText('email (*)').exists).ok();
@@ -68,8 +65,7 @@ class AdminPage {
     await testController.expect(Selector('table').withText('size').exists).ok();
     await testController.expect(Selector('table').withText('price').exists).ok();
     await testController.expect(Selector('table tbody tr').count).gte(5);
-  }
-  */
+  } */
 }
 
 export const adminPage = new AdminPage();
