@@ -1,27 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Tab, Tabs, Button, Col, InputGroup, Card } from 'react-bootstrap';
-import SimpleSchema from 'simpl-schema';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { AutoForm, SelectField } from 'uniforms-bootstrap5';
+import { Container, Tab, Tabs, Button, Col, Card } from 'react-bootstrap';
 import swal from 'sweetalert';
 import AdminDataList from '../../components/lists/admin/AdminDataList';
 import Profile from '../Profile';
 import { collectionNames, resetAllMethod } from '../../../startup/both/Methods';
 import scrollableY from '../../helpers/CommonProps';
 
-const bridge = new SimpleSchema2Bridge(new SimpleSchema({
-  elements: {
-    type: Number,
-    allowedValues: [10, 20, 50],
-    defaultValue: 10,
-  },
-}));
-
-/* This component is merely to organize all admin data */
 const AdminHome = () => {
-  // Index of the active pagination item
-  const [numElements, setNumElements] = useState(10);
   // The meteor method takes no parameters, so the object holding parameters is empty
   const handleClearDataButton = () => {
     Meteor.call(resetAllMethod, {}, (error) => {
@@ -32,9 +18,6 @@ const AdminHome = () => {
       }
     });
   };
-  const handleChange = (event) => {
-    setNumElements(parseInt(event.target.value, 10));
-  };
   return (
     <Container className="p-2 text-center" id="admin-page">
       <Tabs>
@@ -42,19 +25,7 @@ const AdminHome = () => {
         <Tab eventKey="dataDb" title="Server Data">
           <Card>
             <Col>
-              <AutoForm schema={bridge}>
-                <InputGroup className="align-items-center" onChange={e => handleChange(e)}>
-                  <Button onClick={handleClearDataButton} className="me-2">Reset all data to default</Button>
-                  <InputGroup.Text>Items per Page: </InputGroup.Text>
-                  <SelectField
-                    type="number"
-                    name="elements"
-                    label={null}
-                    className="mb-auto"
-                    inputClassName="rounded-0 rounded-end"
-                  />
-                </InputGroup>
-              </AutoForm>
+              <Button onClick={handleClearDataButton} className="me-2">Reset all data to default</Button>
               <Tabs>
                 {collectionNames.map(collectionName => (
                   <Tab
@@ -63,10 +34,7 @@ const AdminHome = () => {
                     title={collectionName.replace('Collection', '')}
                     eventKey={collectionName}
                   >
-                    <AdminDataList
-                      collectionName={collectionName}
-                      numElements={numElements}
-                    />
+                    <AdminDataList collectionName={collectionName} />
                   </Tab>
                 ))}
               </Tabs>
