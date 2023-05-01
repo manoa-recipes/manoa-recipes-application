@@ -38,9 +38,11 @@ const EditProfile = () => {
       swal('Success', 'Item updated successfully', 'success')));
 
     // attempts to add allergy to list of allergies
-    Profiles.collection.update(_id, { $push: { allergies } }, (error) => (error ?
-      swal('Error', error.message, 'error') :
-      swal('Success', 'Item updated successfully', 'success')));
+    if (allergies.length !== 0) {
+      Profiles.collection.update(_id, { $push: { allergies } }, (error) => (error ?
+        swal('Error', error.message, 'error') :
+        swal('Success', 'Item updated successfully', 'success')));
+    }
   };
 
   return ready ? (
@@ -51,7 +53,7 @@ const EditProfile = () => {
           <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
             <Card>
               <Card.Body>
-                <TextField name="allergies" placeholder="Add new allergy..." />
+                <TextField name="allergies" placeholder="Add new allergy..." defaultValue="" />
                 Vegan
                 <Form.Select name="vegan">
                   <option label="true">
