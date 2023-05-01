@@ -13,7 +13,7 @@ import { getCollection } from '../../../../startup/both/CollectionHelpers';
 /** Show the list with PAGINATION, if the list is long, using numElements.
   * ****NOT DONE**** */
 // Function to render a collection as a list.  ex. param: <AdminDataList collectionName={ Recipes.name, numElements }
-const AdminDataList = ({ collectionName, numElements }) => {
+const AdminDataList = ({ collectionName }) => {
   // The collection based on the name given
   const collection = getCollection(collectionName);
   // Schema of the collection
@@ -85,6 +85,5 @@ const AdminDataList = ({ collectionName, numElements }) => {
 };
 AdminDataList.propTypes = {
   collectionName: PropTypes.string.isRequired,
-  numElements: PropTypes.number.isRequired,
 };
 export default AdminDataList;
