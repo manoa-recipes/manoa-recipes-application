@@ -11,7 +11,7 @@ import {
   addDoc,
   updateDoc,
   removeDoc,
-} from './DocumentFunctions';
+} from './DocumentHelpers';
 import {
   getCollection,
   clearCollection,
@@ -19,7 +19,7 @@ import {
   resetCollection,
   loadDefaultData,
   clearAllCollections,
-} from './CollectionFunctions';
+} from './CollectionHelpers';
 
 const collectionNames = [Profiles.name, Ingredients.name, Recipes.name, Vendors.name, RecipesIngredients.name, VendorsIngredients.name];
 
@@ -52,7 +52,8 @@ Meteor.methods({
     // NOTE: ingredients is an array of RecipesIngredients documents from the Autoform
     if (Recipes.collection.find({ name }).count() !== 0) { console.log('addRecipeMethod\n  Recipe found!  Exiting.'); return; }
     addDoc(Recipes, { name, owner, image, instructions, time, servings, vegan, glutenFree, source });
-    _.pluck(ingredients, 'ingredient').map(ingredient => addDoc(Ingredients, { name: ingredient }));
+    _.pluck(ingredients, 'ingredient')
+      .map(ingredient => addDoc(Ingredients, { name: ingredient }));
     ingredients.map(document => addDoc(RecipesIngredients, document));
   },
 });

@@ -9,7 +9,7 @@ import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import {
   addDoc,
-} from './DocumentFunctions';
+} from './DocumentHelpers';
 
 /** All of the collections */
 const collections = [Ingredients, RecipesIngredients, VendorsIngredients, Profiles, Recipes, Vendors];
@@ -67,13 +67,14 @@ const clearAllCollections = () => collections.map(collection => clearCollection(
 const loadDefaultData = () => {
   const defaultDataExists = (Meteor.settings.defaultProfiles && Meteor.settings.defaultRecipes && Meteor.settings.defaultVendors && Meteor.settings.defaultRecipesIngredients && Meteor.settings.defaultVendorsIngredients) !== undefined;
   if (defaultDataExists) {
-    console.log('\nLoading additional data from:\n  app/public/settings.development.json');
+    console.log('\nLoading default data from:\n  app/public/settings.development.json');
     collections.map(collection => refillCollection(collection));
     console.log('Collections initialized.');
   } else { console.log('\nWarning!\n  Please start Meteor with a settings file at:\n  app/public/settings.development.json\n'); }
   if (Meteor.settings.loadAssetsFile) {
     const assetsFileName = 'data.json';
     console.log(`Loading additional data from:\n  app/private/${assetsFileName}`);
+    // eslint-disable-next-line no-undef
     const jsonData = JSON.parse(Assets.getText(assetsFileName));
     jsonData.profiles?.map(document => addDoc(Profiles, document));
     jsonData.recipes?.map(document => addDoc(Recipes, document));

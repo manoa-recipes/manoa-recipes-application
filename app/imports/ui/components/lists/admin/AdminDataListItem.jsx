@@ -54,7 +54,8 @@ const AdminDataListItem = ({ document, collectionName }) => {
       }
     });
   };
-  /** There HAS to be a better way to pass the _id.  This works for now. */
+  /** Maps through the keys of the schema and extracts the data from the document.
+    * Then adds an edit button and the modal holding the form for editing the doc. */
   return (
     <tr>
       <td className="text-start">
@@ -72,7 +73,7 @@ const AdminDataListItem = ({ document, collectionName }) => {
           style={{ maxWidth: '10rem' }}
           key={index}
         >
-          <div style={{ maxHeight: '10rem', overflowY: 'auto' }}>{document[field]}</div>
+          <div style={{ maxHeight: '10vh', overflowY: 'auto' }}>{document[field]}</div>
         </td>
       ))}
       <td>

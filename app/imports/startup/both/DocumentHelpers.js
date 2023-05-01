@@ -13,7 +13,9 @@ const isJoin = (collection) => ((collection.name === RecipesIngredients.name) ||
 
 // Add user to their Meteor role.
 function promoteUser(userID, role) {
+  // Create the role if it is new
   Roles.createRole(role, { unlessExists: true });
+  // Add user to the role
   Roles.addUsersToRoles(userID, role);
 }
 
@@ -35,11 +37,7 @@ const addIngredient = (ingredient) => Ingredients.collection.update({ name: ingr
 const addProfile = ({ email, role, vegan, glutenFree, allergies }) => {
   // Probably a better way to frame this expression
   createUser(email, role);
-  if (allergies) {
-    Profiles.collection.insert({ email, vegan, glutenFree, allergies });
-  } else {
-    Profiles.collection.insert({ email, vegan, glutenFree, allergies: [] });
-  }
+  Profiles.collection.insert({ email, vegan, glutenFree, allergies });
 };
 
 // Add document to the RecipesIngredients collection
@@ -70,10 +68,9 @@ const addDoc = (collection, document) => {
       const name = document.ingredient;
       Ingredients.collection.update({ name }, { $set: { name } }, { upsert: true });
     }
-    if (collection.name === Profiles.name) {
-      // If it is the Profiles collection, reuse the function
-      addProfile(document);
-    }
+    // For profiles, try to create user (in case this is used for new sign ups)
+    if (collection.name === Profiles.name) { createUser(document.email, document.role); }
+    // Finally insert the document
     collection.collection.update(document, { $set: document }, { upsert: true });
   } else { console.log(`  Collection "${collection}" not recognized!`); }
 };

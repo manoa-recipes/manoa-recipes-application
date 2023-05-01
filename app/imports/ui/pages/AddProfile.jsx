@@ -1,6 +1,6 @@
 import React from 'react';
-import { AutoForm, TextField, LongTextField, SelectField, SubmitField, ErrorsField } from 'uniforms-bootstrap5';
-import { Container, Col, Card, Row, Form } from 'react-bootstrap';
+import { AutoForm, TextField, SubmitField, ErrorsField } from 'uniforms-bootstrap5';
+import { Container, Col, Card, Form } from 'react-bootstrap';
 import swal from 'sweetalert';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';

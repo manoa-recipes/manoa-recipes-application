@@ -4,18 +4,16 @@ import { _ } from 'meteor/underscore';
 import { useParams } from 'react-router';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import RecipeCard from '../../components/recipe/RecipeCard';
-import { Recipes } from '../../../api/recipes/Recipes';
-import { RecipesIngredients } from '../../../api/recipes/RecipesIngredients';
-import { Ingredients } from '../../../api/ingredients/Ingredients';
-
+import LoadingSpinner from '../components/LoadingSpinner';
+import RecipeCard from '../components/recipe/RecipeCard';
+import { Recipes } from '../../api/recipes/Recipes';
+import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
+import { Ingredients } from '../../api/ingredients/Ingredients';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ListRecipeByIngredient = () => {
+const ViewIngredient = () => {
   // ID of the ingredient
   const { _id } = useParams();
-  console.log('_id:', _id);
   const { ready, ingredient, names } = useTracker(() => {
     const sub1 = Meteor.subscribe(Recipes.userPublicationName);
     const sub2 = Meteor.subscribe(RecipesIngredients.userPublicationName);
@@ -30,10 +28,8 @@ const ListRecipeByIngredient = () => {
       ready: rdy,
     };
   }, [_id]);
-  console.log(names);
   // Map through all the recipe names matched through cross checking the ingredient and RecipesIngredients and return documents that are matched
   const recipes = ready ? _.flatten(names.map(name => Recipes.collection.find({ name }).fetch())) : undefined;
-  console.log(recipes, names);
   return (ready && recipes !== undefined ? (
     <Container className="py-3" id="list-recipe-page">
       <Row className="justify-content-center">
@@ -50,4 +46,4 @@ const ListRecipeByIngredient = () => {
   ) : <LoadingSpinner />);
 };
 
-export default ListRecipeByIngredient;
+export default ViewIngredient;

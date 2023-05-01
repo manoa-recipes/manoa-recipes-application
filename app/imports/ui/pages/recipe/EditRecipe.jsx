@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
-import { AutoField, AutoForm, BoolField, ErrorsField, HiddenField, ListAddField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { AutoForm, BoolField, ErrorsField, HiddenField, ListDelField, ListField, ListItemField, LongTextField, NumField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { useParams } from 'react-router';
 import { Recipes } from '../../../api/recipes/Recipes';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -53,7 +53,6 @@ const EditRecipe = () => {
     /* Output to console for tracing bugs */
     // console.log('useTracker documents:', '\n  recipe: ', document, '\n  ingredients: ', ingredientItems);
     // console.log('useTracker:\n  user: ', user, '\n  Admin: ', isAdmin, '\n  Owner: ', isOwner, '\n  Edit Access: ', isAdmin || isOwner);
-
     return {
       recipe: document,
       startIngredients: ingredientItems,

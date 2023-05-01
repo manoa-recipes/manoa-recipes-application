@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { _ } from 'meteor/underscore';
+import { useTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import { Card, Col, Container, Row } from 'react-bootstrap';
@@ -8,6 +9,8 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { DashCircle, PlusCircle } from 'react-bootstrap-icons';
 import { addRecipeMethod } from '../../../startup/both/Methods';
 import { RecipeFormSchema } from '../../forms/RecipeFormInfo';
+import { Recipes } from '../../../api/recipes/Recipes';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 // Defined in '../../forms/RecipeFormInfo.js'
 const recipeBridge = new SimpleSchema2Bridge(RecipeFormSchema);
@@ -17,25 +20,41 @@ const AddRecipe = () => {
   const owner = Meteor.user()?.username;
   // The recipe name (make it undefined to force the user to interact with it)
   const [name, setName] = useState(undefined);
+  // Whether the recipe name is taken
+  const [valid, setValid] = useState(false);
   // console.log('Logged in user: ', owner);
-
-  // On submit, insert the data.
-  const submit = (data) => {
-    const { image, instructions, time, servings, ingredients } = data;
-    // Extend the form data of the join docs at the moment of submit
-    // because: recipe field of the RecipesIngredients is a HiddenField on the form
-    ingredients.map(ingredient => _.extend({}, ingredient, { recipe: name }));
-    Meteor.call(addRecipeMethod, { name, owner, image, instructions, time, servings, ingredients }, (error) => {
-      if (error) {
-        swal('Error', error.message, 'error');
-      } else {
-        swal('Success', 'Recipe added successfully', 'success');
-      }
-    });
+  const { ready, recipes } = useTracker(() => {
+    const subscription = Meteor.subscribe(Recipes.userPublicationName);
+    // Data is ready
+    const rdy = subscription.ready();
+    return {
+      recipes: _.pluck(Recipes.collection.find({}).fetch(), 'name'),
+      ready: rdy,
+    };
+  }, []);
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setName(value);
+    // Prevent submit for invalid input
+    if (recipes.includes(value) || value.length === 0) {
+      setValid(false);
+    } else { setValid(true); }
   };
-
-  // Render the form. Use Uniforms: https://github.com/vazco/uniforms
-  return (
+  const submit = (data) => {
+    if (valid) {
+      const { image, instructions, time, servings, ingredients } = data;
+      // Extend the form data of the join docs at the moment of submit
+      ingredients.map(ingredient => _.extend({}, ingredient, { recipe: name }));
+      Meteor.call(addRecipeMethod, { name, owner, image, instructions, time, servings, ingredients }, (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'Recipe added successfully!', 'success');
+        }
+      });
+    } else { swal('Error', 'Recipe name Taken!', 'error'); }
+  };
+  return ready ? (
     <Container className="p-2 text-end">
       <AutoForm schema={recipeBridge} onSubmit={data => submit(data)}>
         <Card className="text-center">
@@ -45,7 +64,7 @@ const AddRecipe = () => {
               <Card.Body>
                 <Col>
                   <Row
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={handleChange}
                   >
                     <TextField
                       name="name"
@@ -53,6 +72,7 @@ const AddRecipe = () => {
                       value={name}
                       defaultValue={name}
                       className="mb-auto"
+                      autoComplete={null}
                     />
                   </Row>
                   <Row><TextField name="image" placeholder="..." className="mb-auto" /></Row>
@@ -91,7 +111,7 @@ const AddRecipe = () => {
         </Card>
       </AutoForm>
     </Container>
-  );
+  ) : <LoadingSpinner />;
 };
 
 export default AddRecipe;

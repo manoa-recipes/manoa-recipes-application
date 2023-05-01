@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { loadDefaultData } from '../both/CollectionFunctions';
+import { loadDefaultData } from '../both/CollectionHelpers';
 
 /* eslint-disable no-console */
 /** For Debugging */
