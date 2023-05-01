@@ -50,7 +50,8 @@
       "image": "https://lh3.googleusercontent.com/4eyzo2D9zdI8iyIRHGC_Ehe4rzW7j3DIxZWctid6rx65yfsnvr31mIt2BEQeVqQy2Zork9Ysy-QTO4i6oOL6uQ=w1280-h1280-c-rj-v1-e365",
       "instructions": "Wash the lettuce and tomato thoroughly. Assemble the chopped lettuce and tomato.  ",
       "time": "10 minutes",
-      "servings": 2
+      "servings": 2,
+      "vegan": true
     },
     {
       "name": "Scratch Pasta Sauce",
