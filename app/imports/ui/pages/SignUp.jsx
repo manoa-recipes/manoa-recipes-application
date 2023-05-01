@@ -77,7 +77,7 @@ const SignUp = ({ location }) => {
     // assignRoles(newUser, role);
   };
 
-  /* Display the signup form. Redirect to landing page after successful registration and login. */
+  /* Display the signup form. Redirect to home page after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/home' } };
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
