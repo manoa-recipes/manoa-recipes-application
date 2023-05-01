@@ -108,7 +108,7 @@ const VendorProfile = () => {
                     className="d-flex justify-content-between align-items-start"
                   >
                     <div className="ms-2 me-auto">
-                      <div className="fw"><Link to={`/edit_vendor_profile/${vendorData._id}`}>Edit Information</Link>
+                      <div className="fw"><Link to={`/edit_vendor_profile/${vendorData[0]._id}`}>Edit Information</Link>
                       </div>
                     </div>
                   </ListGroup.Item>

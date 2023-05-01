@@ -47,17 +47,15 @@ const EditVendorProfile = () => {
             <Card>
               <Card.Body>
                 <Row>
-                  <Col><TextField name="firstName" /></Col>
-                  <Col><TextField name="lastName" /></Col>
+                  <Col><TextField name="name" /></Col>
+                  <Col><TextField name="address" /></Col>
                 </Row>
                 <Row>
-                  <Col><TextField name="address" /></Col>
+                  <Col><TextField name="hours" /></Col>
                   <Col><TextField name="image" /></Col>
                 </Row>
-                <LongTextField name="description" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
-                <HiddenField name="owner" />
               </Card.Body>
             </Card>
           </AutoForm>
