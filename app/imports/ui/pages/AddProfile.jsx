@@ -10,6 +10,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { Navigate } from 'react-router-dom';
 import { Profiles } from '../../api/profiles/Profiles';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { Roles } from 'meteor/alanning:roles';
 
 /* Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = (allAllergies) => new SimpleSchema({
@@ -24,6 +25,8 @@ const makeSchema = (allAllergies) => new SimpleSchema({
 const AddProfile = () => {
 
   const [redirectToReferer, setRedirectToRef] = useState(false);
+
+  console.log(`this.userId = ${Meteor.userId}`);
 
   /* On submit, insert the data. */
   const submit = (data) => {

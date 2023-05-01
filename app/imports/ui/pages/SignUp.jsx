@@ -59,9 +59,10 @@ const SignUp = ({ location }) => {
         setError('');
         console.log(role);
         console.log('before Profiles.insert');
-        if (role === 'vendor') {
-          console.log('Profiles.insert making profile');
-          Profiles.insert({ email: email, vegan: false, glutenFree: false, allergies: [] });
+        if (role === 'user') {
+          console.log(`this.userId = ${this.userId}`);
+          console.log('Profiles.collection.insert making profile');
+          Profiles.collection.insert({ email: email, vegan: false, glutenFree: false, allergies: [] });
         }
         setRedirectToRef(true);
       }
