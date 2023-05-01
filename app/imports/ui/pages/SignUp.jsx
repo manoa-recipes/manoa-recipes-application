@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
@@ -19,32 +20,69 @@ const SignUp = ({ location }) => {
     email: String,
     password: String,
     role: {
-      type: String, allowedValues: ['vendor', 'user'],
+      type: String, allowedValues: ['user', 'vendor'],
       defaultValue: 'user',
     },
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
-  const submit = (doc) => {
-    const { email, password, role } = doc;
-    const userID = Accounts.createUser({ email, username: email, password }, (err) => {
-      if (err) {
-        setError(err.reason);
-        return;
-      }
-      if (role === 'vendor' || role === 'user') {
-        Roles.createRole(role, { unlessExists: true });
-        Roles.addUsersToRoles(userID, role);
-      }
-      setRedirectToRef(true);
-    });
+  const assignRoles = (userId, role) => {
+    console.log(userId);
+    console.log('creating role');
+    Roles.createRole(role, { unlessExists: true });
+    console.log('Roles.createRole worked');
+    Roles.addUsersToRoles(userId, role);
+    console.log('Roles.addUsersToRoles worked');
   };
 
+  // Add user to the Meteor accounts.
+  /* function createUser(email, role) {
+    console.log(`  createUser(${email}, ${role})`);
+    const userID = Accounts.createUser({ username: email, email, password: 'changeme' });
+    if (role === 'admin') { promoteUser(userID, role); }
+    if (role === 'vendor') { promoteUser(userID, role); }
+
+    // adding user role
+    if (role === 'user') { promoteUser(userID, role); }
+  } */
+
+  /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
+  const submit = (doc) => {
+    const { email, password, role } = doc;
+
+    const userID = Accounts.createUser({ username: email, email, password: password }, (err) => {
+      if (err) {
+        setError(err.reason);
+      } else {
+        setError('');
+        setRedirectToRef(true);
+      }
+    });
+
+    console.log('making roles');
+    console.log(Meteor.users.find());
+    if (role === 'vendor') { assignRoles(userID, role); }
+
+    // adding user role
+    if (role === 'user') { assignRoles(userID, role); }
+
+    // console.log(Meteor.user);
+    // console.log(role);
+    // assignRoles(Meteor.userId, role);
+    /* Accounts.onCreateUser((options, user) => {
+      console.log('on create user');
+      assignRoles(userId, role);
+    }); */
+    // console.log(Meteor.userId());
+    // assignRoles(newUser, role);
+  };
+
+  /* Display the signup form. Redirect to landing page after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/home' } };
+  // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
   }
-
   return (
     <Container fluid id="signup-page" className="">
       <Row md={3}>
@@ -82,16 +120,15 @@ const SignUp = ({ location }) => {
   );
 };
 
+/* Ensure that the React Router location object is available in case we need to redirect. */
 SignUp.propTypes = {
   location: PropTypes.shape({
-    state: PropTypes.shape({
-      pathname: PropTypes.string,
-    }),
+    state: PropTypes.string,
   }),
 };
 
 SignUp.defaultProps = {
-  location: { state: {} },
+  location: { state: '' },
 };
 
 export default SignUp;
