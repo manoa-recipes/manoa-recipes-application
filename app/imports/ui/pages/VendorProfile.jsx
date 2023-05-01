@@ -138,11 +138,9 @@ const VendorProfile = () => {
                           <th>Price</th>
                         </tr>
                       </thead>
-
                       <tbody>
                         {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
                       </tbody>
-
                     </Table>
                   </Accordion.Body>
                 </Accordion>
