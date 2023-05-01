@@ -39,7 +39,7 @@ const ViewRecipe = () => {
   const scroller = { maxHeight: '50vh', overflowY: 'auto' };
   // Its about 30 characters per line
   return (ready ? (
-    <Container>
+    <Container id="view-recipe-page">
       <Row xs={1} sm={1} md={1} lg={3} className="grid m-auto g-0 justify-content-center">
         <Col
           xs={{ order: '1' }}
@@ -48,6 +48,7 @@ const ViewRecipe = () => {
           {editAccess ? (
             <Button
               className="rounded-0 rounded-top"
+              id="edit"
               href={`/edit-recipe/${recipe._id}`}
             >
               Edit
