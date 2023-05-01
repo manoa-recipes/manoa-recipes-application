@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { _ } from 'meteor/underscore';
+import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
-import { Table, Card, Accordion, Button, Row, Col } from 'react-bootstrap';
+import { Table, Card, Button, Row, Col } from 'react-bootstrap';
 import { Star } from 'react-bootstrap-icons';
-import { AutoFields, AutoForm, SubmitField } from 'uniforms-bootstrap5';
 import LoadingSpinner from '../../LoadingSpinner';
 import { Ingredients } from '../../../../api/ingredients/Ingredients';
 import { Recipes } from '../../../../api/recipes/Recipes';
@@ -43,9 +41,6 @@ const AdminDataList = ({ collectionName, numElementsPerPage }) => {
       ready: rdy,
     };
   }, []);
-  const handleAdd = () => {
-
-  };
   const handleReset = () => {
     Meteor.call(resetCollectionMethod, { collectionName }, (error) => {
       if (error) {

@@ -54,7 +54,6 @@ const AdminDataListItem = ({ document, collectionName }) => {
       }
     });
   };
-  if (collectionName === Profiles.name) { console.log(document); }
   /** Maps through the keys of the schema and extracts the data from the document.
     * Then adds an edit button and the modal holding the form for editing the doc. */
   return (

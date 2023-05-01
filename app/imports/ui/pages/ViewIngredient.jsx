@@ -4,14 +4,14 @@ import { _ } from 'meteor/underscore';
 import { useParams } from 'react-router';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import RecipeCard from '../../components/recipe/RecipeCard';
-import { Recipes } from '../../../api/recipes/Recipes';
-import { RecipesIngredients } from '../../../api/recipes/RecipesIngredients';
-import { Ingredients } from '../../../api/ingredients/Ingredients';
+import LoadingSpinner from '../components/LoadingSpinner';
+import RecipeCard from '../components/recipe/RecipeCard';
+import { Recipes } from '../../api/recipes/Recipes';
+import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
+import { Ingredients } from '../../api/ingredients/Ingredients';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
-const ListRecipeByIngredient = () => {
+const ViewIngredient = () => {
   // ID of the ingredient
   const { _id } = useParams();
   const { ready, ingredient, names } = useTracker(() => {
@@ -46,4 +46,4 @@ const ListRecipeByIngredient = () => {
   ) : <LoadingSpinner />);
 };
 
-export default ListRecipeByIngredient;
+export default ViewIngredient;

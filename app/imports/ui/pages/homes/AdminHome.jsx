@@ -3,11 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { Container, Tab, Tabs, Button, Col, InputGroup, Card } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { AutoField, AutoFields, AutoForm } from 'uniforms-bootstrap5';
+import { AutoField, AutoForm } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import AdminDataList from '../../components/lists/admin/AdminDataList';
-import DataListsAdmin from '../../components/lists/admin/DataListsAdmin';
-import JoinListsAdmin from '../../components/lists/admin/JoinListsAdmin';
 import Profile from '../Profile';
 import { collectionNames, resetAllMethod } from '../../../startup/both/Methods';
 
@@ -33,6 +31,9 @@ const AdminHome = () => {
       }
     });
   };
+  const handleChange = (event) => {
+    console.log(event);
+  };
   return (
     <Container className="p-2 text-center" id="admin-page">
       <Tabs>
@@ -44,7 +45,7 @@ const AdminHome = () => {
                 <InputGroup className="align-items-center">
                   <Button onClick={handleClearDataButton} className="me-2">Reset all data to default</Button>
                   <InputGroup.Text>Items in List: </InputGroup.Text>
-                  <AutoField name="itemsInList" label={null} className="mb-auto" inputClassName="rounded-0 rounded-end" />
+                  <AutoField name="itemsInList" label={null} className="mb-auto" inputClassName="rounded-0 rounded-end" onChange={handleChange} />
                 </InputGroup>
               </AutoForm>
               <Tabs>
