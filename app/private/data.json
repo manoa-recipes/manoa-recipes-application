@@ -27,7 +27,9 @@
       "instructions": "Place rice into a bowl with enough water to cover. Set aside to soak for 20 minutes.Meanwhile, in the last 10 minutes of soaking, heat oil in a large pot or saucepan over medium heat. Add cinnamon stick, cardamom pods, and cloves, then stir in cumin seed. Cook and stir until fragrant and toasted, about a minute, then add onion to the pot. Saute onion until the color is a rich golden brown, about 10 minutes.Drain water from rice, and stir into the pot. Cook and stir rice until lightly toasted, about 3 minutes. Add water and salt, and bring to a boil. Cover and reduce heat to low.Simmer for about 15 minutes, or until all the water has been absorbed. Let stand for 5 minutes, then fluff with a fork before serving.",
       "time": "15 minutes",
       "servings": 6,
-      "source": "https://www.allrecipes.com/recipe/72349/indian-style-basmati-rice/"
+      "source": "https://www.allrecipes.com/recipe/72349/indian-style-basmati-rice/",
+      "vegan": true,
+      "glutenFree": true
     },
     {
       "name": "Slow Cooker Butter Chicken",
@@ -164,7 +166,8 @@
       "instructions": "Slice tofu into 4 thick slices. Marinate in 1/3 cup of teriyaki sauce while you prepare the vegetables.Cut bell pepper into 4 wedges; remove core and seeds. Cut ends off zucchini, then cut each zucchini in half lengthwise. Slice pineapple into 4 wedges. Cut onion into quarters. Place vegetables and pineapple onto a large platter. Brush with olive oil and season vegetables with salt and pepper.Preheat an outdoor grill for medium-high heat and lightly oil grate.Grill onions for 4 minutes, turning halfway through. Add bell pepper, zucchini, and pineapple to the grill and continue grilling, turning occasionally, until done to your liking, 8 to 10 minutes. Remove to a platter as each item finishes cooking, and cut into bite-sized pieces when cool enough to handle.Remove tofu from the marinade. Lightly oil the grate and grill 2 to 3 minutes per side.Divide hot rice between 4 bowls. Top with grilled vegetables, pineapple, and tofu. Drizzle with remaining 1/3 cup teriyaki sauce. Sprinkle with sesame seeds and serve.",
       "time": "20 minutes",
       "servings": 4,
-      "source": "https://www.allrecipes.com/recipe/284474/grilled-teriyaki-tofu-bowls/"
+      "source": "https://www.allrecipes.com/recipe/284474/grilled-teriyaki-tofu-bowls/",
+      "glutenFree": true
     },
     {
       "name": "Mexican Tinga",
@@ -327,7 +330,8 @@
       "instructions": "Preheat the oven to 350 degrees F (175 degrees C).Roast corn, in husks, directly on the oven rack in the preheated oven until tender and cooked through, 40 to 45 minutes.Peel down husks and rub each ear of corn with 1 tablespoon butter. Sprinkle each with cotija cheese, cilantro, lime juice, and chili powder.",
       "time": "40 minutes",
       "servings": 6,
-      "source": "https://www.allrecipes.com/recipe/273229/mexican-street-corn/"
+      "source": "https://www.allrecipes.com/recipe/273229/mexican-street-corn/",
+      "glutenFree": true
     },
     {
       "name": "Curry Stand Chicken Tikka Masala Sauce",
@@ -363,7 +367,8 @@
       "instructions": "Heat vegetable oil in a wok or large skillet over medium heat. Stir in garlic and cook until it begins to brown, 3 to 5 seconds.Stir in cabbage until coated in oil; cover the wok and cook for 1 minutePour in soy sauce; cook and stir for another minute. Increase heat to high and stir in Chinese cooking wine. Cook and stir until cabbage is tender, about 2 minutes more.Serve hot and enjoy!",
       "time": "5 minutes",
       "servings": 4,
-      "source": "https://www.allrecipes.com/recipe/174210/super-easy-stir-fried-cabbage/"
+      "source": "https://www.allrecipes.com/recipe/174210/super-easy-stir-fried-cabbage/",
+      "vegan": true
     },
 
     {
