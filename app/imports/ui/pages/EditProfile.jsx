@@ -13,7 +13,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 // const bridge = new SimpleSchema2Bridge(Profiles.schema);
 
-/* Renders the EditStuff page for editing a single document. */
+/* Renders the EditProfile page for editing a single document. */
 const EditProfile = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
@@ -21,7 +21,7 @@ const EditProfile = () => {
   // console.log('EditStuff', _id);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { doc, ready } = useTracker(() => {
-    // Get access to Stuff documents.
+    // Get access to Profile documents.
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();

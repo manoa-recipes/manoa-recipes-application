@@ -11,7 +11,7 @@ import SimpleSchema from 'simpl-schema';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-/* Renders the EditStuff page for editing a single document. */
+/* Renders the EditVendorProducts page for editing a single document. */
 const EditVendorProducts = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
@@ -19,7 +19,7 @@ const EditVendorProducts = () => {
   // console.log('EditContact', _id);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { doc, ready } = useTracker(() => {
-    // Get access to Stuff documents.
+    // Get access to VendorsIngredients documents.
     const subscription = Meteor.subscribe(VendorsIngredients.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();

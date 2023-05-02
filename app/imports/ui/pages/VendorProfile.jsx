@@ -33,13 +33,13 @@ VendorIngredientList.propTypes = {
   }).isRequired,
 };
 
-/* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/* Renders a table containing all of the Vendor documents. Use VendorsIngredients to render each row. */
 const VendorProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, ready2, vendorData, vendorIngredients } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
+    // Get access to Vendors documents.
     const subscription = Meteor.subscribe(Vendors.userPublicationName);
     const subscription2 = Meteor.subscribe(VendorsIngredients.userPublicationName);
 

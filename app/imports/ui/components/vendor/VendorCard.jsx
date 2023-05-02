@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Accordion, Card, Table } from 'react-bootstrap';
 import VendorIngredient from './VendorIngredient';
 
-/** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
+/** Renders a single row in the List Recipe table. See pages/ListRecipe.jsx. */
 const VendorCard = ({ vendor, vendorIngredients }) => (
   <Card className="h-100">
     <div className="row g-0">

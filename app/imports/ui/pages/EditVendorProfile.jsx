@@ -20,7 +20,7 @@ const EditVendorProfile = () => {
   // console.log('EditContact', _id);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { doc, ready } = useTracker(() => {
-    // Get access to Stuff documents.
+    // Get access to Vendors documents.
     const subscription = Meteor.subscribe(Vendors.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();

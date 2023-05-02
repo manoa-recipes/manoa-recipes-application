@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
+/** Renders a single row in the List Recipe table. See pages/ListRecipe.jsx. */
 const VendorIngredient = ({ vendorIngredient }) => (
   <tr>
     <td>{vendorIngredient.ingredient}</td>

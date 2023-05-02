@@ -14,7 +14,7 @@ const Footer = () => (
             <br />
             Jianlong Chen - <em>jianlong@hawaii.edu</em>
             <br />
-            Lisa Cheng - <em>chenlis@hawaii.edu</em>
+            Lisa Cheng - <em>chenglis@hawaii.edu</em>
             <br />
             Melvin Iwamoto - <em>melvinti@hawaii.edu</em>
             <br />
