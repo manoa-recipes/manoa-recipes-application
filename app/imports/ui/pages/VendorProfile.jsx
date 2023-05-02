@@ -143,7 +143,7 @@ const VendorProfile = () => {
                       </tbody>
                     </Table>
                     <div className="ms-2 me-auto">
-                      <div className="fw"><Link to={`/edit_vendor_profile/${vendorData[0]._id}`}>Edit</Link>
+                      <div className="fw"><Link to={`/edit_vendor_products/${vendorData[0]._id}`}>Edit</Link>
                       </div>
                     </div>
                   </Accordion.Body>
