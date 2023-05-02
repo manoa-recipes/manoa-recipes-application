@@ -47,7 +47,6 @@ const UserHome = () => {
 
             <Button className="p-1 px-2 mx-5" variant={(!restriction.glutenFree && !restriction.vegan) ? 'success' : 'btn btn-secondary'} onClick={() => setRestriction({ glutenFree: false, vegan: false })}>All Recipes</Button>
 
-
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4 mt-1">
             {filteredRecipes.map((recipe) => (<Col key={recipe._id}><RecipeCard recipe={recipe} /></Col>))}
