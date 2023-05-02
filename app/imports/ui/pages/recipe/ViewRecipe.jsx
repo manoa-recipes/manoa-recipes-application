@@ -40,7 +40,7 @@ const ViewRecipe = () => {
   // Its about 30 characters per line
   return (ready ? (
     <Container id="view-recipe-page">
-      <Row xs={1} sm={1} md={1} lg={3} className="grid m-auto g-0 justify-content-center">
+      <Row xs={1} sm={1} md={1} lg={3} className="grid m-auto g-0 justify-content-center  py-5">
         <Col
           xs={{ order: '1' }}
           className="text-center w-auto m-auto"
