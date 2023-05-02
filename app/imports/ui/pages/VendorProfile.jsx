@@ -9,9 +9,8 @@ import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import { removeDoc } from '../../startup/both/DocumentHelpers';
 
-const removeItem = ({ vendorIngredient }) => {
-  console.log(`remove clicked id = ${vendorIngredient._id}`);
-  removeDoc(vendorIngredient._id, VendorsIngredients);
+const removeItem = ({ _id }) => {
+  removeDoc(_id, VendorsIngredients);
 };
 
 const VendorIngredientList = ({ vendorIngredient }) => (
