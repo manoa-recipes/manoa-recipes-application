@@ -10,7 +10,6 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { Navigate } from 'react-router-dom';
 import { Profiles } from '../../api/profiles/Profiles';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Roles } from 'meteor/alanning:roles';
 
 /* Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = (allAllergies) => new SimpleSchema({
