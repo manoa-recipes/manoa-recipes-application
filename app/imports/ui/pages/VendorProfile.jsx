@@ -150,6 +150,11 @@ const VendorProfile = () => {
                         {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
                       </tbody>
                     </Table>
+
+                    <div className="ms-2 me-auto">
+                      <div className="fw"><Link to={`/edit_vendor_products/${vendorData[0]._id}`}>Add Ingredient</Link>
+                      </div>
+                    </div>
                   </Accordion.Body>
                 </Accordion>
               </Card.Body>

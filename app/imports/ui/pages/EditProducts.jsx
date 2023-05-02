@@ -7,14 +7,12 @@ import { useTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { useParams } from 'react-router';
 import { Navigate } from 'react-router-dom';
-import { Vendors } from '../../api/vendors/Vendors';
+import SimpleSchema from 'simpl-schema';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const bridge = new SimpleSchema2Bridge(VendorsIngredients.schema);
-
 /* Renders the EditStuff page for editing a single document. */
-const EditVendorProfile = () => {
+const EditVendorProducts = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
   const [redirectToReferer, setRedirectToRef] = useState(false);
@@ -32,11 +30,29 @@ const EditVendorProfile = () => {
       ready: rdy,
     };
   }, [_id]);
-  // console.log('EditStuff', doc, ready);
+
+  const schema = new SimpleSchema({
+    email: String,
+    address: String,
+    ingredient: String,
+    inStock: { type: String, allowedValues: ['true', 'false'],
+      defaultValue: 'false' },
+    size: { type: String, defaultValue: 'whole' },
+    price: { type: Number, defaultValue: 0.01 },
+  });
+
+  const bridge = new SimpleSchema2Bridge(schema);
+
   // On successful submit, insert the data.
   const submit = (data) => {
     const { ingredient, inStock, size, price } = data;
-    VendorsIngredients.collection.update(_id, { $set: { ingredient, inStock, size, price } }, (error) => (error ?
+
+    let inStockBool = false;
+    if (inStock === 'true') {
+      inStockBool = true;
+    }
+
+    VendorsIngredients.collection.update(_id, { $set: { ingredient: ingredient, inStock: inStockBool, size: size, price: price } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Item updated successfully', 'success')));
 
@@ -75,4 +91,4 @@ const EditVendorProfile = () => {
   ) : <LoadingSpinner />;
 };
 
-export default EditVendorProfile;
+export default EditVendorProducts;
