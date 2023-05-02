@@ -42,7 +42,7 @@ const SignIn = () => {
   // Otherwise return the Login form.
   return (
     <Container fluid id="signin-page" className="">
-      <Row>
+      <Row className="d-flex justify-content-center py-3">
         <Col md={3}>
           <Col id="text-sign-in" className="text-center">
             <h4>Please login to your account</h4>

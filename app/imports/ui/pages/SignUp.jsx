@@ -70,7 +70,7 @@ const SignUp = ({ location }) => {
   }
   return (
     <Container fluid id="signup-page" className="">
-      <Row md={3}>
+      <Row md={3} className="d-flex justify-content-center py-3">
         <Col md={3}>
           <Col id="text-sign-up" className="text-center">
             <h4>Register your account</h4>
