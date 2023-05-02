@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap';
 import { Clock, PersonFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 
-/** Renders a single row in the List Recipe table. See pages/ListRecipe.jsx. */
+/** Renders a single row in the View Ingredient table. See pages/ViewIngredient.jsx. */
 const RecipeCard = ({ recipe }) => (
   <Link to={`/view-recipe/${recipe._id}`} className="recipeLink">
     <Card style={{ width: '18rem' }} className="h-100 m-auto">
