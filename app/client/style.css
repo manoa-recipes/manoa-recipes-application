@@ -84,6 +84,9 @@ body {
   border-width: 0 0 0 12px;
 }
 
+.recipe-img {
+  object-fit: cover;
+}
 
 #nav {
   background-color: #ABC4AA;
