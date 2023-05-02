@@ -6,6 +6,45 @@ import VendorIngredient from './VendorIngredient';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 const VendorCard = ({ vendor, vendorIngredients }) => {
   const [activeAccord, setActiveAccord] = useState({});
+/** Renders a single row in the List Recipe table. See pages/ListRecipe.jsx. */
+const VendorCard = ({ vendor, vendorIngredients }) => (
+  <Card className="h-100">
+    <div className="row g-0">
+      <div className="col-md-6">
+        <Card.Img src={vendor.image} className="vendorCard" style={{ height: '200px' }} />
+      </div>
+      <div className="col-md-6">
+        <Card.Body>
+          <Card.Title>{vendor.name}</Card.Title>
+          <Card.Text>Address: {vendor.address}</Card.Text>
+          <Card.Text>Hours: {vendor.hours}</Card.Text>
+        </Card.Body>
+      </div>
+      <Card.Footer>
+        <Accordion>
+          <Accordion.Header>
+            <h5>Products</h5>
+          </Accordion.Header>
+          <Accordion.Body>
+            <Table striped bordered variant="light">
+              <thead>
+                <tr>
+                  <th>Ingredient</th>
+                  <th>In Stock</th>
+                  <th>Size</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vendorIngredients.map((vendorIngredient) => <VendorIngredient key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
+              </tbody>
+            </Table>
+          </Accordion.Body>
+        </Accordion>
+      </Card.Footer>
+    </div>
+  </Card>
+);
 
   VendorCard.propTypes = {
     vendor: PropTypes.shape({

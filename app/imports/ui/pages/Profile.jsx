@@ -6,13 +6,10 @@ import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profiles/Profiles';
 
-/* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/* Renders the user's profile as Card components. */
 const UserProfile = () => {
-  // const { _id } = useParams();
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, profileData } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
     // Get access to Profile documents.
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
 
@@ -22,7 +19,6 @@ const UserProfile = () => {
     // Get the profile document
     // ***note: to access any data from the document, use profileItems.key
     const user = (Meteor.userId() !== null) ? Meteor.user()?.username : 'tempUser';
-    // const profileItems = Profiles.collection.find({ email: user }).fetch();
     const profileItems = Profiles.collection.findOne({ email: user });
     return {
       profileData: profileItems,
@@ -34,7 +30,7 @@ const UserProfile = () => {
       <Row className="d-flex justify-content-center">
         <Col className="col-3 text-center border-gradient off-white-background rounded-2 py-4" id="my-profile">
           <Container className="py-4">
-            <Image width="150px" className="rounded-circle border border-white border-2" src="https://www.winsornewton.com/na/wp-content/uploads/sites/50/2019/09/50903849-WN-ARTISTS-OIL-COLOUR-SWATCH-WINSOR-EMERALD-960x960.jpg" />
+            <Image className="profile-img rounded-circle border border-white border-2" src="https://www.winsornewton.com/na/wp-content/uploads/sites/50/2019/09/50903849-WN-ARTISTS-OIL-COLOUR-SWATCH-WINSOR-EMERALD-960x960.jpg" />
           </Container>
           <h1>My Profile</h1>
           <h5>{ Meteor.user().username }</h5>

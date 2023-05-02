@@ -10,7 +10,8 @@ import { Recipes } from '../../api/recipes/Recipes';
 import { RecipesIngredients } from '../../api/recipes/RecipesIngredients';
 import { Ingredients } from '../../api/ingredients/Ingredients';
 
-/* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/* Renders a table containing all of the View Ingredient documents. Use Recipes to render each row. */
+/* Renders a table containing all the ingredients. Use <RecipeCard> to render each row. */
 const ViewIngredient = () => {
   // ID of the ingredient
   const { _id } = useParams();

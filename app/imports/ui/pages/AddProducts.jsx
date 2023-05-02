@@ -7,11 +7,10 @@ import { useTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { Navigate } from 'react-router-dom';
 import SimpleSchema from 'simpl-schema';
-import { useParams } from 'react-router';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-/* Renders the EditStuff page for editing a single document. */
+/* Renders the EditRecipe page for editing a single document. */
 const AddVendorProducts = () => {
   const email = Meteor.user()?.username;
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
@@ -19,7 +18,7 @@ const AddVendorProducts = () => {
 
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready } = useTracker(() => {
-    // Get access to Stuff documents.
+    // Get access to VendorsIngredients documents.
     const subscription = Meteor.subscribe(VendorsIngredients.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();

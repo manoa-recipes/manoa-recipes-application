@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row, Card, ListGroup, Image, Accordion, Table, Button } from 'react-bootstrap';
+import { Col, Container, Row, Card, ListGroup, Image, Accordion, Table } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -33,13 +33,13 @@ VendorIngredientList.propTypes = {
   }).isRequired,
 };
 
-/* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/* Renders a table containing all of the Vendor documents. Use VendorsIngredients to render each row. */
 const VendorProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, ready2, vendorData, vendorIngredients } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
+    // Get access to Vendors documents.
     const subscription = Meteor.subscribe(Vendors.userPublicationName);
     const subscription2 = Meteor.subscribe(VendorsIngredients.userPublicationName);
 
@@ -65,7 +65,7 @@ const VendorProfile = () => {
       <Row className="d-flex justify-content-center">
         <Col className="col-3 text-center border-gradient off-white-background rounded-2 py-4" id="my-profile">
           <Container className="py-4">
-            <Image className="square-img rounded-circle border border-white border-2" src={vendorData[0].image} />
+            <Image className="profile-img rounded-circle border border-white border-2" src={vendorData[0].image} />
           </Container>
           <h1>My Profile</h1>
           <h5>{ Meteor.user().username }</h5>

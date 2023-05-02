@@ -13,12 +13,12 @@ const VendorList = () => {
   const { ready, vendors, vendorIngredients } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
+    // Get access to Vendors documents.
     const subscription = Meteor.subscribe(Vendors.userPublicationName);
     const subscription2 = Meteor.subscribe(VendorsIngredients.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready() && subscription2.ready();
-    // Get the Stuff documents
+    // Get the Vendors documents
     const vendorList = Vendors.collection.find({}).fetch();
     const vendorStuff = VendorsIngredients.collection.find({}).fetch();
     return {
@@ -34,7 +34,7 @@ const VendorList = () => {
         <Col>
           <Col className="text-center">
             <h2>Vendors</h2>
-            <h4><i>Click on &apos;sProducts&apos;s to see what&apos;s in stock.</i></h4>
+            <h4><i>Click on &apos;Products&apos; to see what&apos;s in stock.</i></h4>
           </Col>
           <Row xs={1} md={2} lg={3} className="g-4">
             {vendors.map((vendor) => (<Col key={vendor._id}><VendorCard vendor={vendor} vendorIngredients={vendorIngredients.filter(vendorIngredient => (vendorIngredient.address === vendor.address))} /></Col>))}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 import { Clock, PersonFill } from 'react-bootstrap-icons';
 
-/** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
+/** Renders a recipe's information. */
 const RecipeInfo = ({ recipe }) => (
   <Card style={{ width: '18rem' }} className="h-auto m-auto">
     <Card.Img variant="top" src={recipe.image} />
