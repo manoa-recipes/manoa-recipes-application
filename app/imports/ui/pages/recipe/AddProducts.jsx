@@ -5,31 +5,30 @@ import { AutoForm, ErrorsField, SubmitField, TextField, SelectField } from 'unif
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { useParams } from 'react-router';
 import { Navigate } from 'react-router-dom';
 import SimpleSchema from 'simpl-schema';
+import { useParams } from 'react-router';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 /* Renders the EditStuff page for editing a single document. */
 const AddVendorProducts = () => {
+  const email = Meteor.user()?.email;
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
   const [redirectToReferer, setRedirectToRef] = useState(false);
-  // console.log('EditContact', _id);
+
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { doc, ready } = useTracker(() => {
+  const { ready } = useTracker(() => {
     // Get access to Stuff documents.
     const subscription = Meteor.subscribe(VendorsIngredients.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();
     // Get the document
-    const document = VendorsIngredients.collection.findOne(_id);
     return {
-      doc: document,
       ready: rdy,
     };
-  }, [_id]);
+  }, []);
 
   const schema = new SimpleSchema({
     email: String,
@@ -52,7 +51,7 @@ const AddVendorProducts = () => {
       inStockBool = true;
     }
 
-    VendorsIngredients.collection.update(_id, { $set: { ingredient: ingredient, inStock: inStockBool, size: size, price: price } }, (error) => (error ?
+    VendorsIngredients.collection.insert(_id, { $set: { email: email, ingredient: ingredient, inStock: inStockBool, size: size, price: price } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Item updated successfully', 'success')));
 
@@ -69,7 +68,7 @@ const AddVendorProducts = () => {
       <Row className="justify-content-center">
         <Col xs={10}>
           <Col className="text-center"><h2>Edit Products</h2></Col>
-          <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
+          <AutoForm schema={bridge} onSubmit={data => submit(data)}>
             <Card>
               <Card.Body>
                 <Row>
