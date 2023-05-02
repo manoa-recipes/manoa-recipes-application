@@ -9,12 +9,12 @@ import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import { removeDoc } from '../../startup/both/DocumentHelpers';
 
-const VendorIngredientList = ({ vendorIngredient }) => (
-  function removeItem = ({ _id }) => {
-    console.log(`remove clicked id = ${_id}`);
-    removeDoc(_id, VendorsIngredients);
-  };
+const removeItem = ({ _id }) => {
+  console.log(`remove clicked id = ${_id}`);
+  removeDoc(_id, VendorsIngredients);
+};
 
+const VendorIngredientList = ({ vendorIngredient }) => (
   <tr>
     <td>{vendorIngredient.ingredient}</td>
     <td>{vendorIngredient.inStock ? 'True' : 'False'}</td>
