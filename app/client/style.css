@@ -96,6 +96,12 @@ body {
   color: #675D50;
 }
 
+.profile-img {
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
+}
+
 .userHomeBackground {
   background: fixed center url("https://wallpapers.com/images/hd/vegetables-healthy-food-desktop-1fdano01i4e1w365.jpg");
   background-size: cover;
