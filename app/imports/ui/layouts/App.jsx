@@ -28,6 +28,7 @@ import AddProfile from '../pages/AddProfile';
 import SearchResults from '../pages/SearchResults';
 import ViewIngredient from '../pages/ViewIngredient';
 import EditVendorProducts from '../pages/EditProducts';
+import AddVendorProducts from '../pages/recipe/AddProducts';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
