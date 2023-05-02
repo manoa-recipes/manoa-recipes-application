@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const RecipeCard = ({ recipe }) => (
   <Link to={`/view-recipe/${recipe._id}`} className="recipeLink">
     <Card style={{ width: '18rem' }} className="h-100 m-auto">
-      <Card.Img variant="top" src={recipe.image} style={{ height: '40vh' }} />
+      <Card.Img className="recipe-img" variant="top" src={recipe.image} style={{ height: '40vh' }} />
       <Card.Title className="px-3">{recipe.name}</Card.Title>
       <Card.Subtitle className="px-3">{recipe.owner}</Card.Subtitle>
       <Card.Body>

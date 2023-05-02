@@ -84,6 +84,9 @@ body {
   border-width: 0 0 0 12px;
 }
 
+.recipe-img {
+  object-fit: cover;
+}
 
 #nav {
   background-color: #ABC4AA;
@@ -91,6 +94,12 @@ body {
 
 #text {
   color: #675D50;
+}
+
+.square-img {
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
 }
 
 .userHomeBackground {
