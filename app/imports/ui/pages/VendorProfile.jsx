@@ -142,6 +142,8 @@ const VendorProfile = () => {
                           <th>In Stock</th>
                           <th>Size</th>
                           <th>Price</th>
+                          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                          <th />
                         </tr>
                       </thead>
                       <tbody>
