@@ -80,7 +80,7 @@ const EditProfile = () => {
     setRedirectToRef(true);
   };
 
-  // const { from } = location?.state || { from: { pathname: '/user-profile' } };
+  // redirect to user profile
   if (redirectToReferer) {
     return <Navigate to="/user-profile" />;
   }
