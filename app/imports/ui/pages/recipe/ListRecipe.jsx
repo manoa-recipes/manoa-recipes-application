@@ -6,7 +6,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import RecipeCard from '../../components/recipe/RecipeCard';
 import { Recipes } from '../../../api/recipes/Recipes';
 
-/* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
+/* Renders a table containing all of the Recipe documents. Use <RecipeItem> to render each row. */
 const UserHome = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const [restriction, setRestriction] = useState({ glutenFree: false, vegan: false });
