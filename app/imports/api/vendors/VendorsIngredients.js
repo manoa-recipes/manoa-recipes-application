@@ -13,7 +13,7 @@ class VendorsIngredientsCollection {
       email: String,
       address: String,
       ingredient: String,
-      inStock: { type: Boolean, allowedValues: [true, false], defaultValue: true },
+      inStock: { type: Boolean, defaultValue: true },
       size: { type: String, defaultValue: 'whole' },
       price: { type: Number, defaultValue: 0.01 },
     });

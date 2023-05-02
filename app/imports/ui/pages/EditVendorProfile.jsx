@@ -37,7 +37,7 @@ const EditVendorProfile = () => {
     const { name, address, hours, image } = data;
     Vendors.collection.update(_id, { $set: { name, address, hours, image } }, (error) => (error ?
       swal('Error', error.message, 'error') :
-      swal('Success', 'Item updated successfully', 'success')));
+      swal('Success', 'Profile updated successfully!', 'success')));
 
     setRedirectToRef(true);
   };

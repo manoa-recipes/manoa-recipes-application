@@ -13,9 +13,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 /* Renders the EditStuff page for editing a single document. */
 const AddVendorProducts = () => {
-  const email = Meteor.user()?.email;
+  const email = Meteor.user()?.username;
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
-  const { _id } = useParams();
   const [redirectToReferer, setRedirectToRef] = useState(false);
 
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -31,8 +30,6 @@ const AddVendorProducts = () => {
   }, []);
 
   const schema = new SimpleSchema({
-    email: String,
-    address: String,
     ingredient: String,
     inStock: { type: String, allowedValues: ['true', 'false'],
       defaultValue: 'false' },
@@ -46,14 +43,20 @@ const AddVendorProducts = () => {
   const submit = (data) => {
     const { ingredient, inStock, size, price } = data;
 
+    console.log(`inStock = ${inStock}`);
+
     let inStockBool = false;
     if (inStock === 'true') {
       inStockBool = true;
     }
 
-    VendorsIngredients.collection.insert(_id, { $set: { email: email, ingredient: ingredient, inStock: inStockBool, size: size, price: price } }, (error) => (error ?
+    console.log(`inStockBool = ${inStockBool}`);
+
+    const address = 'none';
+
+    VendorsIngredients.collection.insert({ email, address, ingredient, size, price }, (error) => (error ?
       swal('Error', error.message, 'error') :
-      swal('Success', 'Item updated successfully', 'success')));
+      swal('Success', 'Ingredient added successfully!', 'success')));
 
     setRedirectToRef(true);
   };
@@ -67,7 +70,7 @@ const AddVendorProducts = () => {
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col xs={10}>
-          <Col className="text-center"><h2>Edit Products</h2></Col>
+          <Col className="text-center"><h2>Add A Product</h2></Col>
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
             <Card>
               <Card.Body>

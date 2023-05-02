@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row, Card, ListGroup, Image, Accordion, Table } from 'react-bootstrap';
+import { Col, Container, Row, Card, ListGroup, Image, Accordion, Table, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -19,6 +19,15 @@ const VendorIngredientList = ({ vendorIngredient }) => (
         <div className="fw"><Link to={`/edit_vendor_products/${vendorIngredient._id}`}>Edit</Link>
         </div>
       </div>
+    </td>
+    <td>
+      <Button
+        id="remove"
+        value={document._id}
+        variant="danger"
+      >
+        -
+      </Button>
     </td>
   </tr>
 );
@@ -59,6 +68,7 @@ const VendorProfile = () => {
       ready2: rdy2,
     };
   }, []);
+
   return (ready, ready2 ? (
     <Container className="py-3" id="vendor-profile-page">
       <Row className="d-flex justify-content-center">
@@ -142,8 +152,6 @@ const VendorProfile = () => {
                           <th>In Stock</th>
                           <th>Size</th>
                           <th>Price</th>
-                          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-                          <th />
                         </tr>
                       </thead>
                       <tbody>
@@ -152,7 +160,7 @@ const VendorProfile = () => {
                     </Table>
 
                     <div className="ms-2 me-auto">
-                      <div className="fw"><Link to={`/edit_vendor_products/${vendorData[0]._id}`}>Add Ingredient</Link>
+                      <div className="fw"><Link to={`/add_vendor_products/${vendorData[0]._id}`}>Add Ingredient</Link>
                       </div>
                     </div>
                   </Accordion.Body>
