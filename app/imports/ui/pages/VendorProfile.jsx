@@ -20,15 +20,6 @@ const VendorIngredientList = ({ vendorIngredient }) => (
         </div>
       </div>
     </td>
-    <td>
-      <Button
-        id="remove"
-        value={document._id}
-        variant="danger"
-      >
-        -
-      </Button>
-    </td>
   </tr>
 );
 
@@ -152,6 +143,7 @@ const VendorProfile = () => {
                           <th>In Stock</th>
                           <th>Size</th>
                           <th>Price</th>
+                          <th>Edit</th>
                         </tr>
                       </thead>
                       <tbody>
