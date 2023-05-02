@@ -14,6 +14,12 @@ const VendorIngredientList = ({ vendorIngredient }) => (
     <td>{vendorIngredient.inStock ? 'True' : 'False'}</td>
     <td>{vendorIngredient.size}</td>
     <td>{vendorIngredient.price}</td>
+    <td>
+      <div className="ms-2 me-auto">
+        <div className="fw"><Link to={`/edit_vendor_products/${vendorIngredient._id}`}>Edit</Link>
+        </div>
+      </div>
+    </td>
   </tr>
 );
 
@@ -142,10 +148,6 @@ const VendorProfile = () => {
                         {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
                       </tbody>
                     </Table>
-                    <div className="ms-2 me-auto">
-                      <div className="fw"><Link to={`/edit_vendor_products/${vendorData[0]._id}`}>Edit</Link>
-                      </div>
-                    </div>
                   </Accordion.Body>
                 </Accordion>
               </Card.Body>
