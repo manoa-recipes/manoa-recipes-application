@@ -7,6 +7,11 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
+import { removeDoc } from '../../startup/both/DocumentHelpers';
+
+const removeItem = ({ _id }) => {
+  removeDoc(_id, VendorsIngredients);
+};
 
 const VendorIngredientList = ({ vendorIngredient }) => (
   <tr>
@@ -19,6 +24,15 @@ const VendorIngredientList = ({ vendorIngredient }) => (
         <div className="fw"><Link to={`/edit_vendor_products/${vendorIngredient._id}`}>Edit</Link>
         </div>
       </div>
+    </td>
+    <td>
+      <Button
+        id="remove"
+        variant="danger"
+        onClick={() => removeItem(vendorIngredient)}
+      >
+        -
+      </Button>
     </td>
   </tr>
 );
@@ -144,10 +158,11 @@ const VendorProfile = () => {
                           <th>Size</th>
                           <th>Price</th>
                           <th>Edit</th>
+                          <th>Delete</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
+                        {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} id={vendorIngredient._id} />)}
                       </tbody>
                     </Table>
 
