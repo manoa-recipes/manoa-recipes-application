@@ -14,6 +14,12 @@ const VendorIngredientList = ({ vendorIngredient }) => (
     <td>{vendorIngredient.inStock ? 'True' : 'False'}</td>
     <td>{vendorIngredient.size}</td>
     <td>{vendorIngredient.price}</td>
+    <td>
+      <div className="ms-2 me-auto">
+        <div className="fw"><Link to={`/edit_vendor_products/${vendorIngredient._id}`}>Edit</Link>
+        </div>
+      </div>
+    </td>
   </tr>
 );
 
@@ -53,6 +59,7 @@ const VendorProfile = () => {
       ready2: rdy2,
     };
   }, []);
+
   return (ready, ready2 ? (
     <Container className="py-3" id="vendor-profile-page">
       <Row className="d-flex justify-content-center">
@@ -136,12 +143,18 @@ const VendorProfile = () => {
                           <th>In Stock</th>
                           <th>Size</th>
                           <th>Price</th>
+                          <th>Edit</th>
                         </tr>
                       </thead>
                       <tbody>
                         {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
                       </tbody>
                     </Table>
+
+                    <div className="ms-2 me-auto">
+                      <div className="fw"><Link to={`/add_vendor_products/${vendorData[0]._id}`}>Add Ingredient</Link>
+                      </div>
+                    </div>
                   </Accordion.Body>
                 </Accordion>
               </Card.Body>

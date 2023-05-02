@@ -32,7 +32,6 @@ const EditProfile = () => {
       ready: rdy,
     };
   }, [_id]);
-  // console.log('EditStuff', doc, ready);
 
   const schema = new SimpleSchema({
     email: { type: String, index: true, unique: true },
@@ -69,7 +68,7 @@ const EditProfile = () => {
 
     Profiles.collection.update(_id, { $set: { vegan: veganBool, glutenFree: glutenFreeBool } }, (error) => (error ?
       swal('Error', error.message, 'error') :
-      swal('Success', 'Item updated successfully', 'success')));
+      swal('Success', 'Profile updated successfully!', 'success')));
 
     // attempts to add allergy to list of allergies
     if (allergies.length !== 0) {
