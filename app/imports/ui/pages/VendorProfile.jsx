@@ -9,9 +9,9 @@ import { Vendors } from '../../api/vendors/Vendors';
 import { VendorsIngredients } from '../../api/vendors/VendorsIngredients';
 import { removeDoc } from '../../startup/both/DocumentHelpers';
 
-const removeItem = ({ _id }) => {
-  console.log(`remove clicked id = ${_id}`);
-  removeDoc(_id, VendorsIngredients);
+const removeItem = ({ vendorIngredient }) => {
+  console.log(`remove clicked id = ${vendorIngredient._id}`);
+  removeDoc(vendorIngredient._id, VendorsIngredients);
 };
 
 const VendorIngredientList = ({ vendorIngredient }) => (
@@ -30,7 +30,7 @@ const VendorIngredientList = ({ vendorIngredient }) => (
       <Button
         id="remove"
         variant="danger"
-        onClick={() => removeItem(vendorIngredient._id)}
+        onClick={() => removeItem(vendorIngredient)}
       >
         -
       </Button>
