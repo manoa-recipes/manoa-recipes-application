@@ -50,11 +50,9 @@ const AddVendorProducts = () => {
       inStockBool = true;
     }
 
-    console.log(`inStockBool = ${inStockBool}`);
-
     const address = 'none';
 
-    VendorsIngredients.collection.insert({ email, address, ingredient, size, price }, (error) => (error ?
+    VendorsIngredients.collection.insert({ email, address, ingredient, inStockBool, size, price }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Ingredient added successfully!', 'success')));
 
