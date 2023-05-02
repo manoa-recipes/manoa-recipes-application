@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row, Card, ListGroup, Image, Accordion, Table } from 'react-bootstrap';
+import { Col, Container, Row, Card, ListGroup, Image, Accordion, Table, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -14,6 +14,12 @@ const VendorIngredientList = ({ vendorIngredient }) => (
     <td>{vendorIngredient.inStock ? 'True' : 'False'}</td>
     <td>{vendorIngredient.size}</td>
     <td>{vendorIngredient.price}</td>
+    <td>
+      <div className="ms-2 me-auto">
+        <div className="fw"><Link to={`/edit_vendor_products/${vendorIngredient._id}`}>Edit</Link>
+        </div>
+      </div>
+    </td>
   </tr>
 );
 
@@ -53,12 +59,13 @@ const VendorProfile = () => {
       ready2: rdy2,
     };
   }, []);
+
   return (ready, ready2 ? (
     <Container className="py-3" id="vendor-profile-page">
       <Row className="d-flex justify-content-center">
         <Col className="col-3 text-center border-gradient off-white-background rounded-2 py-4" id="my-profile">
           <Container className="py-4">
-            <Image width="150px" className="rounded-circle border border-white border-2" src={vendorData[0].image} />
+            <Image className="square-img rounded-circle border border-white border-2" src={vendorData[0].image} />
           </Container>
           <h1>My Profile</h1>
           <h5>{ Meteor.user().username }</h5>
@@ -136,12 +143,18 @@ const VendorProfile = () => {
                           <th>In Stock</th>
                           <th>Size</th>
                           <th>Price</th>
+                          <th>Edit</th>
                         </tr>
                       </thead>
                       <tbody>
                         {vendorIngredients.map((vendorIngredient) => <VendorIngredientList key={vendorIngredient._id} vendorIngredient={vendorIngredient} />)}
                       </tbody>
                     </Table>
+
+                    <div className="ms-2 me-auto">
+                      <div className="fw"><Link to={`/add_vendor_products/${vendorData[0]._id}`}>Add Ingredient</Link>
+                      </div>
+                    </div>
                   </Accordion.Body>
                 </Accordion>
               </Card.Body>

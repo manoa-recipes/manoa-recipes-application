@@ -27,6 +27,8 @@ import EditProfile from '../pages/EditProfile';
 import AddProfile from '../pages/AddProfile';
 import SearchResults from '../pages/SearchResults';
 import ViewIngredient from '../pages/ViewIngredient';
+import EditVendorProducts from '../pages/EditProducts';
+import AddVendorProducts from '../pages/AddProducts';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -48,6 +50,8 @@ const App = () => {
           <Route path="/home" element={<ProtectedRoute><UserHome /></ProtectedRoute>} />
           <Route path="/edit_user_profile/:_id" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
           <Route path="/edit_vendor_profile/:_id" element={<ProtectedRoute><EditVendorProfile /></ProtectedRoute>} />
+          <Route path="/edit_vendor_products/:_id" element={<ProtectedRoute><EditVendorProducts /></ProtectedRoute>} />
+          <Route path="/add_vendor_products/:_id" element={<ProtectedRoute><AddVendorProducts /></ProtectedRoute>} />
           <Route path="/add_user_profile" element={<ProtectedRoute><AddProfile /></ProtectedRoute>} />
           <Route path="/user-profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
           <Route path="/vendor-profile" element={<ProtectedRoute><VendorProfile /></ProtectedRoute>} />
